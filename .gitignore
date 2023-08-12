@@ -1,0 +1,7 @@
+*~
+*.o
+Release
+Debug
+.qmake.stash
+object_script*
+Makefile*
