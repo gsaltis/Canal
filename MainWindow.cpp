@@ -23,21 +23,24 @@
  * Function : MainWindow
  *****************************************************************************/
 MainWindow::MainWindow
-() : QMainWindow()
+(QString InFilename) : QMainWindow()
 {
+  Initialize();
+  filename = InFilename;
 }
 
 /*****************************************************************************!
  * Function : MainWindow
  *****************************************************************************/
 MainWindow::MainWindow
-(QWidget* parent) : QMainWindow(parent)
+(QWidget* parent, QString InFilename) : QMainWindow(parent)
 {
-    Initialize();
-    CreateActions();
-    CreateMenus();
-    InitializeSubWindows();
-    CreateSubWindows();
+  Initialize();
+  filename = InFilename;
+  CreateActions();
+  CreateMenus();
+  InitializeSubWindows();
+  CreateSubWindows();
 }
 
 /*****************************************************************************!
@@ -54,6 +57,7 @@ MainWindow::~MainWindow
 void
 MainWindow::Initialize()
 {
+  filename = QString();
   setWindowTitle(SystemConfig::SystemName);  
 }
 
@@ -64,7 +68,7 @@ MainWindow::Initialize()
 void
 MainWindow::CreateSubWindows()
 {
-  displayWindow = new MainDisplayWindow();  
+  displayWindow = new MainDisplayWindow(filename);
   displayWindow->setParent(this);
   statusbar = statusBar();
 }

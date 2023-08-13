@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <QtGui>
+#include <QCommandLineParser>
 
 /*****************************************************************************!
  * Local Headers
@@ -40,17 +41,35 @@ int
 main
 (int argc, char** argv)
 {
+  QString                               MainSourceFilename;
+  QStringList                           args;
   QApplication 				application(argc, argv);
   MainWindow* 				w;
-  
+  QCommandLineParser                    parser;
+
   application.setApplicationName("Canal");
-  application.setApplicationVersion("0.0.0");
+  application.setApplicationVersion("0.1.0");
   application.setOrganizationName("Greg Saltis");
   application.setOrganizationDomain("www.gsaltis.com");
-  
-  w = new MainWindow(NULL);
+
+  parser.addHelpOption();
+  parser.addVersionOption();
+  parser.setApplicationDescription("C/C++ Analyzer Helper");
+  parser.addPositionalArgument("source", "Specify source input file");
+
+  parser.process(application);
+  args = parser.positionalArguments();
+
+  if ( args.size() > 0 ) {
+    MainSourceFilename = args[0];
+  }
+  if ( MainSourceFilename.isEmpty() ) {
+    printf("%s\n", MainSourceFilename.toStdString().c_str());
+  }
+  w = new MainWindow(NULL, MainSourceFilename);
   w->resize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
   w->move(MAIN_WINDOW_X, MAIN_WINDOW_Y);
+  w->showMaximized();
   w->show();
   
   return application.exec();

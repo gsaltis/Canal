@@ -1,5 +1,5 @@
 /*****************************************************************************
- * FILE NAME    : JSONFileWindow.cpp
+ * FILE NAME    : JSONFileTreeItem.cpp
  * DATE         : August 12 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
@@ -15,35 +15,21 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONFileWindow.h"
+#include "JSONFileTreeItem.h"
 
 /*****************************************************************************!
- * Function : JSONFileWindow
+ * Function : JSONFileTreeItem
  *****************************************************************************/
-JSONFileWindow::JSONFileWindow
-(
- QString                                InFilename,
- QString                                InBasename,
- QJsonObject                            InMainJSONObject
-) : QWidget()
+JSONFileTreeItem::JSONFileTreeItem
+() : QTreeWidgetItem()
 {
-  QPalette pal;
-
-  mainJSONObject = InMainJSONObject;
-  basename = InBasename;
-  filename = InFilename;
-
-  pal = palette();
-  pal.setBrush(QPalette::Window, QBrush(QColor(255, 0, 255)));
-  setPalette(pal);
-  setAutoFillBackground(true);
   initialize();
 }
 
 /*****************************************************************************!
- * Function : ~JSONFileWindow
+ * Function : ~JSONFileTreeItem
  *****************************************************************************/
-JSONFileWindow::~JSONFileWindow
+JSONFileTreeItem::~JSONFileTreeItem
 ()
 {
 }
@@ -52,10 +38,8 @@ JSONFileWindow::~JSONFileWindow
  * Function : initialize
  *****************************************************************************/
 void
-JSONFileWindow::initialize()
+JSONFileTreeItem::initialize()
 {
-  innerObj = mainJSONObject["inner"].toArray();
-  printf("%s %d : %lld\n", __FUNCTION__, __LINE__, innerObj.size());
   InitializeSubWindows();  
   CreateSubWindows();
 }
@@ -64,26 +48,25 @@ JSONFileWindow::initialize()
  * Function : CreateSubWindows
  *****************************************************************************/
 void
-JSONFileWindow::CreateSubWindows()
+JSONFileTreeItem::CreateSubWindows()
 {
-  fileTree = new JSONFileTree(mainJSONObject, filename, basename);
-  fileTree->setParent(this);
+  
 }
 
 /*****************************************************************************!
  * Function : InitializeSubWindows
  *****************************************************************************/
 void
-JSONFileWindow::InitializeSubWindows()
+JSONFileTreeItem::InitializeSubWindows()
 {
-  fileTree = NULL;  
+  
 }
 
 /*****************************************************************************!
  * Function : resizeEvent
  *****************************************************************************/
 void
-JSONFileWindow::resizeEvent
+JSONFileTreeItem::resizeEvent
 (QResizeEvent* InEvent)
 {
   QSize					size;  
@@ -95,7 +78,4 @@ JSONFileWindow::resizeEvent
   height = size.height();
   (void)height;
   (void)width;
-  if ( fileTree ) {
-    fileTree->resize(width, height);
-  }
 }

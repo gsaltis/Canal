@@ -29,6 +29,8 @@ QT                              += core gui widgets
 DEFINES                         += \
 
 SOURCES                         += \
+				   JSONFileTree.cpp                             \
+				   JSONFileTreeItem.cpp                         \
 				   JSONFileWindow.cpp                           \
 				   JSONElementWindow.cpp                        \
 				   MainDisplayWindow.cpp                        \
@@ -39,6 +41,8 @@ SOURCES                         += \
 				   main.cpp                                     \
 
 HEADERS                         += \
+				   JSONFileTree.h                               \
+				   JSONFileTreeItem.h                           \
 				   JSONFileWindow.h                             \
 				   JSONElementWindow.h                          \
 				   MainDisplayWindow.h                          \

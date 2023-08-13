@@ -81,7 +81,6 @@ JSONElementWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  printf("%d %d\n", width, height);
   (void)height;
   (void)width;
 }

@@ -13,6 +13,9 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
+#include <QString>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 /*****************************************************************************!
  * Local Headers
@@ -35,7 +38,7 @@ class MainDisplayWindow : public QWidget
 
  //! Constructors
  public :
-  MainDisplayWindow             ();
+  MainDisplayWindow             (QString InFilename);
 
  //! Destructor
  public :
@@ -59,6 +62,7 @@ class MainDisplayWindow : public QWidget
   void                          InitializeSubWindows    ();
   void                          CreateSubWindows        ();
   void                          resizeEvent             (QResizeEvent* InEvent);
+  void                          HandleInputFilename     (void);
 
  //! Private Data
  private :
@@ -66,6 +70,10 @@ class MainDisplayWindow : public QWidget
   MainTagWindow*                tagWindow;
   JSONFileWindow*               fileWindow;
   JSONElementWindow*            elementWindow;
+  QString                       filename;
+  QString                       baseFilename;
+  QJsonDocument                 jsonDoc;
+  QJsonObject                   mainJSONObject;
 
  //! Public Slots
  public slots :

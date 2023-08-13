@@ -14,6 +14,7 @@
 #include <QtGui>
 #include <QMainWindow>
 #include <QAction>
+#include <QString>
 
 /*****************************************************************************!
  * Local Headers
@@ -38,8 +39,8 @@ class MainWindow : public QMainWindow
 
  //! Constructors
  public :
-  MainWindow                    ();
-  MainWindow                    (QWidget* );
+  MainWindow                    (QString InFilename);
+  MainWindow                    (QWidget*, QString InFilename);
 
  //! Destructor
  public :
@@ -72,6 +73,7 @@ class MainWindow : public QMainWindow
   QMenuBar*                     menubar;
   QMenu*                        fileMenu;
   QStatusBar*                   statusbar;
+  QString                       filename;
 
  //! Public Slots
  public slots :

@@ -1,49 +1,48 @@
 /*****************************************************************************
- * FILE NAME    : JSONFileWindow.h
+ * FILE NAME    : JSONFileTree.h
  * DATE         : August 12 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _jsonfilewindow_h_
-#define _jsonfilewindow_h_
+#ifndef _jsonfiletree_h_
+#define _jsonfiletree_h_
 
 /*****************************************************************************!
  * Global Headers
  *****************************************************************************/
 #include <QtCore>
 #include <QtGui>
+#include <QTreeWidget>
 #include <QWidget>
-#include <QString>
 #include <QJsonObject>
-#include <QJsonArray>
+#include <QString>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONFileTree.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define JSONFILE_WINDOW_X               200
-#define JSONFILE_WINDOW_Y               200
-#define JSONFILE_WINDOW_WIDTH           200
-#define JSONFILE_WINDOW_HEIGHT          200
+#define JSONFILE_TREE_X                 200
+#define JSONFILE_TREE_Y                 200
+#define JSONFILE_TREE_WIDTH             200
+#define JSONFILE_TREE_HEIGHT            200
 
 /*****************************************************************************!
- * Exported Class : JSONFileWindow
+ * Exported Class : JSONFileTree
  *****************************************************************************/
-class JSONFileWindow : public QWidget
+class JSONFileTree : public QTreeWidget
 {
   Q_OBJECT;
 
  //! Constructors
  public :
-  JSONFileWindow                (QString InFilename, QString InBasename, QJsonObject InMainJSONObject);
+  JSONFileTree                  (QJsonObject InJSONFileObject, QString InFilename, QString InBaseFilename);
 
  //! Destructor
  public :
-  ~JSONFileWindow               ();
+  ~JSONFileTree                 ();
 
  //! Public Methods
  public :
@@ -66,11 +65,9 @@ class JSONFileWindow : public QWidget
 
  //! Private Data
  private :
+  QJsonObject                   JSONFileObject;
   QString                       filename;
-  QString                       basename;
-  QJsonObject                   mainJSONObject;
-  QJsonArray                    innerObj;
-  JSONFileTree*                 fileTree;
+  QString                       baseFilename;
 
  //! Public Slots
  public slots :
@@ -83,4 +80,4 @@ class JSONFileWindow : public QWidget
 
 };
 
-#endif /* _jsonfilewindow_h_*/
+#endif /* _jsonfiletree_h_*/

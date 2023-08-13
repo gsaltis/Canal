@@ -21,10 +21,16 @@
  * Function : MainDisplayWindow
  *****************************************************************************/
 MainDisplayWindow::MainDisplayWindow
-() : QWidget()
+(
+ QString                                InFilename
+) : QWidget()
 {
   QPalette				pal;
 
+  filename = InFilename;
+  if ( ! filename.isEmpty() ) {
+    HandleInputFilename();
+  }
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(160, 160, 160)));
   setPalette(pal);
@@ -73,12 +79,12 @@ MainDisplayWindow::CreateSubWindows()
   splitter->setParent(this);
 
   tagWindow = new MainTagWindow();
-  fileWindow = new JSONFileWindow();
+  fileWindow = new JSONFileWindow(filename, baseFilename, mainJSONObject);
   elementWindow = new JSONElementWindow();
 
   splitter->addWidget(tagWindow);
   splitter->addWidget(fileWindow);
-  splitter->addWidget(elementWindow);
+  splitter->addWidget(elementWindow );
 }
 
 /*****************************************************************************!
@@ -101,3 +107,30 @@ MainDisplayWindow::resizeEvent
     splitter->resize(width, height);
   }
 }
+
+/*****************************************************************************!
+ * Function : HandleInputFilename
+ *****************************************************************************/
+void
+MainDisplayWindow::HandleInputFilename(void)
+{
+  QJsonParseError                       jsonError;
+  QByteArray                            array;
+  QFileInfo                             fileinfo(filename);
+  QFile                                 file(filename);
+
+  if ( !file.open(QIODevice::ReadOnly) ) {
+    fprintf(stderr, "Could not open %s\n", filename.toStdString().c_str());
+    return;
+  }
+  array = file.readAll();
+  file.close();
+  jsonDoc = QJsonDocument::fromJson(array, &jsonError);
+  if ( jsonDoc.isEmpty() ) {
+    printf("JSON Parser error : %d : %s\n", jsonError.offset, jsonError.errorString().toStdString().c_str());
+    return;
+  }
+  baseFilename = fileinfo.completeBaseName();
+  mainJSONObject = jsonDoc.object();
+}
+
