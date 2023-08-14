@@ -64,6 +64,7 @@ class MainTagWindow : public QWidget
   void                          resizeEvent             (QResizeEvent* InEvent);
   void                          BuildTagList            (QJsonObject InObject);
   void                          PopulateTree            (void);
+  void                          ProcessArrayTagList     (QJsonArray InArray, QString InTag);
 
  //! Private Data
  private :

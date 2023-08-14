@@ -114,13 +114,36 @@ MainTagWindow::BuildTagList
       continue;
     }
     if ( value.isArray() ) {
-      array = value.toArray();
-      for (int i = 0 ; i < array.size(); i++ ) {
-        QJsonValue                      v = array[i];
-        if ( v.isObject() ) {
-          BuildTagList(v.toObject());
-        }
+      ProcessArrayTagList(value.toArray(), key);
+    }
+  }
+}
+
+/*****************************************************************************!
+ * Function : ProcessArrayTagList
+ *****************************************************************************/
+void
+MainTagWindow::ProcessArrayTagList
+(QJsonArray InArray, QString InTag)
+{
+  QString                               tag;
+  QString                               kind;
+  for (int i = 0 ; i < InArray.size(); i++ ) {
+    QJsonValue                          v = InArray[i];
+    QJsonObject                         obj;
+    
+    if ( v.isObject() ) {
+      obj = v.toObject();
+      kind = obj["kind"].toString();
+      if ( kind.isEmpty() ) {
+        BuildTagList(v.toObject());
+        continue;
       }
+      tag = QString("%1[%2]").arg(InTag).arg(kind);
+      if ( ! jsonTags.HasElement(tag, QJsonValue::Object) ) {
+        jsonTags << new JSONTagElement(tag, QJsonValue::Object);
+      }        
+      BuildTagList(v.toObject());
     }
   }
 }

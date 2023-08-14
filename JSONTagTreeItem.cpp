@@ -65,7 +65,6 @@ JSONTagTreeItem::JSONTagTreeItem
     }
   }
   QString t = InElement->GetTag();
-  printf("%s %d : %s\n", __FILE__, __LINE__, t.toStdString().c_str());
   setText(0, t);
   setText(1, typeString);
 }
