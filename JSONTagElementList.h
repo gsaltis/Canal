@@ -1,11 +1,11 @@
 /*****************************************************************************
- * FILE NAME    : MainTagWindow.h
- * DATE         : August 12 2023
+ * FILE NAME    : JSONTagElementList.h
+ * DATE         : August 13 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _maintagwindow_h_
-#define _maintagwindow_h_
+#ifndef _jsontagelementlist_h_
+#define _jsontagelementlist_h_
 
 /*****************************************************************************!
  * Global Headers
@@ -13,39 +13,32 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
-#include <QJsonObject>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONTagTree.h"
-#include "JSONTagElementList.h"
+#include "JSONTagElement.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define MAIN_TAG_WINDOW_X               200
-#define MAIN_TAG_WINDOW_Y               200
-#define MAIN_TAG_WINDOW_WIDTH           200
-#define MAIN_TAG_WINDOW_HEIGHT          200
 
 /*****************************************************************************!
- * Exported Class : MainTagWindow
+ * Exported Class : JSONTagElementList
  *****************************************************************************/
-class MainTagWindow : public QWidget
+class JSONTagElementList : public QList<JSONTagElement*>
 {
-  Q_OBJECT;
-
  //! Constructors
  public :
-  MainTagWindow                 (QJsonObject InJsonObject);
+  JSONTagElementList            ();
 
  //! Destructor
  public :
-  ~MainTagWindow                ();
+  ~JSONTagElementList           ();
 
  //! Public Methods
  public :
+  bool                          HasElement              (QString InTag, QJsonValue::Type InType);
 
  //! Public Data
  public :
@@ -58,18 +51,9 @@ class MainTagWindow : public QWidget
 
  //! Private Methods
  private :
-  void                          initialize              ();
-  void                          CreateSubWindows        ();
-  void                          InitializeSubWindows    ();
-  void                          resizeEvent             (QResizeEvent* InEvent);
-  void                          BuildTagList            (QJsonObject InObject);
-  void                          PopulateTree            (void);
 
  //! Private Data
  private :
-  QJsonObject                   jsonObject;
-  JSONTagElementList            jsonTags;
-  JSONTagTree*                  tagTree;
 
  //! Public Slots
  public slots :
@@ -82,4 +66,4 @@ class MainTagWindow : public QWidget
 
 };
 
-#endif /* _maintagwindow_h_*/
+#endif /* _jsontagelementlist_h_*/

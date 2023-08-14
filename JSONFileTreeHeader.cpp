@@ -1,7 +1,7 @@
 /*****************************************************************************
- * FILE NAME    : MainDisplayWindow.cpp
- * DATE         : August 12 2023
- * PROJECT      : Canal
+ * FILE NAME    : JSONFileTreeHeader.cpp
+ * DATE         : August 13 2023
+ * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
 
@@ -15,83 +15,64 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "MainDisplayWindow.h"
+#include "JSONFileTreeHeader.h"
 
 /*****************************************************************************!
- * Function : MainDisplayWindow
+ * Function : JSONFileTreeHeader
  *****************************************************************************/
-MainDisplayWindow::MainDisplayWindow
-(
- QString                                InFilename
-) : QWidget()
+JSONFileTreeHeader::JSONFileTreeHeader
+() : QHeaderView(Qt::Horizontal)
 {
-  QPalette				pal;
-
-  filename = InFilename;
-  if ( ! filename.isEmpty() ) {
-    HandleInputFilename();
-  }
+  QPalette pal;
   pal = palette();
-  pal.setBrush(QPalette::Window, QBrush(QColor(160, 160, 160)));
+  pal.setBrush(QPalette::Window, QBrush(QColor(192, 0, 192)));
   setPalette(pal);
   setAutoFillBackground(true);
-
-  Initialize();
+  setStretchLastSection(true);
+  initialize();
 }
 
 /*****************************************************************************!
- * Function : ~MainDisplayWindow
+ * Function : ~JSONFileTreeHeader
  *****************************************************************************/
-MainDisplayWindow::~MainDisplayWindow
+JSONFileTreeHeader::~JSONFileTreeHeader
 ()
 {
 }
 
 /*****************************************************************************!
- * Function : Initialize
+ * Function : initialize
  *****************************************************************************/
 void
-MainDisplayWindow::Initialize()
+JSONFileTreeHeader::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
 }
 
 /*****************************************************************************!
- * Function : InitializeSubWindows
- *****************************************************************************/
-void
-MainDisplayWindow::InitializeSubWindows()
-{
-  splitter = NULL;
-  tagWindow = NULL;
-  fileWindow = NULL;
-  elementWindow = NULL;
-}
-
-/*****************************************************************************!
  * Function : CreateSubWindows
  *****************************************************************************/
 void
-MainDisplayWindow::CreateSubWindows()
+JSONFileTreeHeader::CreateSubWindows()
 {
-  splitter = new MainSplitter();
-  splitter->setParent(this);
+  
+}
 
-  tagWindow = new MainTagWindow(mainJSONObject);
-  fileWindow = new JSONFileWindow(filename, baseFilename, mainJSONObject);
-  elementWindow = new JSONElementWindow();
-
-  splitter->addWidget(tagWindow);
-  splitter->addWidget(fileWindow);
-  splitter->addWidget(elementWindow );
+/*****************************************************************************!
+ * Function : InitializeSubWindows
+ *****************************************************************************/
+void
+JSONFileTreeHeader::InitializeSubWindows()
+{
+  
 }
 
 /*****************************************************************************!
  * Function : resizeEvent
  *****************************************************************************/
 void
-MainDisplayWindow::resizeEvent
+JSONFileTreeHeader::resizeEvent
 (QResizeEvent* InEvent)
 {
   QSize					size;  
@@ -103,34 +84,15 @@ MainDisplayWindow::resizeEvent
   height = size.height();
   (void)height;
   (void)width;
-  if ( splitter ) {
-    splitter->resize(width, height);
-  }
 }
 
 /*****************************************************************************!
- * Function : HandleInputFilename
+ * Function : paintEvent
  *****************************************************************************/
 void
-MainDisplayWindow::HandleInputFilename(void)
+JSONFileTreeHeader::paintEvent
+(QPaintEvent* InEvent)
 {
-  QJsonParseError                       jsonError;
-  QByteArray                            array;
-  QFileInfo                             fileinfo(filename);
-  QFile                                 file(filename);
-
-  if ( !file.open(QIODevice::ReadOnly) ) {
-    fprintf(stderr, "Could not open %s\n", filename.toStdString().c_str());
-    return;
-  }
-  array = file.readAll();
-  file.close();
-  jsonDoc = QJsonDocument::fromJson(array, &jsonError);
-  if ( jsonDoc.isEmpty() ) {
-    printf("JSON Parser error : %d : %s\n", jsonError.offset, jsonError.errorString().toStdString().c_str());
-    return;
-  }
-  baseFilename = fileinfo.completeBaseName();
-  mainJSONObject = jsonDoc.object();
+  (void)InEvent;
 }
 

@@ -16,13 +16,15 @@
  * Local Headers
  *****************************************************************************/
 #include "MainTagWindow.h"
+#include "JSONTagTreeItem.h"
 
 /*****************************************************************************!
  * Function : MainTagWindow
  *****************************************************************************/
 MainTagWindow::MainTagWindow
-() : QWidget()
+(QJsonObject InJsonObject) : QWidget()
 {
+  jsonObject = InJsonObject;
   QPalette pal;
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(128, 0, 0)));
@@ -45,8 +47,10 @@ MainTagWindow::~MainTagWindow
 void
 MainTagWindow::initialize()
 {
+  BuildTagList(jsonObject);
   InitializeSubWindows();  
   CreateSubWindows();
+  PopulateTree();
 }
 
 /*****************************************************************************!
@@ -55,7 +59,8 @@ MainTagWindow::initialize()
 void
 MainTagWindow::CreateSubWindows()
 {
-  
+  tagTree = new JSONTagTree();  
+  tagTree->setParent(this);
 }
 
 /*****************************************************************************!
@@ -64,7 +69,7 @@ MainTagWindow::CreateSubWindows()
 void
 MainTagWindow::InitializeSubWindows()
 {
-  
+  tagTree = NULL;  
 }
 
 /*****************************************************************************!
@@ -81,6 +86,60 @@ MainTagWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  (void)height;
-  (void)width;
+  if ( tagTree ) {
+    tagTree->resize(width, height);
+  }
+}
+
+/*****************************************************************************!
+ * Function : BuildTagList
+ *****************************************************************************/
+void
+MainTagWindow::BuildTagList
+(QJsonObject InObject)
+{
+  QJsonArray                            array;
+  QStringList                           keys;
+
+  keys = InObject.keys();
+  for ( auto keyi = keys.begin() ; keyi != keys.end() ; keyi++ ) {
+    QString                             key = *keyi;
+    QJsonValue                          value = InObject[key];
+
+    if ( ! jsonTags.HasElement(key, value.type()) ) {
+      jsonTags << new JSONTagElement(key, value.type());;
+    }
+    if ( value.isObject() ) {
+      BuildTagList(value.toObject());
+      continue;
+    }
+    if ( value.isArray() ) {
+      array = value.toArray();
+      for (int i = 0 ; i < array.size(); i++ ) {
+        QJsonValue                      v = array[i];
+        if ( v.isObject() ) {
+          BuildTagList(v.toObject());
+        }
+      }
+    }
+  }
+}
+
+/*****************************************************************************!
+ * Function : PopulateTree
+ *****************************************************************************/
+void
+MainTagWindow::PopulateTree(void)
+{
+  std::sort(jsonTags.begin(), jsonTags.end(),
+            [] (JSONTagElement* InElement1, JSONTagElement* InElement2) {
+              return InElement1->GetTag() < InElement2->GetTag();
+            });
+  for ( auto tagi = jsonTags.begin() ; tagi != jsonTags.end() ; tagi++ ) {
+    JSONTagElement*                     tag = *tagi;
+    JSONTagTreeItem*                    item;
+
+    item = new JSONTagTreeItem(tag);
+    tagTree->addTopLevelItem(item);
+  }
 }

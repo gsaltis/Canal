@@ -1,48 +1,46 @@
 /*****************************************************************************
- * FILE NAME    : MainTagWindow.h
- * DATE         : August 12 2023
+ * FILE NAME    : JSONTagTreeItem.h
+ * DATE         : August 13 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _maintagwindow_h_
-#define _maintagwindow_h_
+#ifndef _jsontagtreeitem_h_
+#define _jsontagtreeitem_h_
 
 /*****************************************************************************!
  * Global Headers
  *****************************************************************************/
 #include <QtCore>
 #include <QtGui>
-#include <QWidget>
-#include <QJsonObject>
+#include <QTreeWidgetItem>
+#include <QString>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONTagTree.h"
-#include "JSONTagElementList.h"
+#include "JSONTagElement.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define MAIN_TAG_WINDOW_X               200
-#define MAIN_TAG_WINDOW_Y               200
-#define MAIN_TAG_WINDOW_WIDTH           200
-#define MAIN_TAG_WINDOW_HEIGHT          200
+#define JSONTAG_TREE_ITEM_X             200
+#define JSONTAG_TREE_ITEM_Y             200
+#define JSONTAG_TREE_ITEM_WIDTH         200
+#define JSONTAG_TREE_ITEM_HEIGHT        200
 
 /*****************************************************************************!
- * Exported Class : MainTagWindow
+ * Exported Class : JSONTagTreeItem
  *****************************************************************************/
-class MainTagWindow : public QWidget
+class JSONTagTreeItem : public QTreeWidgetItem
 {
-  Q_OBJECT;
 
  //! Constructors
  public :
-  MainTagWindow                 (QJsonObject InJsonObject);
+  JSONTagTreeItem               (JSONTagElement* InTag);
 
  //! Destructor
  public :
-  ~MainTagWindow                ();
+  ~JSONTagTreeItem              ();
 
  //! Public Methods
  public :
@@ -59,27 +57,14 @@ class MainTagWindow : public QWidget
  //! Private Methods
  private :
   void                          initialize              ();
-  void                          CreateSubWindows        ();
-  void                          InitializeSubWindows    ();
-  void                          resizeEvent             (QResizeEvent* InEvent);
-  void                          BuildTagList            (QJsonObject InObject);
-  void                          PopulateTree            (void);
 
  //! Private Data
  private :
-  QJsonObject                   jsonObject;
-  JSONTagElementList            jsonTags;
-  JSONTagTree*                  tagTree;
-
- //! Public Slots
- public slots :
-
- //! Public Signals
- signals :
+  QString                       tag;
 
  //! Public Actions
  public :
 
 };
 
-#endif /* _maintagwindow_h_*/
+#endif /* _jsontagtreeitem_h_*/

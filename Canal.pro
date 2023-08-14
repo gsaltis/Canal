@@ -29,26 +29,38 @@ QT                              += core gui widgets
 DEFINES                         += \
 
 SOURCES                         += \
+				   JSONElementWindow.cpp                        \
 				   JSONFileTree.cpp                             \
+				   JSONFileTreeHeader.cpp                       \
 				   JSONFileTreeItem.cpp                         \
 				   JSONFileWindow.cpp                           \
-				   JSONElementWindow.cpp                        \
+				   JSONObjectFormat.cpp                         \
+				   JSONTagElement.cpp                           \
+				   JSONTagElementList.cpp                       \
+				   JSONTagTree.cpp                              \
+				   JSONTagTreeItem.cpp                          \
 				   MainDisplayWindow.cpp                        \
-                                   MainSplitter.cpp                             \
-                                   MainWindow.cpp                               \
+				   MainSplitter.cpp                             \
 				   MainTagWindow.cpp                            \
+				   MainWindow.cpp                               \
 				   SystemConfig.cpp                             \
 				   main.cpp                                     \
 
 HEADERS                         += \
+				   JSONElementWindow.h                          \
 				   JSONFileTree.h                               \
+				   JSONFileTreeHeader.h                         \
 				   JSONFileTreeItem.h                           \
 				   JSONFileWindow.h                             \
-				   JSONElementWindow.h                          \
+				   JSONObjectFormat.h                           \
+				   JSONTagElement.h                             \
+				   JSONTagElementList.h                         \
+				   JSONTagTree.h                                \
+				   JSONTagTreeItem.h                            \
 				   MainDisplayWindow.h                          \
-				   MainWindow.h                                 \
 				   MainSplitter.h                               \
 				   MainTagWindow.h                              \
+				   MainWindow.h                                 \
 				   SystemConfig.h                               \
 
 FORMS                           += \

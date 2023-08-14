@@ -20,6 +20,7 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
+#include "JSONFileTreeItem.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -62,6 +63,8 @@ class JSONFileTree : public QTreeWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
+  void                          SetInnerItem            (JSONFileTreeItem* InItem, QJsonValue* InValue);
+  void                          AddInnerObject          (JSONFileTreeItem* InItem, QJsonObject InObject);
 
  //! Private Data
  private :

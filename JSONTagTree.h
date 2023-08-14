@@ -1,48 +1,46 @@
 /*****************************************************************************
- * FILE NAME    : MainTagWindow.h
- * DATE         : August 12 2023
+ * FILE NAME    : JSONTagTree.h
+ * DATE         : August 13 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _maintagwindow_h_
-#define _maintagwindow_h_
+#ifndef _jsontagtree_h_
+#define _jsontagtree_h_
 
 /*****************************************************************************!
  * Global Headers
  *****************************************************************************/
 #include <QtCore>
 #include <QtGui>
+#include <QTreeWidget>
 #include <QWidget>
-#include <QJsonObject>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONTagTree.h"
-#include "JSONTagElementList.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define MAIN_TAG_WINDOW_X               200
-#define MAIN_TAG_WINDOW_Y               200
-#define MAIN_TAG_WINDOW_WIDTH           200
-#define MAIN_TAG_WINDOW_HEIGHT          200
+#define JSONTAG_TREE_X                  200
+#define JSONTAG_TREE_Y                  200
+#define JSONTAG_TREE_WIDTH              200
+#define JSONTAG_TREE_HEIGHT             200
 
 /*****************************************************************************!
- * Exported Class : MainTagWindow
+ * Exported Class : JSONTagTree
  *****************************************************************************/
-class MainTagWindow : public QWidget
+class JSONTagTree : public QTreeWidget
 {
   Q_OBJECT;
 
  //! Constructors
  public :
-  MainTagWindow                 (QJsonObject InJsonObject);
+  JSONTagTree                   ();
 
  //! Destructor
  public :
-  ~MainTagWindow                ();
+  ~JSONTagTree                  ();
 
  //! Public Methods
  public :
@@ -62,14 +60,9 @@ class MainTagWindow : public QWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
-  void                          BuildTagList            (QJsonObject InObject);
-  void                          PopulateTree            (void);
 
  //! Private Data
  private :
-  QJsonObject                   jsonObject;
-  JSONTagElementList            jsonTags;
-  JSONTagTree*                  tagTree;
 
  //! Public Slots
  public slots :
@@ -82,4 +75,4 @@ class MainTagWindow : public QWidget
 
 };
 
-#endif /* _maintagwindow_h_*/
+#endif /* _jsontagtree_h_*/

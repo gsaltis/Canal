@@ -17,6 +17,7 @@
  *****************************************************************************/
 #include "JSONFileTree.h"
 #include "JSONFileTreeItem.h"
+#include "JSONFileTreeHeader.h"
 
 /*****************************************************************************!
  * Function : JSONFileTree
@@ -28,8 +29,23 @@ JSONFileTree::JSONFileTree
  QString                                InBaseFilename
 ) : QTreeWidget()
 {
+  QTreeWidgetItem*                      head;
   QPalette pal;
+  QBrush                                brush(QColor("black"));
+  QHeaderView*                          h;
   
+  head = new QTreeWidgetItem();
+
+  head->setText(0, "TAG");
+  head->setBackground(0, brush);
+  
+  head->setText(1, "VALUE");
+  head->setBackground(1, brush);
+
+  h = header();
+  setHeaderItem(head);
+  h->setStretchLastSection(true);
+  setHeader(h);
   baseFilename = InBaseFilename;
   filename = InFilename;
   JSONFileObject = InJSONFileObject;
@@ -69,8 +85,14 @@ JSONFileTree::initialize()
     item->setText(0, keys[i]);
     if ( value.isString() ) {
       item->setText(1, value.toString());
+    } else if ( value.isDouble() ) {
+      QString s = QString("%1").arg(value.toInt());
+      item->setText(1, s);
     }
     addTopLevelItem(item);
+    if ( keys[i] == "inner" ) {
+      SetInnerItem(item, &value);
+    }
   }
 }
 
@@ -81,6 +103,37 @@ void
 JSONFileTree::CreateSubWindows()
 {
   
+}
+
+/*****************************************************************************!
+ * Function : SetInnerItem
+ *****************************************************************************/
+void
+JSONFileTree::SetInnerItem
+(JSONFileTreeItem* InItem, QJsonValue* InValue)
+{
+  QString                               name;
+  QString                               kind;
+  int                                   n;
+  QJsonArray                            array;
+
+  array = InValue->toArray();
+  n = array.size();
+  for (int i = 0; i < n; i++) {
+    QJsonValue                          v = array[i];
+    QJsonObject                         obj = v.toObject();
+    JSONFileTreeItem*                   item;
+    
+    kind = obj["kind"].toString();
+    name = obj["name"].toString();
+    item = new JSONFileTreeItem();
+    item->setText(0, kind);
+    item->setText(1, name);
+    InItem->addChild(item);
+    if ( kind == "FunctionDecl" ) {
+      AddInnerObject(item, obj);
+    }
+  }
 }
 
 /*****************************************************************************!
@@ -109,3 +162,41 @@ JSONFileTree::resizeEvent
   (void)height;
   (void)width;
 }
+
+/*****************************************************************************!
+ * Function : AddInnerObject
+ *****************************************************************************/
+void
+JSONFileTree::AddInnerObject
+(JSONFileTreeItem* InItem, QJsonObject InObject)
+{
+  QStringList                           keys;
+  keys = InObject.keys();
+  
+  for ( int i = 0 ; i < keys.size() ; i++ ) {
+    JSONFileTreeItem*                   item = new JSONFileTreeItem();
+    QJsonValue                          value = InObject[keys[i]];
+    
+    item->setText(0, keys[i]);
+    if ( value.isString() ) {
+      item->setText(1, value.toString());
+    } else if ( value.isDouble() ) {
+      QString s = QString("%1").arg(value.toInt());
+      item->setText(1, s);
+    }
+    InItem->addChild(item);
+    if ( keys[i] == "loc" ) {
+      AddInnerObject(item, value.toObject());
+      continue;
+    }
+    if ( keys[i] == "range" ) {
+      AddInnerObject(item, value.toObject());
+      continue;
+    }
+    if ( keys[i] == "inner" ) {
+      SetInnerItem(item, &value);
+    }
+  }
+}
+
+  
