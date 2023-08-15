@@ -74,10 +74,12 @@ class JSONFileTree : public QTreeWidget
 
  //! Public Slots
  public slots :
-
+  void                          SlotItemClicked         (QTreeWidgetItem*, int);
+  
  //! Public Signals
  signals :
-
+  void                          SignalFileObjectSelected        (QJsonObject*);
+  
  //! Public Actions
  public :
 

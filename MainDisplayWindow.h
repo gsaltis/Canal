@@ -16,6 +16,7 @@
 #include <QString>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QStackedWidget>
 
 /*****************************************************************************!
  * Local Headers
@@ -25,6 +26,7 @@
 #include "JSONFileWindow.h"
 #include "JSONElementWindow.h"
 #include "JSONObjectFormatList.h"
+#include "JSONFileObjectDisplayWindow.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -68,6 +70,7 @@ class MainDisplayWindow : public QWidget
  //! Private Data
  private :
   MainSplitter*                 splitter;
+  QSplitter*                    splitter2;
   MainTagWindow*                tagWindow;
   JSONFileWindow*               fileWindow;
   JSONElementWindow*            elementWindow;
@@ -76,11 +79,14 @@ class MainDisplayWindow : public QWidget
   QJsonDocument                 jsonDoc;
   QJsonObject                   mainJSONObject;
   JSONObjectFormatList*         objectsFormats;
-
+  JSONFileObjectDisplayWindow*  objectDisplayWindow;
+  QStackedWidget*               stacker;
+  
  //! Public Slots
  public slots :
   void                          SlotFormatTypeSelected  (QString InType);
-
+  void                          SlotFileObjectSelected  (QJsonObject* InObject);
+  
  //! Public Signals
  signals :
   void                          SignalFormatTypeSelected(QString InType);

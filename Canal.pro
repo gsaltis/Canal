@@ -34,6 +34,7 @@ SOURCES                         += \
 				   JSONFileTreeHeader.cpp                       \
 				   JSONFileTreeItem.cpp                         \
 				   JSONFileWindow.cpp                           \
+				   JSONFileObjectDisplayWindow.cpp              \
 				   JSONObjectElementTree.cpp                    \
 				   JSONObjectElementTreeItem.cpp                \
 				   JSONObjectFormat.cpp                         \
@@ -51,6 +52,7 @@ SOURCES                         += \
 
 HEADERS                         += \
 				   JSONElementWindow.h                          \
+				   JSONFileObjectDisplayWindow.h                \
 				   JSONFileTree.h                               \
 				   JSONFileTreeHeader.h                         \
 				   JSONFileTreeItem.h                           \

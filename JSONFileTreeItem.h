@@ -22,10 +22,9 @@
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define JSONFILE_TREE_ITEM_X            200
-#define JSONFILE_TREE_ITEM_Y            200
-#define JSONFILE_TREE_ITEM_WIDTH        200
-#define JSONFILE_TREE_ITEM_HEIGHT       200
+#define JSONFILE_TREE_ITEM_TOP          1
+#define JSONFILE_TREE_ITEM_CHILD        2
+#define JSONFILE_TREE_ITEM_INNER_TOP    3
 
 /*****************************************************************************!
  * Exported Class : JSONFileTreeItem
@@ -34,7 +33,8 @@ class JSONFileTreeItem : public QTreeWidgetItem
 {
  //! Constructors
  public :
-  JSONFileTreeItem              ();
+  JSONFileTreeItem              (int InType = JSONFILE_TREE_ITEM_TOP,
+                                 QJsonObject* InObject = NULL);
 
  //! Destructor
  public :
@@ -42,6 +42,8 @@ class JSONFileTreeItem : public QTreeWidgetItem
 
  //! Public Methods
  public :
+  int                           GetType                 ();
+  QJsonObject*                  GetObject               ();  
 
  //! Public Data
  public :
@@ -61,7 +63,9 @@ class JSONFileTreeItem : public QTreeWidgetItem
 
  //! Private Data
  private :
-
+  int                           type;
+  QJsonObject*                  object;
+  
  //! Public Slots
  public slots :
 

@@ -58,6 +58,10 @@ JSONFileWindow::initialize()
   printf("%s %d : %lld\n", __FUNCTION__, __LINE__, innerObj.size());
   InitializeSubWindows();  
   CreateSubWindows();
+  connect(fileTree,
+          SIGNAL(SignalFileObjectSelected(QJsonObject*)),
+          this,
+          SLOT(SlotFileObjectSelected(QJsonObject*)));
 }
 
 /*****************************************************************************!
@@ -98,4 +102,14 @@ JSONFileWindow::resizeEvent
   if ( fileTree ) {
     fileTree->resize(width, height);
   }
+}
+
+/*****************************************************************************!
+ * Function : SlotFileObjectSelected
+ *****************************************************************************/
+void
+JSONFileWindow::SlotFileObjectSelected
+(QJsonObject* InObject)
+{
+  emit SignalFileObjectSelected(InObject);
 }

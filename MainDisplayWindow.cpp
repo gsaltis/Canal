@@ -66,6 +66,7 @@ MainDisplayWindow::InitializeSubWindows()
   tagWindow = NULL;
   fileWindow = NULL;
   elementWindow = NULL;
+  objectDisplayWindow = NULL;
 }
 
 /*****************************************************************************!
@@ -80,10 +81,15 @@ MainDisplayWindow::CreateSubWindows()
   tagWindow = new MainTagWindow(mainJSONObject, objectsFormats);
   fileWindow = new JSONFileWindow(filename, baseFilename, mainJSONObject);
   elementWindow = new JSONElementWindow(objectsFormats);
+  objectDisplayWindow = new JSONFileObjectDisplayWindow();
+
+  stacker = new QStackedWidget();
+  stacker->addWidget(elementWindow);
+  stacker->addWidget(objectDisplayWindow);
 
   splitter->addWidget(tagWindow);
   splitter->addWidget(fileWindow);
-  splitter->addWidget(elementWindow );
+  splitter->addWidget(stacker);
 
 #if 0
   connect(elementWindow, JSONElementWindow::SignalTypeFormatSelected,
@@ -96,6 +102,10 @@ MainDisplayWindow::CreateSubWindows()
   connect(this, SIGNAL(SignalFormatTypeSelected(QString)),
           tagWindow,
           SLOT(SlotFormatTypeSelected(QString)));
+  connect(fileWindow,
+          SIGNAL(SignalFileObjectSelected(QJsonObject*)),
+          this,
+          SLOT(SlotFileObjectSelected(QJsonObject*)));
 }
 
 /*****************************************************************************!
@@ -153,4 +163,16 @@ MainDisplayWindow::SlotFormatTypeSelected
 (QString InType)
 {
   emit SignalFormatTypeSelected(InType);
+}
+
+/*****************************************************************************!
+ * Function : SlotFileObjectSelected
+ *****************************************************************************/
+void
+MainDisplayWindow::SlotFileObjectSelected
+(QJsonObject* InObject)
+{
+  (void)InObject;
+
+  printf("%s::%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
 }

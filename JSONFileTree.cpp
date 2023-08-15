@@ -88,6 +88,10 @@ JSONFileTree::initialize()
       SetInnerItem(item, &value);
     }
   }
+  connect(this,
+          SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+          this,
+          SLOT(SlotItemClicked(QTreeWidgetItem*, int)));
 }
 
 /*****************************************************************************!
@@ -110,7 +114,9 @@ JSONFileTree::SetInnerItem
   QString                               kind;
   int                                   n;
   QJsonArray                            array;
-
+  QJsonObject                           locObj;
+  bool                                  outFileFound = false;
+  
   array = InValue->toArray();
   n = array.size();
   for (int i = 0; i < n; i++) {
@@ -120,12 +126,16 @@ JSONFileTree::SetInnerItem
     
     kind = obj["kind"].toString();
     name = obj["name"].toString();
-    item = new JSONFileTreeItem();
-    item->setText(0, kind);
-    item->setText(1, name);
-    InItem->addChild(item);
-    if ( kind == "FunctionDecl" ) {
-      AddInnerObject(item, obj);
+    locObj = obj["loc"].toObject();
+    filename = locObj["file"].toString();
+    if ( filename == baseFilename ) {
+      outFileFound = true;
+    }
+    if ( outFileFound ) {
+      item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, &obj);
+      item->setText(0, kind);
+      item->setText(1, name);
+      InItem->addChild(item);
     }
   }
 }
@@ -168,7 +178,7 @@ JSONFileTree::AddInnerObject
   keys = InObject.keys();
   
   for ( int i = 0 ; i < keys.size() ; i++ ) {
-    JSONFileTreeItem*                   item = new JSONFileTreeItem();
+    JSONFileTreeItem*                   item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_CHILD);
     QJsonValue                          value = InObject[keys[i]];
     
     item->setText(0, keys[i]);
@@ -193,4 +203,23 @@ JSONFileTree::AddInnerObject
   }
 }
 
+/*****************************************************************************!
+ * Function : SlotItemClicked
+ *****************************************************************************/
+void
+JSONFileTree::SlotItemClicked
+(QTreeWidgetItem* InItem, int)
+{
+  QJsonObject*                          object;
+  int                                   type;
+  JSONFileTreeItem*                     item;
+
+  item = (JSONFileTreeItem*)InItem;
+  type = item->GetType();
+  object = item->GetObject();
   
+  if ( type == JSONFILE_TREE_ITEM_INNER_TOP ) {
+    emit SignalFileObjectSelected(object);
+  }
+}
+
