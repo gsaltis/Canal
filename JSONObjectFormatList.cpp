@@ -1,5 +1,5 @@
 /*****************************************************************************
- * FILE NAME    : JSONObjectFormat.cpp
+ * FILE NAME    : JSONObjectFormatList.cpp
  * DATE         : August 14 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
@@ -15,64 +15,36 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONObjectFormat.h"
+#include "JSONObjectFormatList.h"
 
 /*****************************************************************************!
- * Function : JSONObjectFormat
+ * Function : JSONObjectFormatList
  *****************************************************************************/
-JSONObjectFormat::JSONObjectFormat
-(
- QString                                InTag,
- QStringList                            InKeys
-) : QWidget()
-{
-  keys = InKeys;
-  tag = InTag;
-  std::sort(keys.begin(), keys.end());
-}
-
-/*****************************************************************************!
- * Function : ~JSONObjectFormat
- *****************************************************************************/
-JSONObjectFormat::~JSONObjectFormat
+JSONObjectFormatList::JSONObjectFormatList
 ()
 {
 }
 
 /*****************************************************************************!
- * Function : IsEqual
+ * Function : ~JSONObjectFormatList
+ *****************************************************************************/
+JSONObjectFormatList::~JSONObjectFormatList
+()
+{
+}
+
+/*****************************************************************************!
+ * Function : Contains
  *****************************************************************************/
 bool
-JSONObjectFormat::IsEqual
+JSONObjectFormatList::Contains
 (QString InTag, QStringList InKeys)
 {
-  QStringList                           testKeys = InKeys;
-  std::sort(testKeys.begin(), testKeys.end());
-
-  if ( ! (tag == InTag) ) {
-    return false;
+  for ( auto i = begin(); i != end() ; i++ ) {
+    JSONObjectFormat*                   obj = *i;
+    if ( obj->IsEqual(InTag, InKeys) ) {
+      return true;
+    }
   }
-
-  if ( testKeys != keys ) {
-    return false;
-  }
-  return true;
-}
-
-/*****************************************************************************!
- * Function : GetTag
- *****************************************************************************/
-QString
-JSONObjectFormat::GetTag(void)
-{
-  return tag;
-}
-
-/*****************************************************************************!
- * Function : GetKeys
- *****************************************************************************/
-QStringList
-JSONObjectFormat::GetKeys(void)
-{
-  return keys;
+  return false;
 }

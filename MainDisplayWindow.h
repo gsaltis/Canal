@@ -24,6 +24,7 @@
 #include "MainTagWindow.h"
 #include "JSONFileWindow.h"
 #include "JSONElementWindow.h"
+#include "JSONObjectFormatList.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -38,7 +39,7 @@ class MainDisplayWindow : public QWidget
 
  //! Constructors
  public :
-  MainDisplayWindow             (QString InFilename);
+  MainDisplayWindow             (QString InFilename, JSONObjectFormatList* InObjectsFormats);
 
  //! Destructor
  public :
@@ -74,6 +75,7 @@ class MainDisplayWindow : public QWidget
   QString                       baseFilename;
   QJsonDocument                 jsonDoc;
   QJsonObject                   mainJSONObject;
+  JSONObjectFormatList*         objectsFormats;
 
  //! Public Slots
  public slots :

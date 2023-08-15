@@ -1,5 +1,5 @@
 /*****************************************************************************
- * FILE NAME    : JSONObjectFormat.cpp
+ * FILE NAME    : JSONObjectElementTree.cpp
  * DATE         : August 14 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
@@ -15,64 +15,46 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONObjectFormat.h"
+#include "JSONObjectElementTree.h"
+#include "JSONObjectElementTreeItem.h"
 
 /*****************************************************************************!
- * Function : JSONObjectFormat
+ * Function : JSONObjectElementTree
  *****************************************************************************/
-JSONObjectFormat::JSONObjectFormat
+JSONObjectElementTree::JSONObjectElementTree
 (
- QString                                InTag,
- QStringList                            InKeys
-) : QWidget()
+ JSONObjectFormatList*                  InObjectsFormats
+) : QTreeWidget()
 {
-  keys = InKeys;
-  tag = InTag;
-  std::sort(keys.begin(), keys.end());
+  objectsFormats = InObjectsFormats;
+  QPalette pal;
+  pal = palette();
+  pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
+  setPalette(pal);
+  setAutoFillBackground(true);
+  initialize();
 }
 
 /*****************************************************************************!
- * Function : ~JSONObjectFormat
+ * Function : ~JSONObjectElementTree
  *****************************************************************************/
-JSONObjectFormat::~JSONObjectFormat
+JSONObjectElementTree::~JSONObjectElementTree
 ()
 {
 }
 
 /*****************************************************************************!
- * Function : IsEqual
+ * Function : initialize
  *****************************************************************************/
-bool
-JSONObjectFormat::IsEqual
-(QString InTag, QStringList InKeys)
+void
+JSONObjectElementTree::initialize()
 {
-  QStringList                           testKeys = InKeys;
-  std::sort(testKeys.begin(), testKeys.end());
+  JSONObjectElementTreeItem*            item;
+  for ( auto i = objectsFormats->begin(); i != objectsFormats->end(); i++ ) {
+    JSONObjectFormat*                           obj = *i;
 
-  if ( ! (tag == InTag) ) {
-    return false;
+    item = new JSONObjectElementTreeItem(obj);
+    addTopLevelItem(item);
   }
-
-  if ( testKeys != keys ) {
-    return false;
-  }
-  return true;
 }
 
-/*****************************************************************************!
- * Function : GetTag
- *****************************************************************************/
-QString
-JSONObjectFormat::GetTag(void)
-{
-  return tag;
-}
-
-/*****************************************************************************!
- * Function : GetKeys
- *****************************************************************************/
-QStringList
-JSONObjectFormat::GetKeys(void)
-{
-  return keys;
-}

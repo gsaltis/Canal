@@ -21,10 +21,9 @@
  * Function : MainDisplayWindow
  *****************************************************************************/
 MainDisplayWindow::MainDisplayWindow
-(
- QString                                InFilename
-) : QWidget()
+(QString InFilename, JSONObjectFormatList* InObjectsFormats) : QWidget()
 {
+  objectsFormats = InObjectsFormats;
   QPalette				pal;
 
   filename = InFilename;
@@ -78,9 +77,9 @@ MainDisplayWindow::CreateSubWindows()
   splitter = new MainSplitter();
   splitter->setParent(this);
 
-  tagWindow = new MainTagWindow(mainJSONObject);
+  tagWindow = new MainTagWindow(mainJSONObject, objectsFormats);
   fileWindow = new JSONFileWindow(filename, baseFilename, mainJSONObject);
-  elementWindow = new JSONElementWindow();
+  elementWindow = new JSONElementWindow(objectsFormats);
 
   splitter->addWidget(tagWindow);
   splitter->addWidget(fileWindow);

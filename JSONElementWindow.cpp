@@ -21,8 +21,15 @@
  * Function : JSONElementWindow
  *****************************************************************************/
 JSONElementWindow::JSONElementWindow
-() : QWidget()
+(
+ JSONObjectFormatList*                  InObjectsFormats
+) : QWidget()
 {
+  objectsFormats = InObjectsFormats;
+  std::sort(objectsFormats->begin(), objectsFormats->end(),
+            [] (JSONObjectFormat* InF1, JSONObjectFormat* InF2) {
+              return InF1->GetTag() < InF2->GetTag();
+            });
   QPalette pal;
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(0, 255, 255)));
@@ -45,7 +52,7 @@ JSONElementWindow::~JSONElementWindow
 void
 JSONElementWindow::initialize()
 {
-  InitializeSubWindows();  
+  InitializeSubWindows();
   CreateSubWindows();
 }
 
@@ -55,7 +62,8 @@ JSONElementWindow::initialize()
 void
 JSONElementWindow::CreateSubWindows()
 {
-  
+  elementTree = new JSONObjectElementTree(objectsFormats);  
+  elementTree->setParent(this);
 }
 
 /*****************************************************************************!
@@ -64,7 +72,7 @@ JSONElementWindow::CreateSubWindows()
 void
 JSONElementWindow::InitializeSubWindows()
 {
-  
+  elementTree = NULL;
 }
 
 /*****************************************************************************!
@@ -81,6 +89,7 @@ JSONElementWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  (void)height;
-  (void)width;
+  if ( elementTree ) {
+    elementTree->resize(width, height);
+  }
 }

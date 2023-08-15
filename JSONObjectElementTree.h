@@ -1,50 +1,51 @@
 /*****************************************************************************
- * FILE NAME    : JSONObjectFormat.h
+ * FILE NAME    : JSONObjectElementTree.h
  * DATE         : August 14 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _jsonobjectformat_h_
-#define _jsonobjectformat_h_
+#ifndef _jsonobjectelementtree_h_
+#define _jsonobjectelementtree_h_
 
 /*****************************************************************************!
  * Global Headers
  *****************************************************************************/
 #include <QtCore>
 #include <QtGui>
+#include <QTreeWidget>
 #include <QWidget>
-#include <QString>
-#include <QStringList>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
+#include "JSONObjectFormatList.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
+#define JSONOBJECT_ELEMENT_TREE_X       200
+#define JSONOBJECT_ELEMENT_TREE_Y       200
+#define JSONOBJECT_ELEMENT_TREE_WIDTH   200
+#define JSONOBJECT_ELEMENT_TREE_HEIGHT  200
 
 /*****************************************************************************!
- * Exported Class : JSONObjectFormat
+ * Exported Class : JSONObjectElementTree
  *****************************************************************************/
-class JSONObjectFormat : public QWidget
+class JSONObjectElementTree : public QTreeWidget
 {
   Q_OBJECT;
 
  //! Constructors
  public :
-  JSONObjectFormat              (QString InTag, QStringList InKeys);
+  JSONObjectElementTree         (JSONObjectFormatList* InObjectsFormats);
 
  //! Destructor
  public :
-  ~JSONObjectFormat             ();
+  ~JSONObjectElementTree        ();
 
  //! Public Methods
  public :
-  bool                          IsEqual                 (QString InTag, QStringList InKeys);
-  QString                       GetTag                  (void);
-  QStringList                   GetKeys                 (void);
-  
+
  //! Public Data
  public :
 
@@ -56,11 +57,11 @@ class JSONObjectFormat : public QWidget
 
  //! Private Methods
  private :
+  void                          initialize              ();
 
  //! Private Data
  private :
-  QString                       tag;
-  QStringList                   keys;
+  JSONObjectFormatList*         objectsFormats;
 
  //! Public Slots
  public slots :
@@ -73,4 +74,4 @@ class JSONObjectFormat : public QWidget
 
 };
 
-#endif /* _jsonobjectformat_h_*/
+#endif /* _jsonobjectelementtree_h_*/

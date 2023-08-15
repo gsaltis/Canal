@@ -21,6 +21,7 @@
  *****************************************************************************/
 #include "MainWindow.h"
 #include "main.h"
+#include "JSONObjectFormatList.h"
 
 /*****************************************************************************!
  * Local Macros
@@ -33,6 +34,8 @@
 /*****************************************************************************!
  * Local Data
  *****************************************************************************/
+JSONObjectFormatList
+MainObjectsFormats;
 
 /*****************************************************************************!
  * Function : main
@@ -63,10 +66,7 @@ main
   if ( args.size() > 0 ) {
     MainSourceFilename = args[0];
   }
-  if ( MainSourceFilename.isEmpty() ) {
-    printf("%s\n", MainSourceFilename.toStdString().c_str());
-  }
-  w = new MainWindow(NULL, MainSourceFilename);
+  w = new MainWindow(NULL, MainSourceFilename, &MainObjectsFormats);
   w->resize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
   w->move(MAIN_WINDOW_X, MAIN_WINDOW_Y);
   w->showMaximized();

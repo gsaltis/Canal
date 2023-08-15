@@ -1,11 +1,11 @@
 /*****************************************************************************
- * FILE NAME    : JSONObjectFormat.h
+ * FILE NAME    : JSONObjectFormatList.h
  * DATE         : August 14 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _jsonobjectformat_h_
-#define _jsonobjectformat_h_
+#ifndef _jsonobjectformatlist_h_
+#define _jsonobjectformatlist_h_
 
 /*****************************************************************************!
  * Global Headers
@@ -13,38 +13,34 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
-#include <QString>
-#include <QStringList>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
+#include "JSONObjectFormat.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
 
 /*****************************************************************************!
- * Exported Class : JSONObjectFormat
+ * Exported Class : JSONObjectFormatList
  *****************************************************************************/
-class JSONObjectFormat : public QWidget
+class JSONObjectFormatList : public QList<JSONObjectFormat*>
 {
-  Q_OBJECT;
-
+  
  //! Constructors
  public :
-  JSONObjectFormat              (QString InTag, QStringList InKeys);
+  JSONObjectFormatList          ();
 
  //! Destructor
  public :
-  ~JSONObjectFormat             ();
+  ~JSONObjectFormatList         ();
 
  //! Public Methods
  public :
-  bool                          IsEqual                 (QString InTag, QStringList InKeys);
-  QString                       GetTag                  (void);
-  QStringList                   GetKeys                 (void);
-  
+  bool                          Contains                (QString InTag, QStringList InKeys);
+
  //! Public Data
  public :
 
@@ -59,8 +55,6 @@ class JSONObjectFormat : public QWidget
 
  //! Private Data
  private :
-  QString                       tag;
-  QStringList                   keys;
 
  //! Public Slots
  public slots :
@@ -73,4 +67,4 @@ class JSONObjectFormat : public QWidget
 
 };
 
-#endif /* _jsonobjectformat_h_*/
+#endif /* _jsonobjectformatlist_h_*/

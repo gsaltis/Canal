@@ -22,8 +22,9 @@
  * Function : MainTagWindow
  *****************************************************************************/
 MainTagWindow::MainTagWindow
-(QJsonObject InJsonObject) : QWidget()
+(QJsonObject InJsonObject, JSONObjectFormatList* InObjectsFormats) : QWidget()
 {
+  objectsFormats = InObjectsFormats;
   jsonObject = InJsonObject;
   QPalette pal;
   pal = palette();
@@ -47,10 +48,11 @@ MainTagWindow::~MainTagWindow
 void
 MainTagWindow::initialize()
 {
-  BuildTagList(jsonObject);
+  BuildTagList(jsonObject, "TranslationUnitDecl");
   InitializeSubWindows();  
   CreateSubWindows();
   PopulateTree();
+  printf("%s::%s : %d  : %lld\n", __FILE__, __FUNCTION__, __LINE__, objectsFormats->size());
 }
 
 /*****************************************************************************!
@@ -96,12 +98,17 @@ MainTagWindow::resizeEvent
  *****************************************************************************/
 void
 MainTagWindow::BuildTagList
-(QJsonObject InObject)
+(QJsonObject InObject, QString InTag)
 {
   QJsonArray                            array;
   QStringList                           keys;
 
   keys = InObject.keys();
+
+  if ( ! objectsFormats->Contains(InTag, keys) ) {
+    JSONObjectFormat*                   objFormat = new JSONObjectFormat(InTag, keys);
+    *objectsFormats << objFormat;
+  }
   for ( auto keyi = keys.begin() ; keyi != keys.end() ; keyi++ ) {
     QString                             key = *keyi;
     QJsonValue                          value = InObject[key];
@@ -110,7 +117,7 @@ MainTagWindow::BuildTagList
       jsonTags << new JSONTagElement(key, value.type());;
     }
     if ( value.isObject() ) {
-      BuildTagList(value.toObject());
+      BuildTagList(value.toObject(), key);
       continue;
     }
     if ( value.isArray() ) {
@@ -135,15 +142,11 @@ MainTagWindow::ProcessArrayTagList
     if ( v.isObject() ) {
       obj = v.toObject();
       kind = obj["kind"].toString();
-      if ( kind.isEmpty() ) {
-        BuildTagList(v.toObject());
-        continue;
-      }
       tag = QString("%1[%2]").arg(InTag).arg(kind);
       if ( ! jsonTags.HasElement(tag, QJsonValue::Object) ) {
         jsonTags << new JSONTagElement(tag, QJsonValue::Object);
       }        
-      BuildTagList(v.toObject());
+      BuildTagList(v.toObject(), tag);
     }
   }
 }

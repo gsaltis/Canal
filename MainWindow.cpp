@@ -23,8 +23,9 @@
  * Function : MainWindow
  *****************************************************************************/
 MainWindow::MainWindow
-(QString InFilename) : QMainWindow()
+(QString InFilename,  JSONObjectFormatList* InObjectsFormats) : QMainWindow()
 {
+  objectsFormats = InObjectsFormats;
   Initialize();
   filename = InFilename;
 }
@@ -33,8 +34,9 @@ MainWindow::MainWindow
  * Function : MainWindow
  *****************************************************************************/
 MainWindow::MainWindow
-(QWidget* parent, QString InFilename) : QMainWindow(parent)
+(QWidget* parent, QString InFilename, JSONObjectFormatList* InObjectsFormats) : QMainWindow(parent)
 {
+  objectsFormats = InObjectsFormats;
   Initialize();
   filename = InFilename;
   CreateActions();
@@ -68,7 +70,7 @@ MainWindow::Initialize()
 void
 MainWindow::CreateSubWindows()
 {
-  displayWindow = new MainDisplayWindow(filename);
+  displayWindow = new MainDisplayWindow(filename, objectsFormats);
   displayWindow->setParent(this);
   statusbar = statusBar();
 }

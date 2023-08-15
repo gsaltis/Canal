@@ -20,6 +20,7 @@
  *****************************************************************************/
 #include "JSONTagTree.h"
 #include "JSONTagElementList.h"
+#include "JSONObjectFormatList.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -38,7 +39,7 @@ class MainTagWindow : public QWidget
 
  //! Constructors
  public :
-  MainTagWindow                 (QJsonObject InJsonObject);
+  MainTagWindow                 (QJsonObject InJsonObject, JSONObjectFormatList* InObjectsFormats);
 
  //! Destructor
  public :
@@ -62,7 +63,7 @@ class MainTagWindow : public QWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
-  void                          BuildTagList            (QJsonObject InObject);
+  void                          BuildTagList            (QJsonObject InObject, QString InTag);
   void                          PopulateTree            (void);
   void                          ProcessArrayTagList     (QJsonArray InArray, QString InTag);
 
@@ -71,6 +72,7 @@ class MainTagWindow : public QWidget
   QJsonObject                   jsonObject;
   JSONTagElementList            jsonTags;
   JSONTagTree*                  tagTree;
+  JSONObjectFormatList*         objectsFormats;
 
  //! Public Slots
  public slots :

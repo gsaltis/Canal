@@ -1,5 +1,5 @@
 /*****************************************************************************
- * FILE NAME    : JSONObjectFormat.cpp
+ * FILE NAME    : JSONObjectElementTreeItem.cpp
  * DATE         : August 14 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
@@ -15,64 +15,45 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONObjectFormat.h"
+#include "JSONObjectElementTreeItem.h"
 
 /*****************************************************************************!
- * Function : JSONObjectFormat
+ * Function : JSONObjectElementTreeItem
  *****************************************************************************/
-JSONObjectFormat::JSONObjectFormat
+JSONObjectElementTreeItem::JSONObjectElementTreeItem
 (
- QString                                InTag,
- QStringList                            InKeys
-) : QWidget()
+ JSONObjectFormat*                      InFormat
+) : QTreeWidgetItem()
 {
-  keys = InKeys;
-  tag = InTag;
-  std::sort(keys.begin(), keys.end());
+  format = InFormat;
+  initialize();
 }
 
 /*****************************************************************************!
- * Function : ~JSONObjectFormat
+ * Function : ~JSONObjectElementTreeItem
  *****************************************************************************/
-JSONObjectFormat::~JSONObjectFormat
+JSONObjectElementTreeItem::~JSONObjectElementTreeItem
 ()
 {
 }
 
 /*****************************************************************************!
- * Function : IsEqual
+ * Function : initialize
  *****************************************************************************/
-bool
-JSONObjectFormat::IsEqual
-(QString InTag, QStringList InKeys)
+void
+JSONObjectElementTreeItem::initialize()
 {
-  QStringList                           testKeys = InKeys;
-  std::sort(testKeys.begin(), testKeys.end());
+  QStringList                           keys;
+  setText(0, format->GetTag());
+  keys = format->GetKeys();
+  std::sort(keys.begin(), keys.end());
 
-  if ( ! (tag == InTag) ) {
-    return false;
+  for ( auto i = keys.begin(); i != keys.end(); i++ ) {
+    QString                             key = *i;
+    QTreeWidgetItem*                    item;
+    item = new QTreeWidgetItem();
+    item->setText(0, key);
+    addChild(item);
   }
-
-  if ( testKeys != keys ) {
-    return false;
-  }
-  return true;
 }
 
-/*****************************************************************************!
- * Function : GetTag
- *****************************************************************************/
-QString
-JSONObjectFormat::GetTag(void)
-{
-  return tag;
-}
-
-/*****************************************************************************!
- * Function : GetKeys
- *****************************************************************************/
-QStringList
-JSONObjectFormat::GetKeys(void)
-{
-  return keys;
-}

@@ -17,6 +17,8 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
+#include "JSONObjectFormatList.h"
+#include "JSONObjectElementTree.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -35,7 +37,7 @@ class JSONElementWindow : public QWidget
 
  //! Constructors
  public :
-  JSONElementWindow             ();
+  JSONElementWindow             (JSONObjectFormatList* InObjectsFormats);
 
  //! Destructor
  public :
@@ -62,6 +64,8 @@ class JSONElementWindow : public QWidget
 
  //! Private Data
  private :
+  JSONObjectFormatList*         objectsFormats;
+  JSONObjectElementTree*        elementTree;
 
  //! Public Slots
  public slots :
