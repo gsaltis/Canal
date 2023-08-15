@@ -31,21 +31,15 @@ JSONFileTree::JSONFileTree
 {
   QTreeWidgetItem*                      head;
   QPalette pal;
-  QBrush                                brush(QColor("black"));
-  QHeaderView*                          h;
+  QBrush                                brush(QColor("#800000"));
   
   head = new QTreeWidgetItem();
-
   head->setText(0, "TAG");
   head->setBackground(0, brush);
-  
   head->setText(1, "VALUE");
   head->setBackground(1, brush);
-
-  h = header();
   setHeaderItem(head);
-  h->setStretchLastSection(true);
-  setHeader(h);
+
   baseFilename = InBaseFilename;
   filename = InFilename;
   JSONFileObject = InJSONFileObject;

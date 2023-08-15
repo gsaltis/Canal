@@ -67,8 +67,14 @@ JSONElementWindow::CreateSubWindows()
 {
   elementTree = new JSONObjectElementTree(objectsFormats);  
   elementTree->setParent(this);
+#if 0
   connect(elementTree, JSONObjectElementTree::SignalTypeSelected,
           this, JSONElementWindow::SlotTypeFormatSelected);
+#endif
+  connect(elementTree,
+          SIGNAL(SignalTypeSelected(QString)),
+          this,
+          SLOT(SlotTypeFormatSelected(QString)));
 }
 
 /*****************************************************************************!

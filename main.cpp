@@ -69,7 +69,7 @@ main
   w = new MainWindow(NULL, MainSourceFilename, &MainObjectsFormats);
   w->resize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
   w->move(MAIN_WINDOW_X, MAIN_WINDOW_Y);
-  w->showMaximized();
+  // w->showMaximized();
   w->show();
   
   return application.exec();

@@ -85,10 +85,17 @@ MainDisplayWindow::CreateSubWindows()
   splitter->addWidget(fileWindow);
   splitter->addWidget(elementWindow );
 
+#if 0
   connect(elementWindow, JSONElementWindow::SignalTypeFormatSelected,
           this, MainDisplayWindow::SlotFormatTypeSelected);
   connect(this, MainDisplayWindow::SignalFormatTypeSelected,
           tagWindow, MainTagWindow::SlotFormatTypeSelected);
+#endif
+  connect(elementWindow, SIGNAL(SignalTypeFormatSelected(QString)),
+          this, SLOT(SlotFormatTypeSelected(QString)));
+  connect(this, SIGNAL(SignalFormatTypeSelected(QString)),
+          tagWindow,
+          SLOT(SlotFormatTypeSelected(QString)));
 }
 
 /*****************************************************************************!

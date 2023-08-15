@@ -22,16 +22,9 @@
  * Function : JSONObjectElementTree
  *****************************************************************************/
 JSONObjectElementTree::JSONObjectElementTree
-(
- JSONObjectFormatList*                  InObjectsFormats
-) : QTreeWidget()
+(JSONObjectFormatList* InObjectsFormats) : QTreeWidget()
 {
   objectsFormats = InObjectsFormats;
-  QPalette pal;
-  pal = palette();
-  pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
-  setPalette(pal);
-  setAutoFillBackground(true);
   initialize();
 }
 
@@ -50,13 +43,29 @@ void
 JSONObjectElementTree::initialize()
 {
   JSONObjectElementTreeItem*            item;
+  QTreeWidgetItem*                      head;
+  QBrush                                brush(QColor("#800000"));
+  
+  head = new QTreeWidgetItem();
+  head->setText(0, "OBJECTS");
+  head->setBackground(0, brush);
+  setHeaderItem(head);
+
   for ( auto i = objectsFormats->begin(); i != objectsFormats->end(); i++ ) {
     JSONObjectFormat*                           obj = *i;
-
     item = new JSONObjectElementTreeItem(obj);
     addTopLevelItem(item);
   }
-  connect(this, JSONObjectElementTree::itemClicked, this, JSONObjectElementTree::SlotItemClicked);
+#if 0
+  connect(this,
+          JSONObjectElementTree::itemClicked,
+          this,
+          JSONObjectElementTree::SlotItemClicked);
+#endif
+  connect(this,
+          SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+          this,
+          SLOT(SlotItemClicked(QTreeWidgetItem*, int)));
 }
 
 /*****************************************************************************!
@@ -70,11 +79,11 @@ JSONObjectElementTree::SlotItemClicked
   JSONObjectElementTreeItem*            item = (JSONObjectElementTreeItem*)InItem;
   int                                   itemType = item->GetType();
 
+  printf("%s:%s : %d\n", __FILE__, __FUNCTION__, __LINE__);
   if ( itemType == JSONOBJECT_ELEMENT_TREE_ITEM_TYPE_TOP ) {
     return;
   }
   text = item->text(0);
-  printf("%s::%s:%d : %s\n", __FILE__, __FUNCTION__, __LINE__, text.toStdString().c_str());
   emit SignalTypeSelected(text);
 
 }
