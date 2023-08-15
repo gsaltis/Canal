@@ -84,6 +84,11 @@ MainDisplayWindow::CreateSubWindows()
   splitter->addWidget(tagWindow);
   splitter->addWidget(fileWindow);
   splitter->addWidget(elementWindow );
+
+  connect(elementWindow, JSONElementWindow::SignalTypeFormatSelected,
+          this, MainDisplayWindow::SlotFormatTypeSelected);
+  connect(this, MainDisplayWindow::SignalFormatTypeSelected,
+          tagWindow, MainTagWindow::SlotFormatTypeSelected);
 }
 
 /*****************************************************************************!
@@ -133,3 +138,12 @@ MainDisplayWindow::HandleInputFilename(void)
   mainJSONObject = jsonDoc.object();
 }
 
+/*****************************************************************************!
+ * Function : SlotFormatTypeSelected
+ *****************************************************************************/
+void
+MainDisplayWindow::SlotFormatTypeSelected
+(QString InType)
+{
+  emit SignalFormatTypeSelected(InType);
+}

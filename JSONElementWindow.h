@@ -69,9 +69,11 @@ class JSONElementWindow : public QWidget
 
  //! Public Slots
  public slots :
+  void                          SlotTypeFormatSelected  (QString InType);
 
  //! Public Signals
  signals :
+  void                          SignalTypeFormatSelected (QString InType);
 
  //! Public Actions
  public :

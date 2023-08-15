@@ -19,14 +19,13 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONObjectFormat.h"
+#include "JSONObjectElementTreeItem.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define JSONOBJECT_ELEMENT_TREE_ITEM_X  200
-#define JSONOBJECT_ELEMENT_TREE_ITEM_Y  200
-#define JSONOBJECT_ELEMENT_TREE_ITEM_WIDTH 200
-#define JSONOBJECT_ELEMENT_TREE_ITEM_HEIGHT 200
+#define JSONOBJECT_ELEMENT_TREE_ITEM_TYPE_TOP           1
+#define JSONOBJECT_ELEMENT_TREE_ITEM_TYPE_CHILD         2
 
 /*****************************************************************************!
  * Exported Class : JSONObjectElementTreeItem
@@ -35,7 +34,7 @@ class JSONObjectElementTreeItem : public QTreeWidgetItem
 {
  //! Constructors
  public :
-  JSONObjectElementTreeItem     (JSONObjectFormat* InFormat);
+  JSONObjectElementTreeItem     (JSONObjectFormat* InFormat, int InType = JSONOBJECT_ELEMENT_TREE_ITEM_TYPE_TOP);
 
  //! Destructor
  public :
@@ -43,10 +42,11 @@ class JSONObjectElementTreeItem : public QTreeWidgetItem
 
  //! Public Methods
  public :
+  int                           GetType                 (void);
 
  //! Public Data
  public :
-
+  
  //! Protected Methods
  protected :
 
@@ -60,6 +60,7 @@ class JSONObjectElementTreeItem : public QTreeWidgetItem
  //! Private Data
  private :
   JSONObjectFormat*             format;
+  int                           type;
 
  //! Public Slots
  public slots :

@@ -56,5 +56,26 @@ JSONObjectElementTree::initialize()
     item = new JSONObjectElementTreeItem(obj);
     addTopLevelItem(item);
   }
+  connect(this, JSONObjectElementTree::itemClicked, this, JSONObjectElementTree::SlotItemClicked);
+}
+
+/*****************************************************************************!
+ * Function : SlotItemClicked
+ *****************************************************************************/
+void
+JSONObjectElementTree::SlotItemClicked
+(QTreeWidgetItem* InItem, int)
+{
+  QString                               text;
+  JSONObjectElementTreeItem*            item = (JSONObjectElementTreeItem*)InItem;
+  int                                   itemType = item->GetType();
+
+  if ( itemType == JSONOBJECT_ELEMENT_TREE_ITEM_TYPE_TOP ) {
+    return;
+  }
+  text = item->text(0);
+  printf("%s::%s:%d : %s\n", __FILE__, __FUNCTION__, __LINE__, text.toStdString().c_str());
+  emit SignalTypeSelected(text);
+
 }
 

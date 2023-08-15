@@ -22,9 +22,11 @@
  *****************************************************************************/
 JSONObjectElementTreeItem::JSONObjectElementTreeItem
 (
- JSONObjectFormat*                      InFormat
+ JSONObjectFormat*                      InFormat,
+ int                                    InType
 ) : QTreeWidgetItem()
 {
+  type = InType;
   format = InFormat;
   initialize();
 }
@@ -43,6 +45,9 @@ JSONObjectElementTreeItem::~JSONObjectElementTreeItem
 void
 JSONObjectElementTreeItem::initialize()
 {
+  if ( type == JSONOBJECT_ELEMENT_TREE_ITEM_TYPE_CHILD ) {
+    return;
+  }
   QStringList                           keys;
   setText(0, format->GetTag());
   keys = format->GetKeys();
@@ -50,10 +55,18 @@ JSONObjectElementTreeItem::initialize()
 
   for ( auto i = keys.begin(); i != keys.end(); i++ ) {
     QString                             key = *i;
-    QTreeWidgetItem*                    item;
-    item = new QTreeWidgetItem();
+    JSONObjectElementTreeItem*          item;
+    item = new JSONObjectElementTreeItem(NULL, JSONOBJECT_ELEMENT_TREE_ITEM_TYPE_CHILD);
     item->setText(0, key);
     addChild(item);
   }
 }
 
+/*****************************************************************************!
+ * Function : GetType
+ *****************************************************************************/
+int
+JSONObjectElementTreeItem::GetType(void)
+{
+  return type;
+}

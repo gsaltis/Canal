@@ -79,9 +79,11 @@ class MainDisplayWindow : public QWidget
 
  //! Public Slots
  public slots :
+  void                          SlotFormatTypeSelected  (QString InType);
 
  //! Public Signals
  signals :
+  void                          SignalFormatTypeSelected(QString InType);
 
  //! Public Actions
  public :

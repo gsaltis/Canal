@@ -58,7 +58,8 @@ class JSONObjectElementTree : public QTreeWidget
  //! Private Methods
  private :
   void                          initialize              ();
-
+  void                          SlotItemClicked         (QTreeWidgetItem* InItem, int InColumn);
+  
  //! Private Data
  private :
   JSONObjectFormatList*         objectsFormats;
@@ -68,6 +69,7 @@ class JSONObjectElementTree : public QTreeWidget
 
  //! Public Signals
  signals :
+  void                          SignalTypeSelected      (QString InType);
 
  //! Public Actions
  public :

@@ -28,6 +28,9 @@ JSONElementWindow::JSONElementWindow
   objectsFormats = InObjectsFormats;
   std::sort(objectsFormats->begin(), objectsFormats->end(),
             [] (JSONObjectFormat* InF1, JSONObjectFormat* InF2) {
+              if ( InF1->GetTag() == InF2->GetTag() ) {
+                return InF1->GetKeys().size() < InF2->GetKeys().size();
+              }
               return InF1->GetTag() < InF2->GetTag();
             });
   QPalette pal;
@@ -64,6 +67,8 @@ JSONElementWindow::CreateSubWindows()
 {
   elementTree = new JSONObjectElementTree(objectsFormats);  
   elementTree->setParent(this);
+  connect(elementTree, JSONObjectElementTree::SignalTypeSelected,
+          this, JSONElementWindow::SlotTypeFormatSelected);
 }
 
 /*****************************************************************************!
@@ -92,4 +97,14 @@ JSONElementWindow::resizeEvent
   if ( elementTree ) {
     elementTree->resize(width, height);
   }
+}
+
+/*****************************************************************************!
+ * Function : SlotTypeFormatSelected
+ *****************************************************************************/
+void
+JSONElementWindow::SlotTypeFormatSelected
+(QString InType)
+{
+  emit SignalTypeFormatSelected(InType);
 }

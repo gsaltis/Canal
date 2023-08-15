@@ -19,6 +19,7 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONTagTree.h"
+#include "JSONTagTreeItem.h"
 #include "JSONTagElementList.h"
 #include "JSONObjectFormatList.h"
 
@@ -66,6 +67,7 @@ class MainTagWindow : public QWidget
   void                          BuildTagList            (QJsonObject InObject, QString InTag);
   void                          PopulateTree            (void);
   void                          ProcessArrayTagList     (QJsonArray InArray, QString InTag);
+  JSONTagTreeItem*              FindItemByName          (QString InTag);
 
  //! Private Data
  private :
@@ -76,6 +78,7 @@ class MainTagWindow : public QWidget
 
  //! Public Slots
  public slots :
+  void                          SlotFormatTypeSelected  (QString InType);
 
  //! Public Signals
  signals :

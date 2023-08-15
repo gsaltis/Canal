@@ -169,3 +169,37 @@ MainTagWindow::PopulateTree(void)
     tagTree->addTopLevelItem(item);
   }
 }
+
+/*****************************************************************************!
+ * Function : SlotFormatTypeSelected
+ *****************************************************************************/
+void
+MainTagWindow::SlotFormatTypeSelected
+(QString InType)
+{
+  JSONTagTreeItem*                              item;
+
+  item = FindItemByName(InType);
+  if ( NULL == item ) {
+    return;
+  }
+  tagTree->scrollToItem(item);
+  tagTree->setCurrentItem(item);
+}
+
+/*****************************************************************************!
+ * Function : FindItemByName
+ *****************************************************************************/
+JSONTagTreeItem*
+MainTagWindow::FindItemByName
+(QString InTag)
+{
+  QList<QTreeWidgetItem*>                       items;
+
+  items = tagTree->findItems(InTag, Qt::MatchExactly, 0);
+  if ( items.count() != 1 ) {
+    return NULL;
+  }
+  return (JSONTagTreeItem*)items[0];
+}
+    
