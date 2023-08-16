@@ -1,47 +1,45 @@
 /*****************************************************************************
- * FILE NAME    : JSONFileObjectDisplayWindow.h
- * DATE         : August 15 2023
+ * FILE NAME    : JSONFileObjectDisplayTreeItem.h
+ * DATE         : August 16 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _jsonfileobjectdisplaywindow_h_
-#define _jsonfileobjectdisplaywindow_h_
+#ifndef _jsonfileobjectdisplaytreeitem_h_
+#define _jsonfileobjectdisplaytreeitem_h_
 
 /*****************************************************************************!
  * Global Headers
  *****************************************************************************/
 #include <QtCore>
 #include <QtGui>
+#include <QTreeWidgetItem>
 #include <QWidget>
+#include <QJsonValue>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONFileObjectDisplayTree.h"
-#include "SectionHeader.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_X 200
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_Y 200
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_WIDTH 200
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_HEIGHT 200
+#define JSONFILE_OBJECT_DISPLAY_TREE_ITEM_X 200
+#define JSONFILE_OBJECT_DISPLAY_TREE_ITEM_Y 200
+#define JSONFILE_OBJECT_DISPLAY_TREE_ITEM_WIDTH 200
+#define JSONFILE_OBJECT_DISPLAY_TREE_ITEM_HEIGHT 200
 
 /*****************************************************************************!
- * Exported Class : JSONFileObjectDisplayWindow
+ * Exported Class : JSONFileObjectDisplayTreeItem
  *****************************************************************************/
-class JSONFileObjectDisplayWindow : public QWidget
+class JSONFileObjectDisplayTreeItem : public QTreeWidgetItem
 {
-  Q_OBJECT;
-
  //! Constructors
  public :
-  JSONFileObjectDisplayWindow   ();
+  JSONFileObjectDisplayTreeItem (QString InTag, QJsonValue InValue);
 
  //! Destructor
  public :
-  ~JSONFileObjectDisplayWindow  ();
+  ~JSONFileObjectDisplayTreeItem ();
 
  //! Public Methods
  public :
@@ -58,26 +56,23 @@ class JSONFileObjectDisplayWindow : public QWidget
  //! Private Methods
  private :
   void                          initialize              ();
-  void                          CreateSubWindows        ();
-  void                          InitializeSubWindows    ();
-  void                          resizeEvent             (QResizeEvent* InEvent);
-
+  void                          HandleObject            (QJsonObject InObject);
+  void                          HandleArray             (QJsonArray InArray);
+  
  //! Private Data
  private :
-  JSONFileObjectDisplayTree*    fileTree;
-  SectionHeader*                header;
-
+  QJsonValue                    value;
+  QString                       tag;
+  
  //! Public Slots
  public slots :
-  void                          SlotFileObjectSelected  (QJsonObject);
 
  //! Public Signals
  signals :
-  void                          SignalFileObjectSelected  (QJsonObject);
 
  //! Public Actions
  public :
-  
+
 };
 
-#endif /* _jsonfileobjectdisplaywindow_h_*/
+#endif /* _jsonfileobjectdisplaytreeitem_h_*/

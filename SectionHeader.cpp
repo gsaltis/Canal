@@ -1,6 +1,6 @@
 /*****************************************************************************
- * FILE NAME    : JSONFileObjectDisplayWindow.cpp
- * DATE         : August 15 2023
+ * FILE NAME    : SectionHeader.cpp
+ * DATE         : August 16 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
@@ -11,30 +11,33 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
+#include <QFrame>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONFileObjectDisplayWindow.h"
+#include "SectionHeader.h"
 
 /*****************************************************************************!
- * Function : JSONFileObjectDisplayWindow
+ * Function : SectionHeader
  *****************************************************************************/
-JSONFileObjectDisplayWindow::JSONFileObjectDisplayWindow
-() : QWidget()
+SectionHeader::SectionHeader
+() : QFrame()
 {
   QPalette pal;
   pal = palette();
-  pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
+  pal.setBrush(QPalette::Window, QBrush(QColor(236, 240, 241)));
   setPalette(pal);
   setAutoFillBackground(true);
+  setFrameShadow(QFrame::Sunken);
+  setFrameShape(QFrame::Box);
   initialize();
 }
 
 /*****************************************************************************!
- * Function : ~JSONFileObjectDisplayWindow
+ * Function : ~SectionHeader
  *****************************************************************************/
-JSONFileObjectDisplayWindow::~JSONFileObjectDisplayWindow
+SectionHeader::~SectionHeader
 ()
 {
 }
@@ -43,7 +46,7 @@ JSONFileObjectDisplayWindow::~JSONFileObjectDisplayWindow
  * Function : initialize
  *****************************************************************************/
 void
-JSONFileObjectDisplayWindow::initialize()
+SectionHeader::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
@@ -53,36 +56,34 @@ JSONFileObjectDisplayWindow::initialize()
  * Function : CreateSubWindows
  *****************************************************************************/
 void
-JSONFileObjectDisplayWindow::CreateSubWindows()
+SectionHeader::CreateSubWindows()
 {
-  fileTree = new JSONFileObjectDisplayTree();  
-  fileTree->setParent(this);
-  connect(this,
-          SIGNAL(SignalFileObjectSelected(QJsonObject)),
-          fileTree,
-          SLOT(SlotFileObjectSelected(QJsonObject)));
-  header = new SectionHeader();
-  header->setParent(this);
+  //! Create label
+  HeaderText = new QLabel();
+  HeaderText->setParent(this);
+  HeaderText->move(5, 0);
+  HeaderText->resize(100, 20);
+  HeaderText->setText("None");
+  HeaderText->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+  HeaderText->setFont(QFont("Segoe UI", 12, QFont::Normal));
 }
 
 /*****************************************************************************!
  * Function : InitializeSubWindows
  *****************************************************************************/
 void
-JSONFileObjectDisplayWindow::InitializeSubWindows()
+SectionHeader::InitializeSubWindows()
 {
-  fileTree = NULL;  
-  header = NULL;
+  
 }
 
 /*****************************************************************************!
  * Function : resizeEvent
  *****************************************************************************/
 void
-JSONFileObjectDisplayWindow::resizeEvent
+SectionHeader::resizeEvent
 (QResizeEvent* InEvent)
 {
-  int                                   fileTreeH;
   QSize					size;  
   int					width;
   int					height;
@@ -90,28 +91,15 @@ JSONFileObjectDisplayWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  fileTreeH = height - SECTION_HEADER_HEIGHT;
-  
-  if ( fileTree ) {
-    fileTree->resize(width, fileTreeH);
-    fileTree->move(0, SECTION_HEADER_HEIGHT);
-  }
-  if ( header ) {
-    header->resize(width, SECTION_HEADER_HEIGHT);
-  }
+  HeaderText->resize(width - HeaderText->pos().x(), height);
 }
 
 /*****************************************************************************!
- * Function : SlotFileObjectSelected
+ * Function : SetText
  *****************************************************************************/
 void
-JSONFileObjectDisplayWindow::SlotFileObjectSelected
-(QJsonObject InObject)
+SectionHeader::SetText
+(QString InText)
 {
-  QString                               name;
-  emit SignalFileObjectSelected(InObject);
-  
-  name = InObject["name"].toString();
-  header->SetText(name);
+  HeaderText->setText(InText);
 }
-

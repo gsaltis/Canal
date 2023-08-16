@@ -211,10 +211,7 @@ JSONFileTree::SlotItemClicked
 (QTreeWidgetItem* InItem, int)
 {
   QString                               kind;
-  QJsonObject /*****************************************************************************!
- * 
- *****************************************************************************/
-                          object;
+  QJsonObject                           object;
   int                                   type;
   JSONFileTreeItem*                     item;
 
@@ -224,7 +221,6 @@ JSONFileTree::SlotItemClicked
   
   if ( type == JSONFILE_TREE_ITEM_INNER_TOP ) {
     kind = object.value("kind").toString();
-    printf("%s::%s:%d : %s\n", __FILE__, __FUNCTION__, __LINE__, kind.toStdString().c_str());
     emit SignalFileObjectSelected(object);
   }
 }

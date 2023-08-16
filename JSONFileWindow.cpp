@@ -55,13 +55,12 @@ void
 JSONFileWindow::initialize()
 {
   innerObj = mainJSONObject["inner"].toArray();
-  printf("%s %d : %lld\n", __FUNCTION__, __LINE__, innerObj.size());
   InitializeSubWindows();  
   CreateSubWindows();
   connect(fileTree,
-          SIGNAL(SignalFileObjectSelected(QJsonObject*)),
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
           this,
-          SLOT(SlotFileObjectSelected(QJsonObject*)));
+          SLOT(SlotFileObjectSelected(QJsonObject)));
 }
 
 /*****************************************************************************!

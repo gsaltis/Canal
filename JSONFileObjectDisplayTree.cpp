@@ -16,6 +16,7 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONFileObjectDisplayTree.h"
+#include "JSONFileObjectDisplayTreeItem.h"
 
 /*****************************************************************************!
  * Function : JSONFileObjectDisplayTree
@@ -50,18 +51,15 @@ void
 JSONFileObjectDisplayTree::SlotFileObjectSelected
 (QJsonObject InObject)
 {
-  QString                               kind;
-  QString                               name;
   QJsonValue                            value;
-  
-  printf("%s::%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
+  QStringList                           keys;
 
-  value = InObject.value("kind");
-  kind = value.toString();
-  value = InObject.value("name");
-  name = value.toString();
-
-  printf("%s::%s:%d : %s %s\n", __FILE__, __FUNCTION__, __LINE__,
-         name.toStdString().c_str(),
-         kind.toStdString().c_str());
+  clear();
+  keys = InObject.keys();
+  for ( auto i = keys.begin(); i != keys.end() ; i++ ) {
+    QString                             key = *i;
+    value = InObject[key];
+    JSONFileObjectDisplayTreeItem*      item = new JSONFileObjectDisplayTreeItem(key, value);
+    addTopLevelItem(item);
+  }
 }

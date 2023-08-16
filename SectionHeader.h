@@ -1,11 +1,11 @@
 /*****************************************************************************
- * FILE NAME    : JSONFileObjectDisplayWindow.h
- * DATE         : August 15 2023
+ * FILE NAME    : SectionHeader.h
+ * DATE         : August 16 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _jsonfileobjectdisplaywindow_h_
-#define _jsonfileobjectdisplaywindow_h_
+#ifndef _sectionheader_h_
+#define _sectionheader_h_
 
 /*****************************************************************************!
  * Global Headers
@@ -13,38 +13,39 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
+#include <QFrame>
+#include <QLabel>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONFileObjectDisplayTree.h"
-#include "SectionHeader.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_X 200
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_Y 200
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_WIDTH 200
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_HEIGHT 200
+#define SECTION_HEADER_X                200
+#define SECTION_HEADER_Y                200
+#define SECTION_HEADER_WIDTH            200
+#define SECTION_HEADER_HEIGHT           25
 
 /*****************************************************************************!
- * Exported Class : JSONFileObjectDisplayWindow
+ * Exported Class : SectionHeader
  *****************************************************************************/
-class JSONFileObjectDisplayWindow : public QWidget
+class SectionHeader : public QFrame
 {
   Q_OBJECT;
 
  //! Constructors
  public :
-  JSONFileObjectDisplayWindow   ();
+  SectionHeader                 ();
 
  //! Destructor
  public :
-  ~JSONFileObjectDisplayWindow  ();
+  ~SectionHeader                ();
 
  //! Public Methods
  public :
+  void                          SetText                 (QString InText);
 
  //! Public Data
  public :
@@ -64,20 +65,17 @@ class JSONFileObjectDisplayWindow : public QWidget
 
  //! Private Data
  private :
-  JSONFileObjectDisplayTree*    fileTree;
-  SectionHeader*                header;
+  QLabel*                       HeaderText;
 
  //! Public Slots
  public slots :
-  void                          SlotFileObjectSelected  (QJsonObject);
 
  //! Public Signals
  signals :
-  void                          SignalFileObjectSelected  (QJsonObject);
 
  //! Public Actions
  public :
-  
+
 };
 
-#endif /* _jsonfileobjectdisplaywindow_h_*/
+#endif /* _sectionheader_h_*/

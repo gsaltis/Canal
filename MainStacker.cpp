@@ -81,7 +81,6 @@ MainStacker::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  printf("%s::%s:%d %d %d\n", __FILE__, __FUNCTION__, __LINE__, width, height);
   (void)height;
   (void)width;
 }

@@ -52,7 +52,6 @@ MainTagWindow::initialize()
   InitializeSubWindows();  
   CreateSubWindows();
   PopulateTree();
-  printf("%s::%s : %d  : %lld\n", __FILE__, __FUNCTION__, __LINE__, objectsFormats->size());
 }
 
 /*****************************************************************************!
