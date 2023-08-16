@@ -22,6 +22,7 @@
  * Local Headers
  *****************************************************************************/
 #include "MainSplitter.h"
+#include "MainStacker.h"
 #include "MainTagWindow.h"
 #include "JSONFileWindow.h"
 #include "JSONElementWindow.h"
@@ -80,17 +81,18 @@ class MainDisplayWindow : public QWidget
   QJsonObject                   mainJSONObject;
   JSONObjectFormatList*         objectsFormats;
   JSONFileObjectDisplayWindow*  objectDisplayWindow;
-  QStackedWidget*               stacker;
+  MainStacker*                  stacker;
   
  //! Public Slots
  public slots :
   void                          SlotFormatTypeSelected  (QString InType);
-  void                          SlotFileObjectSelected  (QJsonObject* InObject);
+  void                          SlotFileObjectSelected  (QJsonObject InObject);
   
  //! Public Signals
  signals :
   void                          SignalFormatTypeSelected(QString InType);
-
+  void                          SignalFileObjectSelected(QJsonObject);
+  
  //! Public Actions
  public :
 

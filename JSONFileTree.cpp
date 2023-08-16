@@ -132,7 +132,7 @@ JSONFileTree::SetInnerItem
       outFileFound = true;
     }
     if ( outFileFound ) {
-      item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, &obj);
+      item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, obj);
       item->setText(0, kind);
       item->setText(1, name);
       InItem->addChild(item);
@@ -210,7 +210,11 @@ void
 JSONFileTree::SlotItemClicked
 (QTreeWidgetItem* InItem, int)
 {
-  QJsonObject*                          object;
+  QString                               kind;
+  QJsonObject /*****************************************************************************!
+ * 
+ *****************************************************************************/
+                          object;
   int                                   type;
   JSONFileTreeItem*                     item;
 
@@ -219,6 +223,8 @@ JSONFileTree::SlotItemClicked
   object = item->GetObject();
   
   if ( type == JSONFILE_TREE_ITEM_INNER_TOP ) {
+    kind = object.value("kind").toString();
+    printf("%s::%s:%d : %s\n", __FILE__, __FUNCTION__, __LINE__, kind.toStdString().c_str());
     emit SignalFileObjectSelected(object);
   }
 }

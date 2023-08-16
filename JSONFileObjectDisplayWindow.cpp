@@ -55,7 +55,12 @@ JSONFileObjectDisplayWindow::initialize()
 void
 JSONFileObjectDisplayWindow::CreateSubWindows()
 {
-  
+  fileTree = new JSONFileObjectDisplayTree();  
+  fileTree->setParent(this);
+  connect(this,
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
+          fileTree,
+          SLOT(SlotFileObjectSelected(QJsonObject)));
 }
 
 /*****************************************************************************!
@@ -64,7 +69,7 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
 void
 JSONFileObjectDisplayWindow::InitializeSubWindows()
 {
-  
+  fileTree = NULL;  
 }
 
 /*****************************************************************************!
@@ -81,6 +86,18 @@ JSONFileObjectDisplayWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  (void)height;
-  (void)width;
+  if ( fileTree ) {
+    fileTree->resize(width, height);
+  }
 }
+
+/*****************************************************************************!
+ * Function : SlotFileObjectSelected
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotFileObjectSelected
+(QJsonObject InObject)
+{
+  emit SignalFileObjectSelected(InObject);
+}
+

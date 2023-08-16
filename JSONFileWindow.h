@@ -74,11 +74,11 @@ class JSONFileWindow : public QWidget
 
  //! Public Slots
  public slots :
-  void                          SlotFileObjectSelected  (QJsonObject* InObject);
+  void                          SlotFileObjectSelected  (QJsonObject InObject);
   
  //! Public Signals
  signals :
-  void                          SignalFileObjectSelected(QJsonObject* InObject);
+  void                          SignalFileObjectSelected(QJsonObject InObject);
 
  //! Public Actions
  public :

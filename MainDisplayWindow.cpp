@@ -83,29 +83,26 @@ MainDisplayWindow::CreateSubWindows()
   elementWindow = new JSONElementWindow(objectsFormats);
   objectDisplayWindow = new JSONFileObjectDisplayWindow();
 
-  stacker = new QStackedWidget();
-  stacker->addWidget(elementWindow);
-  stacker->addWidget(objectDisplayWindow);
-
   splitter->addWidget(tagWindow);
   splitter->addWidget(fileWindow);
-  splitter->addWidget(stacker);
+  splitter->addWidget(elementWindow);
+  splitter->addWidget(objectDisplayWindow);
 
-#if 0
-  connect(elementWindow, JSONElementWindow::SignalTypeFormatSelected,
-          this, MainDisplayWindow::SlotFormatTypeSelected);
-  connect(this, MainDisplayWindow::SignalFormatTypeSelected,
-          tagWindow, MainTagWindow::SlotFormatTypeSelected);
-#endif
-  connect(elementWindow, SIGNAL(SignalTypeFormatSelected(QString)),
-          this, SLOT(SlotFormatTypeSelected(QString)));
+  connect(elementWindow,
+          SIGNAL(SignalTypeFormatSelected(QString)),
+          this,
+          SLOT(SlotFormatTypeSelected(QString)));
   connect(this, SIGNAL(SignalFormatTypeSelected(QString)),
           tagWindow,
           SLOT(SlotFormatTypeSelected(QString)));
   connect(fileWindow,
-          SIGNAL(SignalFileObjectSelected(QJsonObject*)),
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
           this,
-          SLOT(SlotFileObjectSelected(QJsonObject*)));
+          SLOT(SlotFileObjectSelected(QJsonObject)));
+  connect(this,
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
+          objectDisplayWindow,
+          SLOT(SlotFileObjectSelected(QJsonObject)));
 }
 
 /*****************************************************************************!
@@ -170,9 +167,7 @@ MainDisplayWindow::SlotFormatTypeSelected
  *****************************************************************************/
 void
 MainDisplayWindow::SlotFileObjectSelected
-(QJsonObject* InObject)
+(QJsonObject InObject)
 {
-  (void)InObject;
-
-  printf("%s::%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
+  emit SignalFileObjectSelected(InObject);
 }

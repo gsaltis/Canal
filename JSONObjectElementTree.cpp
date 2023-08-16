@@ -79,7 +79,6 @@ JSONObjectElementTree::SlotItemClicked
   JSONObjectElementTreeItem*            item = (JSONObjectElementTreeItem*)InItem;
   int                                   itemType = item->GetType();
 
-  printf("%s:%s : %d\n", __FILE__, __FUNCTION__, __LINE__);
   if ( itemType == JSONOBJECT_ELEMENT_TREE_ITEM_TYPE_TOP ) {
     return;
   }

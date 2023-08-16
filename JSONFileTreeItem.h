@@ -34,7 +34,7 @@ class JSONFileTreeItem : public QTreeWidgetItem
  //! Constructors
  public :
   JSONFileTreeItem              (int InType = JSONFILE_TREE_ITEM_TOP,
-                                 QJsonObject* InObject = NULL);
+                                 QJsonObject InObject = QJsonObject());
 
  //! Destructor
  public :
@@ -43,7 +43,7 @@ class JSONFileTreeItem : public QTreeWidgetItem
  //! Public Methods
  public :
   int                           GetType                 ();
-  QJsonObject*                  GetObject               ();  
+  QJsonObject                   GetObject               ();  
 
  //! Public Data
  public :
@@ -64,7 +64,7 @@ class JSONFileTreeItem : public QTreeWidgetItem
  //! Private Data
  private :
   int                           type;
-  QJsonObject*                  object;
+  QJsonObject                   object;
   
  //! Public Slots
  public slots :

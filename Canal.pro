@@ -35,6 +35,7 @@ SOURCES                         += \
 				   JSONFileTreeItem.cpp                         \
 				   JSONFileWindow.cpp                           \
 				   JSONFileObjectDisplayWindow.cpp              \
+				   JSONFileObjectDisplayTree.cpp                \
 				   JSONObjectElementTree.cpp                    \
 				   JSONObjectElementTreeItem.cpp                \
 				   JSONObjectFormat.cpp                         \
@@ -45,6 +46,7 @@ SOURCES                         += \
 				   JSONTagTreeItem.cpp                          \
 				   MainDisplayWindow.cpp                        \
 				   MainSplitter.cpp                             \
+                                   MainStacker.cpp                              \
 				   MainTagWindow.cpp                            \
 				   MainWindow.cpp                               \
 				   SystemConfig.cpp                             \
@@ -53,6 +55,7 @@ SOURCES                         += \
 HEADERS                         += \
 				   JSONElementWindow.h                          \
 				   JSONFileObjectDisplayWindow.h                \
+				   JSONFileObjectDisplayTree.h                  \
 				   JSONFileTree.h                               \
 				   JSONFileTreeHeader.h                         \
 				   JSONFileTreeItem.h                           \
@@ -67,6 +70,7 @@ HEADERS                         += \
 				   JSONTagTreeItem.h                            \
 				   MainDisplayWindow.h                          \
 				   MainSplitter.h                               \
+                                   MainStacker.h                                \
 				   MainTagWindow.h                              \
 				   MainWindow.h                                 \
 				   SystemConfig.h                               \

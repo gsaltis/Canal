@@ -1,6 +1,6 @@
 /*****************************************************************************
- * FILE NAME    : JSONFileWindow.cpp
- * DATE         : August 12 2023
+ * FILE NAME    : MainStacker.cpp
+ * DATE         : August 15 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
@@ -15,35 +15,26 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONFileWindow.h"
+#include "MainStacker.h"
 
 /*****************************************************************************!
- * Function : JSONFileWindow
+ * Function : MainStacker
  *****************************************************************************/
-JSONFileWindow::JSONFileWindow
-(
- QString                                InFilename,
- QString                                InBasename,
- QJsonObject                            InMainJSONObject
-) : QWidget()
+MainStacker::MainStacker
+() : QStackedWidget()
 {
   QPalette pal;
-
-  mainJSONObject = InMainJSONObject;
-  basename = InBasename;
-  filename = InFilename;
-
   pal = palette();
-  pal.setBrush(QPalette::Window, QBrush(QColor(255, 0, 255)));
+  pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
   setPalette(pal);
   setAutoFillBackground(true);
   initialize();
 }
 
 /*****************************************************************************!
- * Function : ~JSONFileWindow
+ * Function : ~MainStacker
  *****************************************************************************/
-JSONFileWindow::~JSONFileWindow
+MainStacker::~MainStacker
 ()
 {
 }
@@ -52,42 +43,35 @@ JSONFileWindow::~JSONFileWindow
  * Function : initialize
  *****************************************************************************/
 void
-JSONFileWindow::initialize()
+MainStacker::initialize()
 {
-  innerObj = mainJSONObject["inner"].toArray();
-  printf("%s %d : %lld\n", __FUNCTION__, __LINE__, innerObj.size());
   InitializeSubWindows();  
   CreateSubWindows();
-  connect(fileTree,
-          SIGNAL(SignalFileObjectSelected(QJsonObject*)),
-          this,
-          SLOT(SlotFileObjectSelected(QJsonObject*)));
 }
 
 /*****************************************************************************!
  * Function : CreateSubWindows
  *****************************************************************************/
 void
-JSONFileWindow::CreateSubWindows()
+MainStacker::CreateSubWindows()
 {
-  fileTree = new JSONFileTree(mainJSONObject, filename, basename);
-  fileTree->setParent(this);
+  
 }
 
 /*****************************************************************************!
  * Function : InitializeSubWindows
  *****************************************************************************/
 void
-JSONFileWindow::InitializeSubWindows()
+MainStacker::InitializeSubWindows()
 {
-  fileTree = NULL;  
+  
 }
 
 /*****************************************************************************!
  * Function : resizeEvent
  *****************************************************************************/
 void
-JSONFileWindow::resizeEvent
+MainStacker::resizeEvent
 (QResizeEvent* InEvent)
 {
   QSize					size;  
@@ -97,19 +81,7 @@ JSONFileWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
+  printf("%s::%s:%d %d %d\n", __FILE__, __FUNCTION__, __LINE__, width, height);
   (void)height;
   (void)width;
-  if ( fileTree ) {
-    fileTree->resize(width, height);
-  }
-}
-
-/*****************************************************************************!
- * Function : SlotFileObjectSelected
- *****************************************************************************/
-void
-JSONFileWindow::SlotFileObjectSelected
-(QJsonObject InObject)
-{
-  emit SignalFileObjectSelected(InObject);
 }

@@ -17,6 +17,7 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
+#include "JSONFileObjectDisplayTree.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -62,16 +63,19 @@ class JSONFileObjectDisplayWindow : public QWidget
 
  //! Private Data
  private :
+  JSONFileObjectDisplayTree*    fileTree;
 
  //! Public Slots
  public slots :
+  void                          SlotFileObjectSelected  (QJsonObject);
 
  //! Public Signals
  signals :
+  void                          SignalFileObjectSelected  (QJsonObject);
 
  //! Public Actions
  public :
-
+  
 };
 
 #endif /* _jsonfileobjectdisplaywindow_h_*/

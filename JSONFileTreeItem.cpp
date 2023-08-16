@@ -21,7 +21,7 @@
  * Function : JSONFileTreeItem
  *****************************************************************************/
 JSONFileTreeItem::JSONFileTreeItem
-(int InType, QJsonObject* InObject) : QTreeWidgetItem()
+(int InType, QJsonObject InObject) : QTreeWidgetItem()
 {
   type = InType;
   object = InObject;
@@ -95,7 +95,7 @@ JSONFileTreeItem::GetType
 /*****************************************************************************!
  * Function : GetObject
  *****************************************************************************/
-QJsonObject*
+QJsonObject
 JSONFileTreeItem::GetObject
 ()
 {
