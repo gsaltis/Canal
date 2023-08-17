@@ -1,20 +1,18 @@
 /*****************************************************************************
- * FILE NAME    : JSONFileObjectDisplayTreeItem.h
- * DATE         : August 16 2023
+ * FILE NAME    : DirectoryManagement.h
+ * DATE         : August 17 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _jsonfileobjectdisplaytreeitem_h_
-#define _jsonfileobjectdisplaytreeitem_h_
+#ifndef _directorymanagement_h_
+#define _directorymanagement_h_
 
 /*****************************************************************************!
  * Global Headers
  *****************************************************************************/
 #include <QtCore>
 #include <QtGui>
-#include <QTreeWidgetItem>
 #include <QWidget>
-#include <QJsonValue>
 
 /*****************************************************************************!
  * Local Headers
@@ -23,28 +21,32 @@
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define JSONFILE_OBJECT_DISPLAY_TREE_ITEM_X 200
-#define JSONFILE_OBJECT_DISPLAY_TREE_ITEM_Y 200
-#define JSONFILE_OBJECT_DISPLAY_TREE_ITEM_WIDTH 200
-#define JSONFILE_OBJECT_DISPLAY_TREE_ITEM_HEIGHT 200
 
 /*****************************************************************************!
- * Exported Class : JSONFileObjectDisplayTreeItem
+ * Exported Class : DirectoryManagement
  *****************************************************************************/
-class JSONFileObjectDisplayTreeItem : public QTreeWidgetItem
+class DirectoryManagement : public QWidget
 {
+  Q_OBJECT;
+
  //! Constructors
  public :
-  JSONFileObjectDisplayTreeItem (QString InTag, QJsonValue InValue);
+  DirectoryManagement           ();
 
  //! Destructor
  public :
-  ~JSONFileObjectDisplayTreeItem ();
+  ~DirectoryManagement          ();
 
  //! Public Methods
  public :
-  QJsonValue                    GetValue                (void);
+  QString
+  GetSystemDir
+  (void);
 
+  void
+  SetSystemDir
+  (QString InSystemDirectory);
+  
  //! Public Data
  public :
 
@@ -56,15 +58,15 @@ class JSONFileObjectDisplayTreeItem : public QTreeWidgetItem
 
  //! Private Methods
  private :
-  void                          initialize              ();
-  void                          HandleObject            (QJsonObject InObject);
-  void                          HandleArray             (QJsonArray InArray);
+  void
+  Initialize
+  ();
   
  //! Private Data
  private :
-  QJsonValue                    value;
-  QString                       tag;
-  
+  QString
+  systemDirectory;
+
  //! Public Slots
  public slots :
 
@@ -76,4 +78,4 @@ class JSONFileObjectDisplayTreeItem : public QTreeWidgetItem
 
 };
 
-#endif /* _jsonfileobjectdisplaytreeitem_h_*/
+#endif /* _directorymanagement_h_*/

@@ -32,6 +32,7 @@
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
+#define MAIN_DISPLAY_WINDOW_COUNT               4
 
 /*****************************************************************************!
  * Exported Class : MainDisplayWindow
@@ -50,7 +51,8 @@ class MainDisplayWindow : public QWidget
 
  //! Public Methods
  public :
-
+  void                          SaveAtExit              ();
+  
  //! Public Data
  public :
 
@@ -87,11 +89,13 @@ class MainDisplayWindow : public QWidget
  public slots :
   void                          SlotFormatTypeSelected  (QString InType);
   void                          SlotFileObjectSelected  (QJsonObject InObject);
+  void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
   
  //! Public Signals
  signals :
   void                          SignalFormatTypeSelected(QString InType);
   void                          SignalFileObjectSelected(QJsonObject);
+  void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
   
  //! Public Actions
  public :

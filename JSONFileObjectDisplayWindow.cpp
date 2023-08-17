@@ -61,6 +61,10 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           fileTree,
           SLOT(SlotFileObjectSelected(QJsonObject)));
+  connect(fileTree,
+          SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
+          this,
+          SLOT(SlotFileElementSelected(QString, QList<QString>)));
   header = new SectionHeader();
   header->setParent(this);
 }
@@ -115,3 +119,12 @@ JSONFileObjectDisplayWindow::SlotFileObjectSelected
   header->SetText(name);
 }
 
+/*****************************************************************************!
+ * Function : SlotFileElementSelected
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotFileElementSelected
+(QString InTag, QList<QString> InKeys)
+{
+  emit SignalFileElementSelected(InTag, InKeys);
+}

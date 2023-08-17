@@ -16,6 +16,8 @@
  * Local Headers
  *****************************************************************************/
 #include "MainDisplayWindow.h"
+#include "common.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : MainDisplayWindow
@@ -75,34 +77,52 @@ MainDisplayWindow::InitializeSubWindows()
 void
 MainDisplayWindow::CreateSubWindows()
 {
+  QList<int>                            widths;
+  
   splitter = new MainSplitter();
   splitter->setParent(this);
 
-  tagWindow = new MainTagWindow(mainJSONObject, objectsFormats);
-  fileWindow = new JSONFileWindow(filename, baseFilename, mainJSONObject);
-  elementWindow = new JSONElementWindow(objectsFormats);
-  objectDisplayWindow = new JSONFileObjectDisplayWindow();
+  widths = MainSystemConfig->GetWindowWidths();
 
-  splitter->addWidget(tagWindow);
+  fileWindow            = new JSONFileWindow(filename, baseFilename, mainJSONObject);
+  tagWindow             = new MainTagWindow(mainJSONObject, objectsFormats);
+  elementWindow         = new JSONElementWindow(objectsFormats);
+  objectDisplayWindow   = new JSONFileObjectDisplayWindow();
+
   splitter->addWidget(fileWindow);
+  splitter->addWidget(tagWindow);
   splitter->addWidget(elementWindow);
   splitter->addWidget(objectDisplayWindow);
-
+  splitter->setSizes(widths);
+  
   connect(elementWindow,
           SIGNAL(SignalTypeFormatSelected(QString)),
           this,
           SLOT(SlotFormatTypeSelected(QString)));
+
   connect(this, SIGNAL(SignalFormatTypeSelected(QString)),
           tagWindow,
           SLOT(SlotFormatTypeSelected(QString)));
+
   connect(fileWindow,
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           this,
           SLOT(SlotFileObjectSelected(QJsonObject)));
+
   connect(this,
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           objectDisplayWindow,
           SLOT(SlotFileObjectSelected(QJsonObject)));
+
+  connect(objectDisplayWindow,
+          SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
+          this,
+          SLOT(SlotFileElementSelected(QString, QList<QString>)));
+
+  connect(this,
+          SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
+          elementWindow,
+          SLOT(SlotFileElementSelected(QString, QList<QString>)));
 }
 
 /*****************************************************************************!
@@ -170,4 +190,27 @@ MainDisplayWindow::SlotFileObjectSelected
 (QJsonObject InObject)
 {
   emit SignalFileObjectSelected(InObject);
+}
+
+/*****************************************************************************!
+ * Function : SaveAtExit
+ *****************************************************************************/
+void
+MainDisplayWindow::SaveAtExit
+()
+{
+  QList<int>                    splitterSizes;
+  
+  splitterSizes = splitter->sizes();
+  MainSystemConfig->SetWindowWidths(splitterSizes);
+}
+
+/*****************************************************************************!
+ * Function : SlotFileElementSelected
+ *****************************************************************************/
+void
+MainDisplayWindow::SlotFileElementSelected
+(QString InTag, QList<QString> InKeys)
+{
+  emit SignalFileElementSelected(InTag, InKeys);
 }

@@ -19,6 +19,7 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONObjectFormatList.h"
+#include "JSONObjectElementTreeItem.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -62,10 +63,12 @@ class JSONObjectElementTree : public QTreeWidget
  //! Private Data
  private :
   JSONObjectFormatList*         objectsFormats;
-
+  JSONObjectElementTreeItem*    lastTreeItem;
+  
  //! Public Slots
  public slots :
   void                          SlotItemClicked         (QTreeWidgetItem* InItem, int InColumn);
+  void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
 
  //! Public Signals
  signals :

@@ -16,6 +16,7 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONTagTree.h"
+#include "common.h"
 
 /*****************************************************************************!
  * Function : JSONTagTree
@@ -46,6 +47,18 @@ void
 JSONTagTree::initialize()
 {
   setColumnCount(2);
+
+  QTreeWidgetItem*                      head;
+  QBrush                                brush(MainTreeHeaderColor);
+  
+  head = new QTreeWidgetItem();
+  head->setText(0, "NAME");
+  head->setBackground(0, brush);
+
+  head->setText(1, "TYPE");
+  head->setBackground(1, brush);
+  setHeaderItem(head);
+
   InitializeSubWindows();  
   CreateSubWindows();
 }

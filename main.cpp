@@ -22,6 +22,7 @@
 #include "MainWindow.h"
 #include "main.h"
 #include "JSONObjectFormatList.h"
+#include "common.h"
 
 /*****************************************************************************!
  * Local Macros
@@ -30,12 +31,31 @@
 /*****************************************************************************!
  * Local Functions
  *****************************************************************************/
+void
+MainExisting
+(void);
+
+void
+MainInitialize
+();
 
 /*****************************************************************************!
  * Local Data
  *****************************************************************************/
 JSONObjectFormatList
 MainObjectsFormats;
+
+MainWindow*
+mainWindow;
+
+DirectoryManagement*
+MainDirectoryManager = NULL;
+
+SystemConfig*
+MainSystemConfig = NULL;
+
+QColor
+MainTreeHeaderColor = QColor(128, 128, 128);
 
 /*****************************************************************************!
  * Function : main
@@ -47,9 +67,11 @@ main
   QString                               MainSourceFilename;
   QStringList                           args;
   QApplication 				application(argc, argv);
-  MainWindow* 				w;
   QCommandLineParser                    parser;
 
+  MainInitialize();
+  
+  atexit(MainExisting);
   application.setApplicationName("Canal");
   application.setApplicationVersion("0.1.0");
   application.setOrganizationName("Greg Saltis");
@@ -66,11 +88,38 @@ main
   if ( args.size() > 0 ) {
     MainSourceFilename = args[0];
   }
-  w = new MainWindow(NULL, MainSourceFilename, &MainObjectsFormats);
-  w->resize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
-  w->move(MAIN_WINDOW_X, MAIN_WINDOW_Y);
+
+  mainWindow = new MainWindow(NULL, MainSourceFilename, &MainObjectsFormats);
+  mainWindow->resize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
+  mainWindow->move(MAIN_WINDOW_X, MAIN_WINDOW_Y);
+  mainWindow->setWindowTitle(MainSystemConfig->GetSystemName() +
+                             QString ( " : ") +
+                             MainSourceFilename);
   // w->showMaximized();
-  w->show();
+  mainWindow->show();
   
   return application.exec();
+}
+
+/*****************************************************************************!
+ * Function : MainExisting
+ *****************************************************************************/
+void
+MainExisting
+(void)
+{
+  mainWindow->SaveAtExit();
+  MainSystemConfig->Save();
+}
+
+/*****************************************************************************!
+ * Function : MainInitialize
+ *****************************************************************************/
+void
+MainInitialize
+()
+{
+  MainDirectoryManager = new DirectoryManagement();
+  MainSystemConfig = new SystemConfig();
+  MainSystemConfig->Read();
 }

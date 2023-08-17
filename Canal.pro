@@ -11,7 +11,7 @@ QMAKE_RC                        = @echo [RC] $@ && windres
 #QMAKE_LFLAGS_WINDOWS            += -mwindows
 QMAKE_LFLAGS_WINDOWS            += -Wl,--subsystem,console
 
-QMAKE_CXXFLAGS                  += 
+QMAKE_CXXFLAGS                  += -g
 
 QMAKE_LIBS                      = 
 
@@ -29,14 +29,17 @@ QT                              += core gui widgets
 DEFINES                         += \
 
 SOURCES                         += \
+				   DirectoryManagement.cpp                      \
 				   JSONElementWindow.cpp                        \
+				   JSONElementWindowSectionHeader.cpp           \
+				   JSONFileObjectDisplayTree.cpp                \
+				   JSONFileObjectDisplayTreeItem.cpp            \
+				   JSONFileObjectDisplayWindow.cpp              \
 				   JSONFileTree.cpp                             \
 				   JSONFileTreeHeader.cpp                       \
 				   JSONFileTreeItem.cpp                         \
 				   JSONFileWindow.cpp                           \
-				   JSONFileObjectDisplayWindow.cpp              \
-				   JSONFileObjectDisplayTreeItem.cpp            \
-				   JSONFileObjectDisplayTree.cpp                \
+				   JSONFileWindowSectionHeader.cpp              \
 				   JSONObjectElementTree.cpp                    \
 				   JSONObjectElementTreeItem.cpp                \
 				   JSONObjectFormat.cpp                         \
@@ -47,22 +50,26 @@ SOURCES                         += \
 				   JSONTagTreeItem.cpp                          \
 				   MainDisplayWindow.cpp                        \
 				   MainSplitter.cpp                             \
-                                   MainStacker.cpp                              \
+				   MainStacker.cpp                              \
 				   MainTagWindow.cpp                            \
+				   MainTagWindowSectionHeader.cpp               \
 				   MainWindow.cpp                               \
-                                   SectionHeader.cpp                            \
+				   SectionHeader.cpp                            \
 				   SystemConfig.cpp                             \
 				   main.cpp                                     \
 
 HEADERS                         += \
+				   DirectoryManagement.h                        \
 				   JSONElementWindow.h                          \
-				   JSONFileObjectDisplayWindow.h                \
+				   JSONElementWindowSectionHeader.h             \
 				   JSONFileObjectDisplayTree.h                  \
 				   JSONFileObjectDisplayTreeItem.h              \
+				   JSONFileObjectDisplayWindow.h                \
 				   JSONFileTree.h                               \
 				   JSONFileTreeHeader.h                         \
 				   JSONFileTreeItem.h                           \
 				   JSONFileWindow.h                             \
+				   JSONFileWindowSectionHeader.h                \
 				   JSONObjectElementTree.h                      \
 				   JSONObjectElementTreeItem.h                  \
 				   JSONObjectFormat.h                           \
@@ -73,10 +80,11 @@ HEADERS                         += \
 				   JSONTagTreeItem.h                            \
 				   MainDisplayWindow.h                          \
 				   MainSplitter.h                               \
-                                   MainStacker.h                                \
+				   MainStacker.h                                \
 				   MainTagWindow.h                              \
+				   MainTagWindowSectionHeader.h                 \
 				   MainWindow.h                                 \
-                                   SectionHeader.h                              \
+				   SectionHeader.h                              \
 				   SystemConfig.h                               \
 
 FORMS                           += \

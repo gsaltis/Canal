@@ -43,6 +43,7 @@ class JSONObjectElementTreeItem : public QTreeWidgetItem
  //! Public Methods
  public :
   int                           GetType                 (void);
+  JSONObjectFormat*             GetFormat               (void);
 
  //! Public Data
  public :

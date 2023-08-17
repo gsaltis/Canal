@@ -52,6 +52,7 @@ MainTagWindow::initialize()
   InitializeSubWindows();  
   CreateSubWindows();
   PopulateTree();
+  header->SetText("JSON ELEMENTS");
 }
 
 /*****************************************************************************!
@@ -62,6 +63,8 @@ MainTagWindow::CreateSubWindows()
 {
   tagTree = new JSONTagTree();  
   tagTree->setParent(this);
+  header = new MainTagWindowSectionHeader();
+  header->setParent(this);
 }
 
 /*****************************************************************************!
@@ -71,6 +74,7 @@ void
 MainTagWindow::InitializeSubWindows()
 {
   tagTree = NULL;  
+  header = NULL;
 }
 
 /*****************************************************************************!
@@ -80,6 +84,7 @@ void
 MainTagWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
+  int                                   tagTreeH;
   QSize					size;  
   int					width;
   int					height;
@@ -87,8 +92,14 @@ MainTagWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
+  tagTreeH = height - SECTION_HEADER_HEIGHT;
   if ( tagTree ) {
-    tagTree->resize(width, height);
+    tagTree->move(0, SECTION_HEADER_HEIGHT);
+    tagTree->resize(width, tagTreeH);
+  }
+  if ( header ) {
+    header->move(0, 0);
+    header->resize(width, SECTION_HEADER_HEIGHT);
   }
 }
 

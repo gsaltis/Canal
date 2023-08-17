@@ -18,6 +18,7 @@
  * Local Headers
  *****************************************************************************/
 #include "MainWindow.h"
+#include "common.h"
 
 /*****************************************************************************!
  * Function : MainWindow
@@ -60,7 +61,7 @@ void
 MainWindow::Initialize()
 {
   filename = QString();
-  setWindowTitle(SystemConfig::SystemName);  
+  setWindowTitle(MainSystemConfig->GetSystemName());  
 }
 
 /*****************************************************************************!
@@ -140,3 +141,14 @@ MainWindow::SlotExit(void)
 {
   exit(EXIT_SUCCESS);  
 }
+
+/*****************************************************************************!
+ * Function : SaveAtExit
+ *****************************************************************************/
+void
+MainWindow::SaveAtExit
+()
+{
+  displayWindow->SaveAtExit();
+}
+

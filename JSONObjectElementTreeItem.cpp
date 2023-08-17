@@ -70,3 +70,12 @@ JSONObjectElementTreeItem::GetType(void)
 {
   return type;
 }
+
+/*****************************************************************************!
+ * Function : GetFormat
+ *****************************************************************************/
+JSONObjectFormat*
+JSONObjectElementTreeItem::GetFormat(void)
+{
+  return format;
+}

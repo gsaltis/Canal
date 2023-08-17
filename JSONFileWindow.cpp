@@ -71,6 +71,9 @@ JSONFileWindow::CreateSubWindows()
 {
   fileTree = new JSONFileTree(mainJSONObject, filename, basename);
   fileTree->setParent(this);
+  header = new JSONFileWindowSectionHeader();
+  header->SetText("TRANSLATION UNIT");
+  header->setParent(this);
 }
 
 /*****************************************************************************!
@@ -80,6 +83,7 @@ void
 JSONFileWindow::InitializeSubWindows()
 {
   fileTree = NULL;  
+  header = NULL;
 }
 
 /*****************************************************************************!
@@ -92,14 +96,20 @@ JSONFileWindow::resizeEvent
   QSize					size;  
   int					width;
   int					height;
-
+  int                                   fileTreeH;
+  
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  (void)height;
-  (void)width;
+  fileTreeH = height - SECTION_HEADER_HEIGHT;
+  
   if ( fileTree ) {
-    fileTree->resize(width, height);
+    fileTree->move(0, SECTION_HEADER_HEIGHT);
+    fileTree->resize(width, fileTreeH);
+  }
+  if ( header ) {
+    header->move(0, 0);
+    header->resize(width, SECTION_HEADER_HEIGHT);
   }
 }
 

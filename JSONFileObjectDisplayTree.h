@@ -65,9 +65,11 @@ class JSONFileObjectDisplayTree : public QTreeWidget
  //! Public Slots
  public slots :
   void                          SlotFileObjectSelected  (QJsonObject);
+  void                          SlotItemSelected        (QTreeWidgetItem* InItem, int InColumn);
   
  //! Public Signals
  signals :
+  void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
 
  //! Public Actions
  public :

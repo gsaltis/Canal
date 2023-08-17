@@ -49,7 +49,8 @@ class MainWindow : public QMainWindow
 
  //! Public Methods
  public :
-
+  void                          SaveAtExit              ();
+  
  //! Public Data
  public :
 
@@ -67,7 +68,7 @@ class MainWindow : public QMainWindow
   void                          resizeEvent             (QResizeEvent* InEvent);
   void                          CreateActions           ();
   void                          CreateMenus             ();
-
+  
  //! Private Data
  private :
   MainDisplayWindow*            displayWindow;

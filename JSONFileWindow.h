@@ -21,6 +21,7 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONFileTree.h"
+#include "JSONFileWindowSectionHeader.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -71,6 +72,7 @@ class JSONFileWindow : public QWidget
   QJsonObject                   mainJSONObject;
   QJsonArray                    innerObj;
   JSONFileTree*                 fileTree;
+  JSONFileWindowSectionHeader*  header;
 
  //! Public Slots
  public slots :

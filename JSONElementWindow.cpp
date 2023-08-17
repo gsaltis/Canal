@@ -67,10 +67,19 @@ JSONElementWindow::CreateSubWindows()
 {
   elementTree = new JSONObjectElementTree(objectsFormats);  
   elementTree->setParent(this);
+  header = new JSONElementWindowSectionHeader();
+  header->setParent(this);
+  header->SetText("OBJECTS");
+  
 #if 0
   connect(elementTree, JSONObjectElementTree::SignalTypeSelected,
           this, JSONElementWindow::SlotTypeFormatSelected);
 #endif
+  connect(this,
+          SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
+          elementTree,
+          SLOT(SlotFileElementSelected(QString, QList<QString>)));
+  
   connect(elementTree,
           SIGNAL(SignalTypeSelected(QString)),
           this,
@@ -96,12 +105,20 @@ JSONElementWindow::resizeEvent
   QSize					size;  
   int					width;
   int					height;
-
+  int                                   elementTreeH;
+  
   size = InEvent->size();
   width = size.width();
   height = size.height();
+  elementTreeH = height - SECTION_HEADER_HEIGHT;
+  
   if ( elementTree ) {
-    elementTree->resize(width, height);
+    elementTree->move(0, SECTION_HEADER_HEIGHT);
+    elementTree->resize(width, elementTreeH);
+  }
+  if ( header ) {
+    header->move(0, 0);
+    header->resize(width, SECTION_HEADER_HEIGHT);
   }
 }
 
@@ -113,4 +130,14 @@ JSONElementWindow::SlotTypeFormatSelected
 (QString InType)
 {
   emit SignalTypeFormatSelected(InType);
+}
+
+/*****************************************************************************!
+ * Function : SlotFileElementSelected
+ *****************************************************************************/
+void
+JSONElementWindow::SlotFileElementSelected
+(QString InTag, QList<QString> InKeys)
+{
+  emit SignalFileElementSelected(InTag, InKeys);
 }

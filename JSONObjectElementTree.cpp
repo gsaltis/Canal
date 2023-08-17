@@ -17,6 +17,8 @@
  *****************************************************************************/
 #include "JSONObjectElementTree.h"
 #include "JSONObjectElementTreeItem.h"
+#include "common.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : JSONObjectElementTree
@@ -44,13 +46,15 @@ JSONObjectElementTree::initialize()
 {
   JSONObjectElementTreeItem*            item;
   QTreeWidgetItem*                      head;
-  QBrush                                brush(QColor("#800000"));
+  QBrush                                brush(MainTreeHeaderColor);
   
   head = new QTreeWidgetItem();
   head->setText(0, "OBJECTS");
   head->setBackground(0, brush);
   setHeaderItem(head);
 
+  lastTreeItem = NULL;
+  
   for ( auto i = objectsFormats->begin(); i != objectsFormats->end(); i++ ) {
     JSONObjectFormat*                           obj = *i;
     item = new JSONObjectElementTreeItem(obj);
@@ -87,3 +91,31 @@ JSONObjectElementTree::SlotItemClicked
 
 }
 
+/*****************************************************************************!
+ * Function : SlotFileElementSelected
+ *****************************************************************************/
+void
+JSONObjectElementTree::SlotFileElementSelected
+(QString InTag, QList<QString> InKeys)
+{
+  int                                   n;
+  JSONObjectElementTreeItem*            treeItem;
+  QList<QString>                        keys = InKeys;
+  JSONObjectFormat*                     format;
+
+  std::sort(keys.begin(), keys.end());
+  n = topLevelItemCount();
+  for (int i = 0; i < n; i++) {
+    treeItem = (JSONObjectElementTreeItem*)topLevelItem(i);
+    format = treeItem->GetFormat();
+    if ( format->IsEqual(InTag, keys) ) {
+      if ( lastTreeItem ) {
+        lastTreeItem->setExpanded(false);
+      }
+      treeItem->setExpanded(true);
+      scrollToItem(treeItem, QAbstractItemView::PositionAtTop);
+      setCurrentItem(treeItem);
+      lastTreeItem = treeItem;
+    }
+  }
+}

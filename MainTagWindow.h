@@ -22,6 +22,7 @@
 #include "JSONTagTreeItem.h"
 #include "JSONTagElementList.h"
 #include "JSONObjectFormatList.h"
+#include "MainTagWindowSectionHeader.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -75,6 +76,7 @@ class MainTagWindow : public QWidget
   JSONTagElementList            jsonTags;
   JSONTagTree*                  tagTree;
   JSONObjectFormatList*         objectsFormats;
+  MainTagWindowSectionHeader*   header;
 
  //! Public Slots
  public slots :

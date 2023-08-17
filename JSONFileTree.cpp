@@ -18,6 +18,8 @@
 #include "JSONFileTree.h"
 #include "JSONFileTreeItem.h"
 #include "JSONFileTreeHeader.h"
+#include "common.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : JSONFileTree
@@ -31,7 +33,7 @@ JSONFileTree::JSONFileTree
 {
   QTreeWidgetItem*                      head;
   QPalette pal;
-  QBrush                                brush(QColor("#800000"));
+  QBrush                                brush(MainTreeHeaderColor);
   
   head = new QTreeWidgetItem();
   head->setText(0, "TAG");
@@ -85,6 +87,7 @@ JSONFileTree::initialize()
     }
     addTopLevelItem(item);
     if ( keys[i] == "inner" ) {
+      item->setExpanded(true);
       SetInnerItem(item, &value);
     }
   }
@@ -110,6 +113,8 @@ void
 JSONFileTree::SetInnerItem
 (JSONFileTreeItem* InItem, QJsonValue* InValue)
 {
+  QColor                                color;
+  QJsonArray                            inner;
   QString                               name;
   QString                               kind;
   int                                   n;
@@ -123,16 +128,30 @@ JSONFileTree::SetInnerItem
     QJsonValue                          v = array[i];
     QJsonObject                         obj = v.toObject();
     JSONFileTreeItem*                   item;
-    
+
     kind = obj["kind"].toString();
     name = obj["name"].toString();
+    inner = obj["inner"].toArray();
+    for ( int j = 0; j < inner.size() ; j++ ) {
+      color = QColor(0, 0, 128);
+      QJsonObject                       obj = inner[j].toObject();
+      QString                           k = obj["kind"].toString();
+      if ( k == "CompoundStmt" ) {
+        color = QColor(128, 0, 0);
+        break;
+      }
+    }
+      
     locObj = obj["loc"].toObject();
     filename = locObj["file"].toString();
     if ( filename == baseFilename ) {
       outFileFound = true;
     }
     if ( outFileFound ) {
+      
       item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, obj);
+      item->setForeground(0, QBrush(color));
+      item->setForeground(1, QBrush(color));
       item->setText(0, kind);
       item->setText(1, name);
       InItem->addChild(item);

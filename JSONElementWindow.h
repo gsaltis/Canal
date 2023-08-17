@@ -19,6 +19,7 @@
  *****************************************************************************/
 #include "JSONObjectFormatList.h"
 #include "JSONObjectElementTree.h"
+#include "JSONElementWindowSectionHeader.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -37,11 +38,13 @@ class JSONElementWindow : public QWidget
 
  //! Constructors
  public :
-  JSONElementWindow             (JSONObjectFormatList* InObjectsFormats);
+  JSONElementWindow
+  (JSONObjectFormatList* InObjectsFormats);
 
  //! Destructor
  public :
-  ~JSONElementWindow            ();
+  ~JSONElementWindow
+  ();
 
  //! Public Methods
  public :
@@ -57,24 +60,48 @@ class JSONElementWindow : public QWidget
 
  //! Private Methods
  private :
-  void                          initialize              ();
-  void                          CreateSubWindows        ();
-  void                          InitializeSubWindows    ();
-  void                          resizeEvent             (QResizeEvent* InEvent);
+  void
+  initialize
+  ();
+
+  void
+  CreateSubWindows
+  ();
+
+  void
+  InitializeSubWindows
+  ();
+
+  void
+  resizeEvent
+  (QResizeEvent* InEvent);
 
  //! Private Data
  private :
-  JSONObjectFormatList*         objectsFormats;
-  JSONObjectElementTree*        elementTree;
-
+  JSONObjectFormatList*                 objectsFormats;
+  JSONObjectElementTree*                elementTree;
+  JSONElementWindowSectionHeader*       header;
+  
  //! Public Slots
  public slots :
-  void                          SlotTypeFormatSelected  (QString InType);
+  void
+  SlotTypeFormatSelected
+  (QString InType);
+
+  void
+  SlotFileElementSelected
+  (QString InTag, QList<QString> InKeys);
 
  //! Public Signals
  signals :
-  void                          SignalTypeFormatSelected (QString InType);
+  void
+  SignalTypeFormatSelected
+  (QString InType);
 
+  void
+  SignalFileElementSelected
+  (QString InTag, QList<QString> InKeys);
+  
  //! Public Actions
  public :
 

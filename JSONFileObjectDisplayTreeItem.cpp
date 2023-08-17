@@ -40,11 +40,13 @@ JSONFileObjectDisplayTreeItem::JSONFileObjectDisplayTreeItem
       break;
     }
     case QJsonValue::Object : {
+      setText(1, "");
       b = QBrush(QColor(128, 0, 0));
       HandleObject(value.toObject());
       break;
     }
     case QJsonValue::Array : {
+      setText(1, "");
       b = QBrush(QColor(0, 128, 0));
       HandleArray(value.toArray());
       break;
@@ -140,3 +142,11 @@ JSONFileObjectDisplayTreeItem::HandleArray
   }
 }
 
+/*****************************************************************************!
+ * Function : GetValue
+ *****************************************************************************/
+QJsonValue
+JSONFileObjectDisplayTreeItem::GetValue(void)
+{
+  return value;
+}

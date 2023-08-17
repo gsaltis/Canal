@@ -55,6 +55,7 @@ class SectionHeader : public QFrame
 
  //! Protected Data
  protected :
+  QLabel*                       HeaderText;
 
  //! Private Methods
  private :
@@ -65,7 +66,6 @@ class SectionHeader : public QFrame
 
  //! Private Data
  private :
-  QLabel*                       HeaderText;
 
  //! Public Slots
  public slots :

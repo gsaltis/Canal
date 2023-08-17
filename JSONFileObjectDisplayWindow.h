@@ -70,10 +70,12 @@ class JSONFileObjectDisplayWindow : public QWidget
  //! Public Slots
  public slots :
   void                          SlotFileObjectSelected  (QJsonObject);
+  void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
 
  //! Public Signals
  signals :
   void                          SignalFileObjectSelected  (QJsonObject);
+  void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
 
  //! Public Actions
  public :
