@@ -75,6 +75,7 @@ class JSONFileTree : public QTreeWidget
  //! Public Slots
  public slots :
   void                          SlotItemClicked         (QTreeWidgetItem*, int);
+  void                          SlotSizeValueChanged    (int InSize);
   
  //! Public Signals
  signals :

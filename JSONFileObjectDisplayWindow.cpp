@@ -128,3 +128,21 @@ JSONFileObjectDisplayWindow::SlotFileElementSelected
 {
   emit SignalFileElementSelected(InTag, InKeys);
 }
+
+/*****************************************************************************!
+ * 
+ *****************************************************************************/
+QList<int>
+JSONFileObjectDisplayWindow::GetColumnWidths
+()
+{
+  int                                   i;
+  int                                   n;
+  QList<int>                            widths;
+  
+  n = fileTree->columnCount();
+  for (i = 0; i < n; i++) {
+    widths << fileTree->columnWidth(i);
+  }
+  return widths;
+}

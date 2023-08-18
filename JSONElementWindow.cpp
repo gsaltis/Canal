@@ -141,3 +141,21 @@ JSONElementWindow::SlotFileElementSelected
 {
   emit SignalFileElementSelected(InTag, InKeys);
 }
+
+/*****************************************************************************!
+ * 
+ *****************************************************************************/
+QList<int>
+JSONElementWindow::GetColumnWidths
+()
+{
+  int                                   i;
+  int                                   n;
+  QList<int>                            widths;
+  
+  n = elementTree->columnCount();
+  for (i = 0; i < n; i++) {
+    widths << elementTree->columnWidth(i);
+  }
+  return widths;
+}

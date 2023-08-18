@@ -42,32 +42,16 @@ SystemConfig::~SystemConfig
 }
 
 /*****************************************************************************!
- * Function : GetWindowWidth
- *****************************************************************************/
-QList<int>
-SystemConfig::GetWindowWidths
-()
-{
-  return WindowWidths;
-}
-
-/*****************************************************************************!
- * Function : SetWindowWidths
- *****************************************************************************/
-void
-SystemConfig::SetWindowWidths
-(QList<int> InWindowWidths)
-{
-  WindowWidths = InWindowWidths;
-}
-
-/*****************************************************************************!
  * Function : Initialize
  *****************************************************************************/
 void
 SystemConfig::Initialize
 ()
 {
+
+  for (int i = 0 ; i < 4; i++ ) {
+    WindowsInfo.push_back(new WindowSizeInfo());
+  }
   SystemName = "Canal";
   WindowWidths = QList<int>();
 }
@@ -89,6 +73,9 @@ void
 SystemConfig::Save
 ()
 {
+  QJsonArray                            columnArray;
+  QJsonObject                           widthObj;
+  QJsonArray                            widths;
   QJsonDocument                         jsonDoc;
   QString                               st;
   QString                               filename;
@@ -97,18 +84,33 @@ SystemConfig::Save
   QJsonObject                           obj2;
   QJsonArray                            array1;
   QList<int>                            width;
+  QJsonObject                           windowObj;
   
   filename = QString("%1%2.json").
     arg(MainDirectoryManager->GetSystemDir()).
     arg(MainSystemConfig->GetSystemName());
 
-  array1.append(QJsonValue(WindowWidths[0]));
-  array1.append(QJsonValue(WindowWidths[1]));
-  array1.append(QJsonValue(WindowWidths[2]));
-  array1.append(QJsonValue(WindowWidths[3]));
+  obj = QJsonObject();
+  windowObj = QJsonObject();
+  
+  widths = QJsonArray();
 
-  obj2.insert("Widths", QJsonValue(array1));
-  obj.insert("Window", QJsonValue(obj2));
+  for ( int i = 0 ; i < 4; i++ ) {
+    WindowSizeInfo*                     w = WindowsInfo[i];
+    std::vector<int>                    columnWidths;
+    
+    widthObj = QJsonObject();
+    widthObj.insert("Width", QJsonValue(w->GetWindowWidth()));
+    columnWidths = w->GetColumnWidths();
+    columnArray = QJsonArray();
+    for ( unsigned long int k = 0; k < columnWidths.size() ; k++ ) {
+      columnArray.append(QJsonValue(columnWidths[k]));
+    }
+    widthObj.insert("Columns", QJsonValue(columnArray));
+    widths.append(QJsonValue(widthObj));
+  }
+  windowObj.insert("Widths", QJsonValue(widths));
+  obj.insert("Window", QJsonValue(windowObj));
 
   jsonDoc = QJsonDocument(obj);
   st = QString(jsonDoc.toJson());
@@ -167,6 +169,8 @@ void
 SystemConfig::ReadWindowInfo
 (QJsonObject InObj)
 {
+  QJsonArray                            columns;
+  QJsonObject                           info;
   int                                   width;
   QJsonArray                            sizesArray;
   if ( InObj.isEmpty() ) {
@@ -180,7 +184,67 @@ SystemConfig::ReadWindowInfo
   WindowWidths.clear();
 
   for ( int i = 0; i < sizesArray.count() ; i++ ) {
-    width = sizesArray[i].toInt();
-    WindowWidths << width;
+    WindowSizeInfo*                     sizeinfo = WindowsInfo[i];
+    QList<int>                          columnWidths;
+    
+    info = sizesArray[i].toObject();
+    width = info["Width"].toInt();
+    sizeinfo->SetWindowWidth(width);
+
+    columns = info["Columns"].toArray();
+    for ( int k = 0 ; k < columns.size(); k++ ) {
+      columnWidths << columns[k].toInt();
+    }
+    sizeinfo->SetColumnWidths(columnWidths);
   }
 }
+
+/*****************************************************************************!
+ * Function : GetWindowWidths
+ *****************************************************************************/
+QList<int>
+SystemConfig::GetWindowWidths
+()
+{
+  QList<int>                    widths;
+  
+  for ( unsigned long int i = 0 ; i < WindowsInfo.size() ; i++ ) {
+    widths << WindowsInfo[i]->GetWindowWidth();
+  }
+  return widths;
+}
+
+/*****************************************************************************!
+ * Function : GetColumnWidths
+ *****************************************************************************/
+QList<int>
+SystemConfig::GetColumnWidths
+(int InIndex)
+{
+  QList<int>                    columnWidths;
+
+  if ( InIndex > (int)WindowsInfo.size() ) {
+    return columnWidths;
+  }
+
+  std::vector<int>              n = WindowsInfo[InIndex]->GetColumnWidths();
+  for ( unsigned long int i = 0; i < n.size(); i++ ) {
+    columnWidths << n[i];
+  }
+  return columnWidths;
+}
+
+/*****************************************************************************!
+ * Function : SetWindowSizeInfo
+ *****************************************************************************/
+void
+SystemConfig::SetWindowSizeInfo
+(int InIndex, int InWindowWidth, QList<int> InColumnWidths)
+{
+  if ( InIndex > (int)WindowsInfo.size() ) {
+    return;
+  }
+  WindowsInfo[InIndex]->SetWindowWidth(InWindowWidth);
+  WindowsInfo[InIndex]->SetColumnWidths(InColumnWidths);
+}
+

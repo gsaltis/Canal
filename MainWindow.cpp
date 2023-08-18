@@ -152,3 +152,12 @@ MainWindow::SaveAtExit
   displayWindow->SaveAtExit();
 }
 
+/*****************************************************************************!
+ * Function : ResizeColumns
+ *****************************************************************************/
+void
+MainWindow::ResizeColumns
+()
+{
+  displayWindow->ResizeColumns();
+}

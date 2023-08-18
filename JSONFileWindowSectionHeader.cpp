@@ -16,6 +16,8 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONFileWindowSectionHeader.h"
+#include "JSONFileWindowDialog.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : JSONFileWindowSectionHeader
@@ -42,6 +44,8 @@ JSONFileWindowSectionHeader::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
+  ActionResizePushed = new QAction("ResizePushed", this);
+  connect(ActionResizePushed, SIGNAL(triggered()), this, SLOT(SlotResizePushed()));
 }
 
 /*****************************************************************************!
@@ -50,7 +54,13 @@ JSONFileWindowSectionHeader::initialize()
 void
 JSONFileWindowSectionHeader::CreateSubWindows()
 {
-  
+  //! Create the Resize button  
+  ResizeButton = new QPushButton();
+  ResizeButton->setParent(this);
+  ResizeButton->setText("RESIZE");
+  ResizeButton->move(100, 2);
+  ResizeButton->resize(60,20);
+  connect(ResizeButton, SIGNAL(pressed()), this, SLOT(SlotResizePushed()));
 }
 
 /*****************************************************************************!
@@ -77,4 +87,33 @@ JSONFileWindowSectionHeader::resizeEvent
   width = size.width();
   height = size.height();
   HeaderText->resize(width - HeaderText->pos().x(), height);
+  ResizeButton->move(width - (5 + ResizeButton->size().width()), 2);
+}
+
+/*****************************************************************************!
+ * Function : SlotResizePushed
+ *****************************************************************************/
+void
+JSONFileWindowSectionHeader::SlotResizePushed(void)
+{
+  JSONFileWindowDialog*                 dialog;
+
+  dialog = new JSONFileWindowDialog();
+  connect(dialog,
+          SIGNAL(SignalSizeValueChanged(int)),
+          this,
+          SLOT(SlotSizeValueChanged(int)));
+  
+  dialog->exec();
+  delete dialog;
+}
+
+/*****************************************************************************!
+ * Function : SlotSizeValueChanged
+ *****************************************************************************/
+void
+JSONFileWindowSectionHeader::SlotSizeValueChanged
+(int InSize)
+{
+  emit SignalSizeValueChanged(InSize);
 }

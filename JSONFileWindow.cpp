@@ -11,11 +11,13 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
+#include <QHeaderView>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
 #include "JSONFileWindow.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : JSONFileWindow
@@ -61,6 +63,14 @@ JSONFileWindow::initialize()
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           this,
           SLOT(SlotFileObjectSelected(QJsonObject)));
+  connect(header,
+          SIGNAL(SignalSizeValueChanged(int)),
+          this,
+          SLOT(SlotSizeValueChanged(int)));
+  connect(this,
+          SIGNAL(SignalSizeValueChanged(int)),
+          fileTree,
+          SLOT(SlotSizeValueChanged(int)));
 }
 
 /*****************************************************************************!
@@ -121,4 +131,42 @@ JSONFileWindow::SlotFileObjectSelected
 (QJsonObject InObject)
 {
   emit SignalFileObjectSelected(InObject);
+}
+
+/*****************************************************************************!
+ * Function : GetColumnWidths
+ *****************************************************************************/
+QList<int>
+JSONFileWindow::GetColumnWidths(void)
+{
+  int                                   i;
+  int                                   n;
+  QList<int>                            widths;
+  
+  n = fileTree->columnCount();
+  for (i = 0; i < n; i++) {
+    widths << fileTree->columnWidth(i);
+  }
+  return widths;
+}
+
+/*****************************************************************************!
+ * Function : SetColumnWidths
+ *****************************************************************************/
+void
+JSONFileWindow::SetColumnWidths
+(QList<int> InWidths)
+{
+  TRACE_FUNCTION_INT(InWidths[0]);
+  fileTree->header()->resizeSection(0, InWidths[0]);
+}
+
+/*****************************************************************************!
+ * Function : SlotSizeValueChanged
+ *****************************************************************************/
+void
+JSONFileWindow::SlotSizeValueChanged
+(int InSize)
+{
+  emit SignalSizeValueChanged(InSize);
 }

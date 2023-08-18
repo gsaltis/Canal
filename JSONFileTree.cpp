@@ -34,14 +34,19 @@ JSONFileTree::JSONFileTree
   QTreeWidgetItem*                      head;
   QPalette pal;
   QBrush                                brush(MainTreeHeaderColor);
-  
+
+  setColumnCount(2);
   head = new QTreeWidgetItem();
   head->setText(0, "TAG");
   head->setBackground(0, brush);
+  resizeColumnToContents(0);
+  
   head->setText(1, "VALUE");
   head->setBackground(1, brush);
   setHeaderItem(head);
 
+  header()->setStretchLastSection(true);
+  
   baseFilename = InBaseFilename;
   filename = InFilename;
   JSONFileObject = InJSONFileObject;
@@ -244,3 +249,12 @@ JSONFileTree::SlotItemClicked
   }
 }
 
+/*****************************************************************************!
+ * Function : SlotSizeValueChanged
+ *****************************************************************************/
+void
+JSONFileTree::SlotSizeValueChanged
+(int InSize)
+{
+  header()->resizeSection(0, InSize); 
+}

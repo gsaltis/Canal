@@ -1,55 +1,49 @@
 /*****************************************************************************
- * FILE NAME    : JSONFileObjectDisplayWindow.h
- * DATE         : August 15 2023
+ * FILE NAME    : JSONFileWindowDialog.h
+ * DATE         : August 18 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _jsonfileobjectdisplaywindow_h_
-#define _jsonfileobjectdisplaywindow_h_
+#ifndef _jsonfilewindowdialog_h_
+#define _jsonfilewindowdialog_h_
 
 /*****************************************************************************!
  * Global Headers
  *****************************************************************************/
 #include <QtCore>
 #include <QtGui>
-#include <QWidget>
+#include <QDialog>
+#include <QPushButton>
+#include <QSpinBox>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONFileObjectDisplayTree.h"
-#include "SectionHeader.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_X 200
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_Y 200
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_WIDTH 200
-#define JSONFILE_OBJECT_DISPLAY_WINDOW_HEIGHT 200
+#define JSONFILE_WINDOW_DIALOG_WIDTH            300
+#define JSONFILE_WINDOW_DIALOG_HEIGHT           400
 
 /*****************************************************************************!
- * Exported Class : JSONFileObjectDisplayWindow
+ * Exported Class : JSONFileWindowDialog
  *****************************************************************************/
-class JSONFileObjectDisplayWindow : public QWidget
+class JSONFileWindowDialog : public QDialog
 {
   Q_OBJECT;
 
  //! Constructors
  public :
-  JSONFileObjectDisplayWindow   ();
+  JSONFileWindowDialog          ();
 
  //! Destructor
  public :
-  ~JSONFileObjectDisplayWindow  ();
+  ~JSONFileWindowDialog         ();
 
  //! Public Methods
  public :
-  QList<int>
-  GetColumnWidths
-  ();
-  
-  
+
  //! Public Data
  public :
 
@@ -61,29 +55,30 @@ class JSONFileObjectDisplayWindow : public QWidget
 
  //! Private Methods
  private :
-  void                          initialize              ();
-  void                          CreateSubWindows        ();
-  void                          InitializeSubWindows    ();
+  void                          Initialize              (void);
+  void                          CreateConnections       (void);
+  void                          CreateSubWindows        (void);
   void                          resizeEvent             (QResizeEvent* InEvent);
 
  //! Private Data
  private :
-  JSONFileObjectDisplayTree*    fileTree;
-  SectionHeader*                header;
+  QPushButton*                  OKButton;
+  QPushButton*                  CancelButton;
+  QSpinBox*                     spinBox;
 
  //! Public Slots
  public slots :
-  void                          SlotFileObjectSelected  (QJsonObject);
-  void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SlotOKButtonPressed     ();
+  void                          SlotCancelButtonPressed ();
+  void                          SlotSizeValueChanged    (int InSize);
 
  //! Public Signals
  signals :
-  void                          SignalFileObjectSelected  (QJsonObject);
-  void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SignalSizeValueChanged  (int InSize);
 
  //! Public Actions
  public :
-  
+
 };
 
-#endif /* _jsonfileobjectdisplaywindow_h_*/
+#endif /* _jsonfilewindowdialog_h_*/

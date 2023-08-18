@@ -18,6 +18,7 @@
  * Local Headers
  *****************************************************************************/
 #include "MainDisplayWindow.h"
+#include "WindowSizeInfo.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -44,10 +45,14 @@ class SystemConfig : public QWidget
   GetWindowWidths
   ();
 
+  QList<int>
+  GetColumnWidths
+  (int InIndex);
+  
   void
-  SetWindowWidths
-  (QList<int> InWindowWidths);
-
+  SetWindowSizeInfo
+  (int InIndex, int InWindowWidth, QList<int> InColumnWidths);
+  
   QString
   GetSystemName
   ();
@@ -59,7 +64,10 @@ class SystemConfig : public QWidget
   void
   Save
   ();
-  void                          Read                    (void);
+
+  void
+  Read
+  (void);
   
  //! Public Data
  public :
@@ -77,11 +85,15 @@ class SystemConfig : public QWidget
 
  //! Private Methods
  private :
-  void                          ReadWindowInfo          (QJsonObject InObj);
+  void
+  ReadWindowInfo
+  (QJsonObject InObj);
 
  //! Private Data
  private :
-
+  std::vector<WindowSizeInfo*>
+  WindowsInfo;
+  
  //! Public Slots
  public slots :
 

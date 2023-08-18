@@ -50,6 +50,7 @@ class MainWindow : public QMainWindow
  //! Public Methods
  public :
   void                          SaveAtExit              ();
+  void                          ResizeColumns           ();
   
  //! Public Data
  public :

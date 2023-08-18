@@ -1,11 +1,11 @@
 /*****************************************************************************
- * FILE NAME    : JSONFileWindowSectionHeader.h
- * DATE         : August 17 2023
+ * FILE NAME    : WindowSizeInfo.h
+ * DATE         : August 18 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _jsonfilewindowsectionheader_h_
-#define _jsonfilewindowsectionheader_h_
+#ifndef _windowsizeinfo_h_
+#define _windowsizeinfo_h_
 
 /*****************************************************************************!
  * Global Headers
@@ -13,35 +13,37 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
-#include <QPushButton>
-#include <QAction>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "SectionHeader.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
 
 /*****************************************************************************!
- * Exported Class : JSONFileWindowSectionHeader
+ * Exported Class : WindowSizeInfo
  *****************************************************************************/
-class JSONFileWindowSectionHeader : public SectionHeader
+class WindowSizeInfo : public QWidget
 {
   Q_OBJECT;
 
  //! Constructors
  public :
-  JSONFileWindowSectionHeader   ();
+  WindowSizeInfo                ();
 
  //! Destructor
  public :
-  ~JSONFileWindowSectionHeader  ();
+  ~WindowSizeInfo               ();
 
  //! Public Methods
  public :
+  int                           GetWindowWidth          (void);
+  void                          SetWindowWidth          (int InWindowWidth);
+  std::vector<int>              GetColumnWidths         (void);
+  void                          SetColumnWidths         (std::vector<int> InColumnWidths);
+  void                          SetColumnWidths         (QList<int> InColumnWidths);
 
  //! Public Data
  public :
@@ -54,28 +56,21 @@ class JSONFileWindowSectionHeader : public SectionHeader
 
  //! Private Methods
  private :
-  void                          initialize              ();
-  void                          CreateSubWindows        ();
-  void                          InitializeSubWindows    ();
-  void                          resizeEvent             (QResizeEvent* InEvent);
 
  //! Private Data
  private :
-  QPushButton*                  ResizeButton;
+  int                           windowWidth;
+  std::vector<int>              columnWidths;
 
  //! Public Slots
  public slots :
-  void                          SlotResizePushed        (void);
-  void                          SlotSizeValueChanged    (int InSize);
 
  //! Public Signals
  signals :
-  void                          SignalSizeValueChanged  (int InSize);
 
  //! Public Actions
  public :
-  QAction*                      ActionResizePushed;
 
 };
 
-#endif /* _jsonfilewindowsectionheader_h_*/
+#endif /* _windowsizeinfo_h_*/

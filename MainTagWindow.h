@@ -49,6 +49,9 @@ class MainTagWindow : public QWidget
 
  //! Public Methods
  public :
+  QList<int>
+  GetColumnWidths
+  ();
 
  //! Public Data
  public :

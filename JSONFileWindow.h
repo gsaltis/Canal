@@ -48,6 +48,11 @@ class JSONFileWindow : public QWidget
 
  //! Public Methods
  public :
+  QList<int>                    GetColumnWidths         (void);
+  void
+  SetColumnWidths
+  (QList<int> InWidths);
+
 
  //! Public Data
  public :
@@ -77,10 +82,12 @@ class JSONFileWindow : public QWidget
  //! Public Slots
  public slots :
   void                          SlotFileObjectSelected  (QJsonObject InObject);
+  void                          SlotSizeValueChanged    (int InSize);
   
  //! Public Signals
  signals :
   void                          SignalFileObjectSelected(QJsonObject InObject);
+  void                          SignalSizeValueChanged  (int InSize);
 
  //! Public Actions
  public :

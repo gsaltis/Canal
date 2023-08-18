@@ -97,7 +97,7 @@ main
                              MainSourceFilename);
   // w->showMaximized();
   mainWindow->show();
-  
+  mainWindow->ResizeColumns();
   return application.exec();
 }
 

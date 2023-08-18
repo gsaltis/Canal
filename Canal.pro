@@ -40,6 +40,7 @@ SOURCES                         += \
 				   JSONFileTreeHeader.cpp                       \
 				   JSONFileTreeItem.cpp                         \
 				   JSONFileWindow.cpp                           \
+				   JSONFileWindowDialog.cpp                     \
 				   JSONFileWindowSectionHeader.cpp              \
 				   JSONObjectElementTree.cpp                    \
 				   JSONObjectElementTreeItem.cpp                \
@@ -57,6 +58,7 @@ SOURCES                         += \
 				   MainWindow.cpp                               \
 				   SectionHeader.cpp                            \
 				   SystemConfig.cpp                             \
+				   WindowSizeInfo.cpp                           \
 				   main.cpp                                     \
 				   sqlite3.c                                    \
 
@@ -72,6 +74,7 @@ HEADERS                         += \
 				   JSONFileTreeHeader.h                         \
 				   JSONFileTreeItem.h                           \
 				   JSONFileWindow.h                             \
+				   JSONFileWindowDialog.h                       \
 				   JSONFileWindowSectionHeader.h                \
 				   JSONObjectElementTree.h                      \
 				   JSONObjectElementTreeItem.h                  \
@@ -89,6 +92,7 @@ HEADERS                         += \
 				   MainWindow.h                                 \
 				   SectionHeader.h                              \
 				   SystemConfig.h                               \
+				   WindowSizeInfo.h                             \
 				   sqlite3.h                                    \
 
 FORMS                           += \

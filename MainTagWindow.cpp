@@ -213,3 +213,20 @@ MainTagWindow::FindItemByName
   return (JSONTagTreeItem*)items[0];
 }
     
+/*****************************************************************************!
+ * Function : GetColumnWidths
+ *****************************************************************************/
+QList<int>
+MainTagWindow::GetColumnWidths
+()
+{
+  int                                   i;
+  int                                   n;
+  QList<int>                            widths;
+  
+  n = tagTree->columnCount();
+  for (i = 0; i < n; i++) {
+    widths << tagTree->columnWidth(i);
+  }
+  return widths;
+}

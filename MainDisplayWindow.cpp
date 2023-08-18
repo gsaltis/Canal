@@ -200,9 +200,23 @@ MainDisplayWindow::SaveAtExit
 ()
 {
   QList<int>                    splitterSizes;
+  QList<int>                    columnSizes;
   
   splitterSizes = splitter->sizes();
-  MainSystemConfig->SetWindowWidths(splitterSizes);
+
+  columnSizes = fileWindow->GetColumnWidths();
+  MainSystemConfig->SetWindowSizeInfo(0, splitterSizes[0], columnSizes);
+
+  columnSizes = tagWindow->GetColumnWidths();
+  MainSystemConfig->SetWindowSizeInfo(1, splitterSizes[1], columnSizes);
+
+  columnSizes = elementWindow->GetColumnWidths();
+  MainSystemConfig->SetWindowSizeInfo(2, splitterSizes[2], columnSizes);
+
+  columnSizes = objectDisplayWindow->GetColumnWidths();
+  MainSystemConfig->SetWindowSizeInfo(3, splitterSizes[3], columnSizes);
+
+  MainSystemConfig->Save();
 }
 
 /*****************************************************************************!
@@ -214,3 +228,16 @@ MainDisplayWindow::SlotFileElementSelected
 {
   emit SignalFileElementSelected(InTag, InKeys);
 }
+
+/*****************************************************************************!
+ * Function : ResizeColumns
+ *****************************************************************************/
+void
+MainDisplayWindow::ResizeColumns
+()
+{
+  fileWindow->SetColumnWidths(MainSystemConfig->GetColumnWidths(0));
+}
+
+
+  
