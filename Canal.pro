@@ -29,6 +29,7 @@ QT                              += core gui widgets
 DEFINES                         += \
 
 SOURCES                         += \
+				   CanalDB.cpp                                  \
 				   DirectoryManagement.cpp                      \
 				   JSONElementWindow.cpp                        \
 				   JSONElementWindowSectionHeader.cpp           \
@@ -57,8 +58,10 @@ SOURCES                         += \
 				   SectionHeader.cpp                            \
 				   SystemConfig.cpp                             \
 				   main.cpp                                     \
+				   sqlite3.c                                    \
 
 HEADERS                         += \
+				   CanalDB.h                                    \
 				   DirectoryManagement.h                        \
 				   JSONElementWindow.h                          \
 				   JSONElementWindowSectionHeader.h             \
@@ -86,6 +89,7 @@ HEADERS                         += \
 				   MainWindow.h                                 \
 				   SectionHeader.h                              \
 				   SystemConfig.h                               \
+				   sqlite3.h                                    \
 
 FORMS                           += \
 
