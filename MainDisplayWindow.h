@@ -91,12 +91,16 @@ class MainDisplayWindow : public QWidget
   void                          SlotFormatTypeSelected  (QString InType);
   void                          SlotFileObjectSelected  (QJsonObject InObject);
   void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
+  void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
   
  //! Public Signals
  signals :
   void                          SignalFormatTypeSelected(QString InType);
   void                          SignalFileObjectSelected(QJsonObject);
   void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SignalObjectFormatSelected (JSONObjectFormat* InObjectFormat);
+  void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
   
  //! Public Actions
  public :

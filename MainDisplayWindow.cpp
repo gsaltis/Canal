@@ -114,6 +114,11 @@ MainDisplayWindow::CreateSubWindows()
           objectDisplayWindow,
           SLOT(SlotFileObjectSelected(QJsonObject)));
 
+  connect(this,
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
+          elementWindow,
+          SLOT(SlotFileObjectSelected(QJsonObject)));
+  
   connect(objectDisplayWindow,
           SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
           this,
@@ -123,6 +128,25 @@ MainDisplayWindow::CreateSubWindows()
           SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
           elementWindow,
           SLOT(SlotFileElementSelected(QString, QList<QString>)));
+
+  connect(elementWindow,
+          SIGNAL(SignalObjectFormatSelected(JSONObjectFormat*)),
+          this,
+          SLOT(SlotObjectFormatSelected(JSONObjectFormat*)));
+
+  connect(this,
+          SIGNAL(SignalObjectFormatSelected(JSONObjectFormat*)),
+          objectDisplayWindow,
+          SLOT(SlotObjectFormatSelected(JSONObjectFormat*)));
+
+  connect(objectDisplayWindow,
+          SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
+          this,
+          SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
+  connect(this,
+          SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
+          elementWindow,
+          SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
 }
 
 /*****************************************************************************!
@@ -239,5 +263,22 @@ MainDisplayWindow::ResizeColumns
   fileWindow->SetColumnWidths(MainSystemConfig->GetColumnWidths(0));
 }
 
+/*****************************************************************************!
+ * Function : SlotObjectFormatSelected
+ *****************************************************************************/
+void
+MainDisplayWindow::SlotObjectFormatSelected
+(JSONObjectFormat* InObjectFormat)
+{
+  emit SignalObjectFormatSelected(InObjectFormat);
+}
 
-  
+/*****************************************************************************!
+ * Function : SlotObjectFormatIdentified
+ *****************************************************************************/
+void
+MainDisplayWindow::SlotObjectFormatIdentified
+(QString InTag, QStringList InKeys)
+{
+  emit SignalFileElementIdentified(InTag, InKeys);
+}

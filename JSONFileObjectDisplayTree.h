@@ -70,6 +70,7 @@ class JSONFileObjectDisplayTree : public QTreeWidget
  //! Public Signals
  signals :
   void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
 
  //! Public Actions
  public :

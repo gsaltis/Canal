@@ -16,6 +16,7 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONElementWindow.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : JSONElementWindow
@@ -80,10 +81,25 @@ JSONElementWindow::CreateSubWindows()
           elementTree,
           SLOT(SlotFileElementSelected(QString, QList<QString>)));
   
+  connect(this,
+          SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
+          elementTree,
+          SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
+  
+  connect(this,
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
+          elementTree,
+          SLOT(SlotFileObjectSelected(QJsonObject)));
+  
   connect(elementTree,
           SIGNAL(SignalTypeSelected(QString)),
           this,
           SLOT(SlotTypeFormatSelected(QString)));
+
+  connect(elementTree,
+          SIGNAL(SignalObjectFormatSelected(JSONObjectFormat*)),
+          this,
+          SLOT(SlotObjectFormatSelected(JSONObjectFormat*)));
 }
 
 /*****************************************************************************!
@@ -158,4 +174,34 @@ JSONElementWindow::GetColumnWidths
     widths << elementTree->columnWidth(i);
   }
   return widths;
+}
+
+/*****************************************************************************!
+ * Function : SlotObjectFormatSelected
+ *****************************************************************************/
+void
+JSONElementWindow::SlotObjectFormatSelected
+(JSONObjectFormat* InObjectFormat)
+{
+  emit(SignalObjectFormatSelected(InObjectFormat));
+}
+
+/*****************************************************************************!
+ * Function : SlotObjectFormatIdentified
+ *****************************************************************************/
+void
+JSONElementWindow::SlotObjectFormatIdentified
+(QString InTag, QStringList InKeys)
+{
+  emit SignalFileElementIdentified(InTag, InKeys);
+}
+
+/*****************************************************************************!
+ * Function : SlotFileObjectSelected
+ *****************************************************************************/
+void
+JSONElementWindow::SlotFileObjectSelected
+(QJsonObject InObject)
+{
+  emit SignalFileObjectSelected(InObject);
 }

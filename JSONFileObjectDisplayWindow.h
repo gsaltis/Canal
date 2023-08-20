@@ -13,11 +13,13 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
+#include <QJsonObject>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
 #include "JSONFileObjectDisplayTree.h"
+#include "JSONObjectFormat.h"
 #include "SectionHeader.h"
 
 /*****************************************************************************!
@@ -70,16 +72,20 @@ class JSONFileObjectDisplayWindow : public QWidget
  private :
   JSONFileObjectDisplayTree*    fileTree;
   SectionHeader*                header;
-
+  QJsonObject                   fileObject;
+  
  //! Public Slots
  public slots :
   void                          SlotFileObjectSelected  (QJsonObject);
   void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
+  void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
 
  //! Public Signals
  signals :
   void                          SignalFileObjectSelected  (QJsonObject);
   void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
 
  //! Public Actions
  public :

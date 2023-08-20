@@ -59,6 +59,8 @@ class JSONObjectElementTree : public QTreeWidget
  //! Private Methods
  private :
   void                          initialize              ();
+  JSONObjectElementTreeItem*    FindItem                (QString InTag, QStringList InKeys);
+  void                          ProcessArray            (QString InKey, QJsonArray InArray);
   
  //! Private Data
  private :
@@ -69,10 +71,15 @@ class JSONObjectElementTree : public QTreeWidget
  public slots :
   void                          SlotItemClicked         (QTreeWidgetItem* InItem, int InColumn);
   void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
+  void
+  SlotFileObjectSelected
+  (QJsonObject InObject);
 
  //! Public Signals
  signals :
   void                          SignalTypeSelected      (QString InType);
+  void                          SignalObjectFormatSelected (JSONObjectFormat* InObjectFormat);
 
  //! Public Actions
  public :

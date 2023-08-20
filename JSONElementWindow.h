@@ -95,6 +95,13 @@ class JSONElementWindow : public QWidget
   SlotFileElementSelected
   (QString InTag, QList<QString> InKeys);
 
+  void
+  SlotObjectFormatSelected
+  (JSONObjectFormat* InObjectFormat);
+
+  void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
+  void                          SlotFileObjectSelected  (QJsonObject InObject);
+  
  //! Public Signals
  signals :
   void
@@ -104,6 +111,18 @@ class JSONElementWindow : public QWidget
   void
   SignalFileElementSelected
   (QString InTag, QList<QString> InKeys);
+
+  void
+  SignalObjectFormatSelected
+  (JSONObjectFormat* InObjectFormat);
+
+  void
+  SignalFileElementIdentified
+  (QString InSearchTag, QStringList InKeys);
+
+  void
+  SignalFileObjectSelected
+  (QJsonObject InObject);
   
  //! Public Actions
  public :

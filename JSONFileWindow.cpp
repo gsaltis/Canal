@@ -157,7 +157,6 @@ void
 JSONFileWindow::SetColumnWidths
 (QList<int> InWidths)
 {
-  TRACE_FUNCTION_INT(InWidths[0]);
   fileTree->header()->resizeSection(0, InWidths[0]);
 }
 

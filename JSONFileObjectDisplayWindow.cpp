@@ -16,6 +16,7 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONFileObjectDisplayWindow.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : JSONFileObjectDisplayWindow
@@ -65,6 +66,10 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
           SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
           this,
           SLOT(SlotFileElementSelected(QString, QList<QString>)));
+  connect(fileTree,
+          SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
+          this,
+          SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
   header = new SectionHeader();
   header->setParent(this);
 }
@@ -114,7 +119,7 @@ JSONFileObjectDisplayWindow::SlotFileObjectSelected
 {
   QString                               name;
   emit SignalFileObjectSelected(InObject);
-  
+  fileObject = InObject;
   name = InObject["name"].toString();
   header->SetText(name);
 }
@@ -146,3 +151,24 @@ JSONFileObjectDisplayWindow::GetColumnWidths
   }
   return widths;
 }
+
+/*****************************************************************************!
+ * Function : SlotObjectFormatSelected
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotObjectFormatSelected
+(JSONObjectFormat* InObjectFormat)
+{
+  (void)InObjectFormat;
+}
+
+/*****************************************************************************!
+ * Function : SlotObjectFormatIdentified
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotObjectFormatIdentified
+(QString InTag, QStringList InKeys)
+{
+  emit SignalFileElementIdentified(InTag, InKeys);  
+}
+

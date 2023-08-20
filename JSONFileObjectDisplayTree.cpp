@@ -117,4 +117,5 @@ JSONFileObjectDisplayTree::SlotItemSelected
   }
   keys = obj.keys();
   emit SignalFileElementSelected(searchTag, keys);
+  emit SignalFileElementIdentified(searchTag, keys);
 }
