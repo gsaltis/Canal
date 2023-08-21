@@ -79,7 +79,6 @@ JSONObjectElementTree::SlotItemClicked
   JSONObjectFormat*                     format;
 
   format = item->GetFormat();
-  TRACE_FUNCTION_LOCATION();
   if ( itemType == JSONOBJECT_ELEMENT_TREE_ITEM_TYPE_TOP ) {
     emit SignalObjectFormatSelected(format);
     return;
@@ -129,16 +128,12 @@ JSONObjectElementTree::SlotObjectFormatIdentified
   int                                   n;
   JSONObjectElementTreeItem*            item;
 
-
-  TRACE_FUNCTION_LOCATION();
   n = topLevelItemCount();
   for (i = 0; i < n; i++) {
     item = (JSONObjectElementTreeItem*)topLevelItem(i);
     format = item->GetFormat();
     if ( format->IsEqual(InTag, InKeys) ) {
-      TRACE_FUNCTION_LOCATION();
-      item->setForeground(0, QBrush(QColor(128, 0, 0)));
-      item->setFont(0, QFont("Segoe UI", 10, QFont::Bold));
+      SelectItem(item);
       break;
     }
   }
@@ -151,12 +146,23 @@ void
 JSONObjectElementTree::SlotFileObjectSelected
 (QJsonObject InObject)
 {
+  UnSelectItem();
+  FileObjectSelected(InObject);
+}
+
+/*****************************************************************************!
+ * Function : FileObjectSelected
+ *****************************************************************************/
+void
+JSONObjectElementTree::FileObjectSelected
+(QJsonObject InObject)
+{
   QJsonValue                            value;
   QStringList                           keys;
   JSONObjectElementTreeItem*            treeItem;
   QJsonObject                           obj;
   QStringList                           k;
-  
+
   keys = InObject.keys();
   for ( auto i = keys.begin(); i != keys.end(); i++ ) {
     QString                             key = *i;
@@ -178,9 +184,8 @@ JSONObjectElementTree::SlotFileObjectSelected
     if ( treeItem == NULL ) {
       continue;
     }
-    treeItem->setForeground(0, QBrush(QColor(128, 0, 0)));
-    treeItem->setFont(0, QFont("Segoe UI", 10, QFont::Bold));
-    SlotFileObjectSelected(obj);
+    SelectItem(treeItem);
+    FileObjectSelected(obj);
   }
 }
 
@@ -238,9 +243,36 @@ JSONObjectElementTree::ProcessArray
     if ( treeItem == NULL ) {
       continue;
     }
-    treeItem->setForeground(0, QBrush(QColor(128, 0, 0)));
-    treeItem->setFont(0, QFont("Segoe UI", 10, QFont::Bold));
-    SlotFileObjectSelected(obj);
+    SelectItem(treeItem);
+    FileObjectSelected(obj);
   }
 }
 
+/*****************************************************************************!
+ * Function : SelectItem
+ *****************************************************************************/
+void
+JSONObjectElementTree::SelectItem
+(JSONObjectElementTreeItem* InItem)
+{
+  InItem->setForeground(0, QBrush(QColor(128, 0, 0)));
+  InItem->setFont(0, QFont("Segoe UI", 10, QFont::Bold));
+}
+
+/*****************************************************************************!
+ * Function : UnSelectItem
+ *****************************************************************************/
+void
+JSONObjectElementTree::UnSelectItem(void)
+{
+  JSONObjectElementTreeItem*            item;
+  int                                   i;
+  int                                   n;
+  n = topLevelItemCount();
+  for (i = 0; i < n; i++) {
+    item = (JSONObjectElementTreeItem*)topLevelItem(i);
+    item->setExpanded(false);
+    item->setForeground(0, QBrush(QColor(0, 0, 0)));
+    item->setFont(0, QFont("Segoe UI", 10, QFont::Normal));
+  }
+}

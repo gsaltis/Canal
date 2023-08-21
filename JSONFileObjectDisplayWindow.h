@@ -14,6 +14,7 @@
 #include <QtGui>
 #include <QWidget>
 #include <QJsonObject>
+#include <QPushButton>
 
 /*****************************************************************************!
  * Local Headers
@@ -73,6 +74,7 @@ class JSONFileObjectDisplayWindow : public QWidget
   JSONFileObjectDisplayTree*    fileTree;
   SectionHeader*                header;
   QJsonObject                   fileObject;
+  QPushButton*                  ExpandButton;
   
  //! Public Slots
  public slots :
@@ -80,12 +82,14 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
   void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
   void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
+  void                          SlotExpandButtonClicked (bool InChecked);
 
  //! Public Signals
  signals :
   void                          SignalFileObjectSelected  (QJsonObject);
   void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
   void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
+  void                          SignalExpandTree        (void);
 
  //! Public Actions
  public :

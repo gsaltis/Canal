@@ -61,6 +61,9 @@ class JSONObjectElementTree : public QTreeWidget
   void                          initialize              ();
   JSONObjectElementTreeItem*    FindItem                (QString InTag, QStringList InKeys);
   void                          ProcessArray            (QString InKey, QJsonArray InArray);
+  void                          SelectItem              (JSONObjectElementTreeItem* InItem);
+  void                          UnSelectItem            (void);
+  void                          FileObjectSelected      (QJsonObject InObject);
   
  //! Private Data
  private :

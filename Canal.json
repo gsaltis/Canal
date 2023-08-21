@@ -3,30 +3,30 @@
         "Widths": [
             {
                 "Columns": [
-                    32,
-                    227
+                    150,
+                    100
                 ],
-                "Width": 278
+                "Width": 405
             },
             {
                 "Columns": [
                     100,
                     100
                 ],
-                "Width": 282
+                "Width": 412
             },
             {
                 "Columns": [
-                    242
+                    362
                 ],
-                "Width": 261
+                "Width": 381
             },
             {
                 "Columns": [
-                    100,
-                    382
+                    440,
+                    248
                 ],
-                "Width": 484
+                "Width": 707
             }
         ]
     }

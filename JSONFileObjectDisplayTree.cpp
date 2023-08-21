@@ -119,3 +119,77 @@ JSONFileObjectDisplayTree::SlotItemSelected
   emit SignalFileElementSelected(searchTag, keys);
   emit SignalFileElementIdentified(searchTag, keys);
 }
+
+/*****************************************************************************!
+ * Function : SlotExpandTree
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::SlotExpandTree(void)
+{
+  int                                   n;
+  int                                   i;
+  JSONFileObjectDisplayTreeItem*        item;
+
+  n = topLevelItemCount();
+  for ( i = 0 ; i < n ; i++ ) {
+    item = (JSONFileObjectDisplayTreeItem*)topLevelItem(i);
+    item->setExpanded(true);
+    ExpandItem(item);
+  }
+}
+
+/*****************************************************************************!
+ * Function : ExpandItem
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::ExpandItem
+(JSONFileObjectDisplayTreeItem* InItem)
+{
+  int                                   n;
+  int                                   i;
+  JSONFileObjectDisplayTreeItem*        item;
+  n = InItem->childCount();
+
+  for (i = 0; i < n; i++) {
+    item = (JSONFileObjectDisplayTreeItem*)InItem->child(i);
+    item->setExpanded(true);
+    ExpandItem(item);
+  }
+}
+
+/*****************************************************************************!
+ * Function : SlotCollapseTree
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::SlotCollapseTree(void)
+{
+  int                                   n;
+  int                                   i;
+  JSONFileObjectDisplayTreeItem*        item;
+
+  n = topLevelItemCount();
+  for ( i = 0 ; i < n ; i++ ) {
+    item = (JSONFileObjectDisplayTreeItem*)topLevelItem(i);
+    item->setExpanded(false);
+    CollapseItem(item);
+  }
+}
+
+/*****************************************************************************!
+ * Function : CollapseItem
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::CollapseItem
+(JSONFileObjectDisplayTreeItem* InItem)
+{
+  int                                   n;
+  int                                   i;
+  JSONFileObjectDisplayTreeItem*        item;
+  n = InItem->childCount();
+
+  for (i = 0; i < n; i++) {
+    item = (JSONFileObjectDisplayTreeItem*)InItem->child(i);
+    item->setExpanded(false);
+    CollapseItem(item);
+  }
+}

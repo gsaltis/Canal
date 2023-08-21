@@ -19,6 +19,7 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
+#include "JSONFileObjectDisplayTreeItem.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -58,7 +59,8 @@ class JSONFileObjectDisplayTree : public QTreeWidget
  //! Private Methods
  private :
   void                          initialize              ();
-
+  void                          ExpandItem              (JSONFileObjectDisplayTreeItem* InItem);
+  void                          CollapsItem             (JSONFileObjectDisplayTreeItem* InItem);
  //! Private Data
  private :
 
@@ -66,6 +68,8 @@ class JSONFileObjectDisplayTree : public QTreeWidget
  public slots :
   void                          SlotFileObjectSelected  (QJsonObject);
   void                          SlotItemSelected        (QTreeWidgetItem* InItem, int InColumn);
+  void                          SlotExpandTree          (void);
+  void                          SlotCollapsTree         (void);
   
  //! Public Signals
  signals :

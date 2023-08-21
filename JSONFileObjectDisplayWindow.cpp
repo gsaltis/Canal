@@ -72,6 +72,18 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
           SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
   header = new SectionHeader();
   header->setParent(this);
+
+  connect(this,
+          SIGNAL(SignalExpandTree()),
+          fileTree,
+          SLOT(SlotExpandTree()));
+  
+  ExpandButton = new QPushButton("Expand", header);
+  ExpandButton->resize(60, 20);
+  connect(ExpandButton,
+          SIGNAL(clicked(bool)),
+          this,
+          SLOT(SlotExpandButtonClicked(bool)));
 }
 
 /*****************************************************************************!
@@ -91,10 +103,12 @@ void
 JSONFileObjectDisplayWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
+  int                                   ExpandButtonX;
+  int                                   ExpandButtonW;
   int                                   fileTreeH;
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
 
   size = InEvent->size();
   width = size.width();
@@ -108,6 +122,11 @@ JSONFileObjectDisplayWindow::resizeEvent
   if ( header ) {
     header->resize(width, SECTION_HEADER_HEIGHT);
   }
+
+  ExpandButtonW = ExpandButton->size().width();
+  ExpandButtonX = width - (ExpandButtonW + 5);
+  ExpandButton->move(ExpandButtonX, 1);
+  ExpandButton->resize(ExpandButtonW, SECTION_HEADER_HEIGHT - 2);
 }
 
 /*****************************************************************************!
@@ -172,3 +191,12 @@ JSONFileObjectDisplayWindow::SlotObjectFormatIdentified
   emit SignalFileElementIdentified(InTag, InKeys);  
 }
 
+/*****************************************************************************!
+ * Function : SlotExpandButtonClicked
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotExpandButtonClicked
+(bool)
+{
+  emit SignalExpandTree();
+}
