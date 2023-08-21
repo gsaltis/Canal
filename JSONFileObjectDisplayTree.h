@@ -60,7 +60,7 @@ class JSONFileObjectDisplayTree : public QTreeWidget
  private :
   void                          initialize              ();
   void                          ExpandItem              (JSONFileObjectDisplayTreeItem* InItem);
-  void                          CollapsItem             (JSONFileObjectDisplayTreeItem* InItem);
+  void                          CollapseItem            (JSONFileObjectDisplayTreeItem* InItem);
  //! Private Data
  private :
 
@@ -69,7 +69,7 @@ class JSONFileObjectDisplayTree : public QTreeWidget
   void                          SlotFileObjectSelected  (QJsonObject);
   void                          SlotItemSelected        (QTreeWidgetItem* InItem, int InColumn);
   void                          SlotExpandTree          (void);
-  void                          SlotCollapsTree         (void);
+  void                          SlotCollapseTree        (void);
   
  //! Public Signals
  signals :
