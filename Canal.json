@@ -4,29 +4,29 @@
             {
                 "Columns": [
                     150,
-                    253
+                    199
                 ],
-                "Width": 405
+                "Width": 368
             },
             {
                 "Columns": [
                     100,
-                    293
+                    100
                 ],
-                "Width": 412
+                "Width": 373
             },
             {
                 "Columns": [
-                    362
+                    326
                 ],
-                "Width": 381
+                "Width": 345
             },
             {
                 "Columns": [
-                    400,
-                    305
+                    193,
+                    446
                 ],
-                "Width": 707
+                "Width": 641
             }
         ]
     }
