@@ -15,6 +15,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QAction>
+#include <QLabel>
 
 /*****************************************************************************!
  * Local Headers
@@ -42,6 +43,7 @@ class JSONFileWindowSectionHeader : public SectionHeader
 
  //! Public Methods
  public :
+  void                          SetInnerCount           (int InCount);
 
  //! Public Data
  public :
@@ -62,6 +64,7 @@ class JSONFileWindowSectionHeader : public SectionHeader
  //! Private Data
  private :
   QPushButton*                  ResizeButton;
+  QLabel*                       ElementCountLabel;
 
  //! Public Slots
  public slots :

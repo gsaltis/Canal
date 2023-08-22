@@ -55,6 +55,7 @@ SOURCES                         += \
 				   MainStacker.cpp                              \
 				   MainTagWindow.cpp                            \
 				   MainTagWindowSectionHeader.cpp               \
+                                   MainTreeWindows.cpp                          \
 				   MainWindow.cpp                               \
 				   SectionHeader.cpp                            \
 				   SystemConfig.cpp                             \
@@ -89,6 +90,7 @@ HEADERS                         += \
 				   MainStacker.h                                \
 				   MainTagWindow.h                              \
 				   MainTagWindowSectionHeader.h                 \
+                                   MainTreeWindows.h                            \
 				   MainWindow.h                                 \
 				   SectionHeader.h                              \
 				   SystemConfig.h                               \

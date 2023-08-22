@@ -78,12 +78,31 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
           fileTree,
           SLOT(SlotExpandTree()));
   
+  connect(this,
+          SIGNAL(SignalCollapseTree()),
+          fileTree,
+          SLOT(SlotCollapseTree()));
+  
   ExpandButton = new QPushButton("Expand", header);
   ExpandButton->resize(60, 20);
   connect(ExpandButton,
           SIGNAL(clicked(bool)),
           this,
           SLOT(SlotExpandButtonClicked(bool)));
+  
+  CollapseButton = new QPushButton("Collapse", header);
+  CollapseButton->resize(60, 20);
+  connect(CollapseButton,
+          SIGNAL(clicked(bool)),
+          this,
+          SLOT(SlotCollapseButtonClicked(bool)));
+
+  DisplayButton = new QPushButton("Display", header);
+  DisplayButton->resize(60, 20);
+  connect(DisplayButton,
+          SIGNAL(clicked(bool)),
+          this,
+          SLOT(SlotDisplayButtonClicked(bool)));
 }
 
 /*****************************************************************************!
@@ -103,8 +122,12 @@ void
 JSONFileObjectDisplayWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
+  int                                   DisplayButtonX;
+  int                                   DisplayButtonW;
   int                                   ExpandButtonX;
   int                                   ExpandButtonW;
+  int                                   CollapseButtonX;
+  int                                   CollapseButtonW;
   int                                   fileTreeH;
   QSize                                 size;  
   int                                   width;
@@ -127,6 +150,16 @@ JSONFileObjectDisplayWindow::resizeEvent
   ExpandButtonX = width - (ExpandButtonW + 5);
   ExpandButton->move(ExpandButtonX, 1);
   ExpandButton->resize(ExpandButtonW, SECTION_HEADER_HEIGHT - 2);
+
+  CollapseButtonW = CollapseButton->size().width();
+  CollapseButtonX = width - (CollapseButtonW + ExpandButtonW + 10);
+  CollapseButton->move(CollapseButtonX, 1);
+  CollapseButton->resize(CollapseButtonW, SECTION_HEADER_HEIGHT - 2);
+
+  DisplayButtonW = DisplayButton->size().width();
+  DisplayButtonX = width - (DisplayButtonW + CollapseButtonW + ExpandButtonW + 15);
+  DisplayButton->move(DisplayButtonX, 1);
+  DisplayButton->resize(DisplayButtonW, SECTION_HEADER_HEIGHT - 2);
 }
 
 /*****************************************************************************!
@@ -199,4 +232,23 @@ JSONFileObjectDisplayWindow::SlotExpandButtonClicked
 (bool)
 {
   emit SignalExpandTree();
+}
+
+/*****************************************************************************!
+ * Function : SlotCollapseButtonClicked
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotCollapseButtonClicked
+(bool)
+{
+  emit SignalCollapseTree();
+}
+
+/*****************************************************************************!
+ * Function : SlotDisplayButtonClicked
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotDisplayButtonClicked
+(bool)
+{
 }

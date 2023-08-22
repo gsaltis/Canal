@@ -40,6 +40,7 @@ JSONFileWindow::JSONFileWindow
   setPalette(pal);
   setAutoFillBackground(true);
   initialize();
+  fileTree->Set(mainJSONObject, filename, basename);
 }
 
 /*****************************************************************************!
@@ -71,6 +72,10 @@ JSONFileWindow::initialize()
           SIGNAL(SignalSizeValueChanged(int)),
           fileTree,
           SLOT(SlotSizeValueChanged(int)));
+  connect(fileTree,
+          SIGNAL(SignalLocalCountSet(int)),
+          this,
+          SLOT(SlotLocalCountSet(int)));
 }
 
 /*****************************************************************************!
@@ -79,7 +84,7 @@ JSONFileWindow::initialize()
 void
 JSONFileWindow::CreateSubWindows()
 {
-  fileTree = new JSONFileTree(mainJSONObject, filename, basename);
+  fileTree = new JSONFileTree();
   fileTree->setParent(this);
   header = new JSONFileWindowSectionHeader();
   header->SetText("TRANSLATION UNIT");
@@ -168,4 +173,14 @@ JSONFileWindow::SlotSizeValueChanged
 (int InSize)
 {
   emit SignalSizeValueChanged(InSize);
+}
+
+/*****************************************************************************!
+ * Function : SlotLocalCountSet
+ *****************************************************************************/
+void
+JSONFileWindow::SlotLocalCountSet
+(int InLocalCount)
+{
+  header->SetInnerCount(InLocalCount);
 }

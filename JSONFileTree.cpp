@@ -25,11 +25,7 @@
  * Function : JSONFileTree
  *****************************************************************************/
 JSONFileTree::JSONFileTree
-(
- QJsonObject                            InJSONFileObject,
- QString                                InFilename,
- QString                                InBaseFilename
-) : QTreeWidget()
+() : QTreeWidget()
 {
   QTreeWidgetItem*                      head;
   QPalette pal;
@@ -47,10 +43,6 @@ JSONFileTree::JSONFileTree
 
   header()->setStretchLastSection(true);
   
-  baseFilename = InBaseFilename;
-  filename = InFilename;
-  JSONFileObject = InJSONFileObject;
-
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
   setPalette(pal);
@@ -75,6 +67,15 @@ JSONFileTree::initialize()
   InitializeSubWindows();  
   CreateSubWindows();
   setColumnCount(2);
+}
+
+/*****************************************************************************!
+ * Function : SetObject
+ *****************************************************************************/
+void
+JSONFileTree::SetObject
+()
+{
   QStringList                           keys;
 
   keys = JSONFileObject.keys();
@@ -103,6 +104,20 @@ JSONFileTree::initialize()
 }
 
 /*****************************************************************************!
+ * Function : Set
+ *****************************************************************************/
+void
+JSONFileTree::Set
+(QJsonObject InJSONFileObject, QString InFilename, QString InBaseFilename)
+{
+  baseFilename = InBaseFilename;
+  filename = InFilename;
+  JSONFileObject = InJSONFileObject;
+
+  SetObject();
+}
+
+/*****************************************************************************!
  * Function : CreateSubWindows
  *****************************************************************************/
 void
@@ -126,6 +141,7 @@ JSONFileTree::SetInnerItem
   QJsonArray                            array;
   QJsonObject                           locObj;
   bool                                  outFileFound = false;
+  int                                   localCount = 0;
   
   array = InValue->toArray();
   n = array.size();
@@ -153,7 +169,7 @@ JSONFileTree::SetInnerItem
       outFileFound = true;
     }
     if ( outFileFound ) {
-      
+      localCount++;
       item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, obj);
       item->setForeground(0, QBrush(color));
       item->setForeground(1, QBrush(color));
@@ -162,6 +178,8 @@ JSONFileTree::SetInnerItem
       InItem->addChild(item);
     }
   }
+  TRACE_FUNCTION_INT(localCount);
+  emit SignalLocalCountSet(localCount);
 }
 
 /*****************************************************************************!

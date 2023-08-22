@@ -44,8 +44,6 @@ JSONFileWindowSectionHeader::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
-  ActionResizePushed = new QAction("ResizePushed", this);
-  connect(ActionResizePushed, SIGNAL(triggered()), this, SLOT(SlotResizePushed()));
 }
 
 /*****************************************************************************!
@@ -54,13 +52,15 @@ JSONFileWindowSectionHeader::initialize()
 void
 JSONFileWindowSectionHeader::CreateSubWindows()
 {
-  //! Create the Resize button  
-  ResizeButton = new QPushButton();
-  ResizeButton->setParent(this);
-  ResizeButton->setText("RESIZE");
-  ResizeButton->move(100, 2);
-  ResizeButton->resize(60,20);
-  connect(ResizeButton, SIGNAL(pressed()), this, SLOT(SlotResizePushed()));
+
+  //! Create label
+  ElementCountLabel = new QLabel();
+  ElementCountLabel->setParent(this);
+  ElementCountLabel->move(10, 1);
+  ElementCountLabel->resize(100, 20);
+  ElementCountLabel->setText("Count");
+  ElementCountLabel->setAlignment(Qt::AlignRight);
+  ElementCountLabel->setFont(QFont("Segoe UI", 10, QFont::Bold));
 }
 
 /*****************************************************************************!
@@ -79,15 +79,24 @@ void
 JSONFileWindowSectionHeader::resizeEvent
 (QResizeEvent* InEvent)
 {
+  int                                   headerW;
   QSize					size;  
   int					width;
   int					height;
+  int                                   labelX;
+  int                                   labelW;
 
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  HeaderText->resize(width - HeaderText->pos().x(), height);
-  ResizeButton->move(width - (5 + ResizeButton->size().width()), 2);
+  
+  labelW = ElementCountLabel->size().width();
+  labelX = width - (labelW + 5);
+  headerW = width - (labelW + 10);
+  
+  HeaderText->resize(headerW, height);
+  ElementCountLabel->resize(labelW, height);
+  ElementCountLabel->move(labelX, 1);
 }
 
 /*****************************************************************************!
@@ -116,4 +125,14 @@ JSONFileWindowSectionHeader::SlotSizeValueChanged
 (int InSize)
 {
   emit SignalSizeValueChanged(InSize);
+}
+
+/*****************************************************************************!
+ * Function : SetInnerCount
+ *****************************************************************************/
+void
+JSONFileWindowSectionHeader::SetInnerCount
+(int InCount)
+{
+  ElementCountLabel->setText(QString("%1").arg(InCount));
 }

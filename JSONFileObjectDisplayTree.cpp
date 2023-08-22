@@ -11,12 +11,14 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
+#include <QTreeWidgetItemIterator>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
 #include "JSONFileObjectDisplayTree.h"
 #include "JSONFileObjectDisplayTreeItem.h"
+
 #include "Trace.h"
 #include "common.h"
 
@@ -126,34 +128,10 @@ JSONFileObjectDisplayTree::SlotItemSelected
 void
 JSONFileObjectDisplayTree::SlotExpandTree(void)
 {
-  int                                   n;
-  int                                   i;
-  JSONFileObjectDisplayTreeItem*        item;
-
-  n = topLevelItemCount();
-  for ( i = 0 ; i < n ; i++ ) {
-    item = (JSONFileObjectDisplayTreeItem*)topLevelItem(i);
-    item->setExpanded(true);
-    ExpandItem(item);
-  }
-}
-
-/*****************************************************************************!
- * Function : ExpandItem
- *****************************************************************************/
-void
-JSONFileObjectDisplayTree::ExpandItem
-(JSONFileObjectDisplayTreeItem* InItem)
-{
-  int                                   n;
-  int                                   i;
-  JSONFileObjectDisplayTreeItem*        item;
-  n = InItem->childCount();
-
-  for (i = 0; i < n; i++) {
-    item = (JSONFileObjectDisplayTreeItem*)InItem->child(i);
-    item->setExpanded(true);
-    ExpandItem(item);
+  QTreeWidgetItemIterator               i(this);
+  while (*i) {
+    (*i)->setExpanded(true);
+    i++;
   }
 }
 
@@ -163,33 +141,10 @@ JSONFileObjectDisplayTree::ExpandItem
 void
 JSONFileObjectDisplayTree::SlotCollapseTree(void)
 {
-  int                                   n;
-  int                                   i;
-  JSONFileObjectDisplayTreeItem*        item;
-
-  n = topLevelItemCount();
-  for ( i = 0 ; i < n ; i++ ) {
-    item = (JSONFileObjectDisplayTreeItem*)topLevelItem(i);
-    item->setExpanded(false);
-    CollapseItem(item);
+  QTreeWidgetItemIterator               i(this);
+  while (*i) {
+    (*i)->setExpanded(false);
+    i++;
   }
 }
 
-/*****************************************************************************!
- * Function : CollapseItem
- *****************************************************************************/
-void
-JSONFileObjectDisplayTree::CollapseItem
-(JSONFileObjectDisplayTreeItem* InItem)
-{
-  int                                   n;
-  int                                   i;
-  JSONFileObjectDisplayTreeItem*        item;
-  n = InItem->childCount();
-
-  for (i = 0; i < n; i++) {
-    item = (JSONFileObjectDisplayTreeItem*)InItem->child(i);
-    item->setExpanded(false);
-    CollapseItem(item);
-  }
-}

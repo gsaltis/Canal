@@ -39,7 +39,7 @@ class JSONFileTree : public QTreeWidget
 
  //! Constructors
  public :
-  JSONFileTree                  (QJsonObject InJSONFileObject, QString InFilename, QString InBaseFilename);
+  JSONFileTree                  ();
 
  //! Destructor
  public :
@@ -47,7 +47,8 @@ class JSONFileTree : public QTreeWidget
 
  //! Public Methods
  public :
-
+  void                          Set(QJsonObject InJSONFileObject, QString InFilename, QString InBaseFilename);
+  
  //! Public Data
  public :
 
@@ -65,7 +66,8 @@ class JSONFileTree : public QTreeWidget
   void                          resizeEvent             (QResizeEvent* InEvent);
   void                          SetInnerItem            (JSONFileTreeItem* InItem, QJsonValue* InValue);
   void                          AddInnerObject          (JSONFileTreeItem* InItem, QJsonObject InObject);
-
+  void                          SetObject               ();
+  
  //! Private Data
  private :
   QJsonObject                   JSONFileObject;
@@ -80,6 +82,7 @@ class JSONFileTree : public QTreeWidget
  //! Public Signals
  signals :
   void                          SignalFileObjectSelected        (QJsonObject);
+  void                          SignalLocalCountSet     (int InLocalInnerCount);
   
  //! Public Actions
  public :

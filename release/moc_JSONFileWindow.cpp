@@ -24,8 +24,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_JSONFileWindow_t {
-    const uint offsetsAndSize[16];
-    char stringdata0[124];
+    const uint offsetsAndSize[20];
+    char stringdata0[155];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_JSONFileWindow_t, stringdata0) + ofs), len 
@@ -38,13 +38,16 @@ QT_MOC_LITERAL(41, 8), // "InObject"
 QT_MOC_LITERAL(50, 22), // "SignalSizeValueChanged"
 QT_MOC_LITERAL(73, 6), // "InSize"
 QT_MOC_LITERAL(80, 22), // "SlotFileObjectSelected"
-QT_MOC_LITERAL(103, 20) // "SlotSizeValueChanged"
+QT_MOC_LITERAL(103, 20), // "SlotSizeValueChanged"
+QT_MOC_LITERAL(124, 17), // "SlotLocalCountSet"
+QT_MOC_LITERAL(142, 12) // "InLocalCount"
 
     },
     "JSONFileWindow\0SignalFileObjectSelected\0"
     "\0InObject\0SignalSizeValueChanged\0"
     "InSize\0SlotFileObjectSelected\0"
-    "SlotSizeValueChanged"
+    "SlotSizeValueChanged\0SlotLocalCountSet\0"
+    "InLocalCount"
 };
 #undef QT_MOC_LITERAL
 
@@ -54,7 +57,7 @@ static const uint qt_meta_data_JSONFileWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -62,12 +65,13 @@ static const uint qt_meta_data_JSONFileWindow[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   38,    2, 0x06,    1 /* Public */,
-       4,    1,   41,    2, 0x06,    3 /* Public */,
+       1,    1,   44,    2, 0x06,    1 /* Public */,
+       4,    1,   47,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       6,    1,   44,    2, 0x0a,    5 /* Public */,
-       7,    1,   47,    2, 0x0a,    7 /* Public */,
+       6,    1,   50,    2, 0x0a,    5 /* Public */,
+       7,    1,   53,    2, 0x0a,    7 /* Public */,
+       8,    1,   56,    2, 0x0a,    9 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QJsonObject,    3,
@@ -76,6 +80,7 @@ static const uint qt_meta_data_JSONFileWindow[] = {
  // slots: parameters
     QMetaType::Void, QMetaType::QJsonObject,    3,
     QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::Int,    9,
 
        0        // eod
 };
@@ -90,6 +95,7 @@ void JSONFileWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 1: _t->SignalSizeValueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 2: _t->SlotFileObjectSelected((*reinterpret_cast< std::add_pointer_t<QJsonObject>>(_a[1]))); break;
         case 3: _t->SlotSizeValueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 4: _t->SlotLocalCountSet((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -119,7 +125,7 @@ const QMetaObject JSONFileWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_JSONFileWindow_t
 , QtPrivate::TypeAndForceComplete<JSONFileWindow, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QJsonObject, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QJsonObject, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QJsonObject, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>
 
 
 >,
@@ -146,13 +152,13 @@ int JSONFileWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

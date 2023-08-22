@@ -257,6 +257,7 @@ JSONObjectElementTree::SelectItem
 {
   InItem->setForeground(0, QBrush(QColor(128, 0, 0)));
   InItem->setFont(0, QFont("Segoe UI", 10, QFont::Bold));
+  InItem->setHidden(false);
 }
 
 /*****************************************************************************!
@@ -272,6 +273,7 @@ JSONObjectElementTree::UnSelectItem(void)
   for (i = 0; i < n; i++) {
     item = (JSONObjectElementTreeItem*)topLevelItem(i);
     item->setExpanded(false);
+    item->setHidden(true);
     item->setForeground(0, QBrush(QColor(0, 0, 0)));
     item->setFont(0, QFont("Segoe UI", 10, QFont::Normal));
   }

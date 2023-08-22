@@ -83,6 +83,7 @@ class JSONFileWindow : public QWidget
  public slots :
   void                          SlotFileObjectSelected  (QJsonObject InObject);
   void                          SlotSizeValueChanged    (int InSize);
+  void                          SlotLocalCountSet       (int InLocalCount);
   
  //! Public Signals
  signals :
