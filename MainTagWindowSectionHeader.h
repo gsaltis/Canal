@@ -17,7 +17,7 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "SectionHeader.h"
+#include "JSONFileWindowSectionHeader.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -30,7 +30,7 @@
 /*****************************************************************************!
  * Exported Class : MainTagWindowSectionHeader
  *****************************************************************************/
-class MainTagWindowSectionHeader : public SectionHeader
+class MainTagWindowSectionHeader : public JSONFileWindowSectionHeader
 {
   Q_OBJECT;
 
@@ -59,7 +59,6 @@ class MainTagWindowSectionHeader : public SectionHeader
   void                          initialize              ();
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
-  void                          resizeEvent             (QResizeEvent* InEvent);
 
  //! Private Data
  private :

@@ -28,6 +28,7 @@
 #include "JSONElementWindow.h"
 #include "JSONObjectFormatList.h"
 #include "JSONFileObjectDisplayWindow.h"
+#include "MainTreeWindows.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -75,9 +76,9 @@ class MainDisplayWindow : public QWidget
  private :
   MainSplitter*                 splitter;
   QSplitter*                    splitter2;
-  MainTagWindow*                tagWindow;
+  MainTagWindow*                elementsWindow;
   JSONFileWindow*               fileWindow;
-  JSONElementWindow*            elementWindow;
+  JSONElementWindow*            objectsWindow;
   QString                       filename;
   QString                       baseFilename;
   QJsonDocument                 jsonDoc;
@@ -86,6 +87,8 @@ class MainDisplayWindow : public QWidget
   JSONFileObjectDisplayWindow*  objectDisplayWindow;
   MainStacker*                  stacker;
   
+  MainTreeWindows*              treesWindow;
+
  //! Public Slots
  public slots :
   void                          SlotFormatTypeSelected  (QString InType);

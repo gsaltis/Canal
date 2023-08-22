@@ -14,6 +14,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+#include <QJsonObject>
 
 /*****************************************************************************!
  * Local Headers
@@ -39,6 +40,10 @@ MainSystemConfig;
 extern
 QColor
 MainTreeHeaderColor;
+
+extern
+QList<QJsonObject>
+MainTopLevelObjects;
 
 /*****************************************************************************!
  * Exported Functions

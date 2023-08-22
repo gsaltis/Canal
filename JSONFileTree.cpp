@@ -171,6 +171,7 @@ JSONFileTree::SetInnerItem
     if ( outFileFound ) {
       localCount++;
       item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, obj);
+      MainTopLevelObjects << obj;
       item->setForeground(0, QBrush(color));
       item->setForeground(1, QBrush(color));
       item->setText(0, kind);
@@ -178,7 +179,6 @@ JSONFileTree::SetInnerItem
       InItem->addChild(item);
     }
   }
-  TRACE_FUNCTION_INT(localCount);
   emit SignalLocalCountSet(localCount);
 }
 
@@ -198,9 +198,9 @@ void
 JSONFileTree::resizeEvent
 (QResizeEvent* InEvent)
 {
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
 
   size = InEvent->size();
   width = size.width();

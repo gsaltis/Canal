@@ -53,6 +53,7 @@ MainTagWindow::initialize()
   CreateSubWindows();
   PopulateTree();
   header->SetText("JSON ELEMENTS");
+  SlotElementCountChanged(tagTree->topLevelItemCount());
 }
 
 /*****************************************************************************!
@@ -85,9 +86,9 @@ MainTagWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
   int                                   tagTreeH;
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
 
   size = InEvent->size();
   width = size.width();
@@ -229,4 +230,14 @@ MainTagWindow::GetColumnWidths
     widths << tagTree->columnWidth(i);
   }
   return widths;
+}
+
+/*****************************************************************************!
+ * Function : SlotElementCountChanged
+ *****************************************************************************/
+void
+MainTagWindow::SlotElementCountChanged
+(int InCount)
+{
+  header->SetInnerCount(InCount);
 }

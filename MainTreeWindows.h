@@ -17,6 +17,12 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
+#include "MainSplitter.h"
+#include "JSONFileWindow.h"
+#include "MainTagWindow.h"
+#include "JSONElementWindow.h"
+#include "JSONFileObjectDisplayWindow.h"
+#include "JSONObjectFormatList.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -35,7 +41,7 @@ class MainTreeWindows : public QWidget
 
  //! Constructors
  public :
-  MainTreeWindows               ();
+  MainTreeWindows               (QString InFilename, JSONObjectFormatList* InObjectsFormats);
 
  //! Destructor
  public :
@@ -62,7 +68,18 @@ class MainTreeWindows : public QWidget
 
  //! Private Data
  private :
+  MainSplitter*                 splitter;
+  MainTagWindow*                tagWindow;
+  JSONFileWindow*               fileWindow;
+  JSONElementWindow*            elementWindow;
+  JSONFileObjectDisplayWindow*  objectDisplayWindow;
+  JSONObjectFormatList*         objectsFormats;
 
+  QString                       filename;
+  QString                       baseFilename;
+  QJsonDocument                 jsonDoc;
+  QJsonObject                   mainJSONObject;
+  
  //! Public Slots
  public slots :
 

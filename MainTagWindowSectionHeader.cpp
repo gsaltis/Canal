@@ -21,7 +21,7 @@
  * Function : MainTagWindowSectionHeader
  *****************************************************************************/
 MainTagWindowSectionHeader::MainTagWindowSectionHeader
-() : SectionHeader()
+() : JSONFileWindowSectionHeader()
 {
   initialize();
 }
@@ -62,19 +62,3 @@ MainTagWindowSectionHeader::InitializeSubWindows()
   
 }
 
-/*****************************************************************************!
- * Function : resizeEvent
- *****************************************************************************/
-void
-MainTagWindowSectionHeader::resizeEvent
-(QResizeEvent* InEvent)
-{
-  QSize					size;  
-  int					width;
-  int					height;
-
-  size = InEvent->size();
-  width = size.width();
-  height = size.height();
-  HeaderText->resize(width - HeaderText->pos().x(), height);
-}

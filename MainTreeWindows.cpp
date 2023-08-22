@@ -16,14 +16,20 @@
  * Local Headers
  *****************************************************************************/
 #include "MainTreeWindows.h"
+#include "common.h"
 
 /*****************************************************************************!
  * Function : MainTreeWindows
  *****************************************************************************/
 MainTreeWindows::MainTreeWindows
-() : QWidget()
+(QString InFilename, JSONObjectFormatList* InObjectsFormats) : QWidget()
 {
   QPalette pal;
+  filename = InFilename;
+  QFileInfo                             fileinfo(filename);
+
+  objectsFormats = InObjectsFormats;
+  baseFilename = fileinfo.completeBaseName();
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
   setPalette(pal);
@@ -55,7 +61,22 @@ MainTreeWindows::initialize()
 void
 MainTreeWindows::CreateSubWindows()
 {
-  
+  QList<int>                            widths;
+  splitter = new MainSplitter();
+  splitter->setParent(this);
+
+  widths = MainSystemConfig->GetWindowWidths();
+
+  fileWindow            = new JSONFileWindow(filename, baseFilename, mainJSONObject);
+  tagWindow             = new MainTagWindow(mainJSONObject, objectsFormats);
+  elementWindow         = new JSONElementWindow(objectsFormats);
+  objectDisplayWindow   = new JSONFileObjectDisplayWindow();
+
+  splitter->addWidget(fileWindow);
+  splitter->addWidget(tagWindow);
+  splitter->addWidget(elementWindow);
+  splitter->addWidget(objectDisplayWindow);
+  splitter->setSizes(widths);  
 }
 
 /*****************************************************************************!
@@ -74,9 +95,9 @@ void
 MainTreeWindows::resizeEvent
 (QResizeEvent* InEvent)
 {
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
 
   size = InEvent->size();
   width = size.width();

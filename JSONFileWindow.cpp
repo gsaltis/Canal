@@ -108,9 +108,9 @@ void
 JSONFileWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
   int                                   fileTreeH;
   
   size = InEvent->size();
@@ -162,7 +162,7 @@ void
 JSONFileWindow::SetColumnWidths
 (QList<int> InWidths)
 {
-  fileTree->header()->resizeSection(0, InWidths[0]);
+  (void)InWidths;
 }
 
 /*****************************************************************************!

@@ -60,7 +60,7 @@ JSONFileWindowSectionHeader::CreateSubWindows()
   ElementCountLabel->resize(100, 20);
   ElementCountLabel->setText("Count");
   ElementCountLabel->setAlignment(Qt::AlignRight);
-  ElementCountLabel->setFont(QFont("Segoe UI", 10, QFont::Bold));
+  ElementCountLabel->setFont(QFont("Segoe UI", 12, QFont::Normal));
 }
 
 /*****************************************************************************!
@@ -80,9 +80,9 @@ JSONFileWindowSectionHeader::resizeEvent
 (QResizeEvent* InEvent)
 {
   int                                   headerW;
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
   int                                   labelX;
   int                                   labelW;
 
@@ -96,7 +96,7 @@ JSONFileWindowSectionHeader::resizeEvent
   
   HeaderText->resize(headerW, height);
   ElementCountLabel->resize(labelW, height);
-  ElementCountLabel->move(labelX, 1);
+  ElementCountLabel->move(labelX, ElementCountLabel->pos().y());
 }
 
 /*****************************************************************************!

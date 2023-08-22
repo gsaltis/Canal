@@ -26,7 +26,7 @@ MainDisplayWindow::MainDisplayWindow
 (QString InFilename, JSONObjectFormatList* InObjectsFormats) : QWidget()
 {
   objectsFormats = InObjectsFormats;
-  QPalette				pal;
+  QPalette                              pal;
 
   filename = InFilename;
   if ( ! filename.isEmpty() ) {
@@ -65,10 +65,11 @@ void
 MainDisplayWindow::InitializeSubWindows()
 {
   splitter = NULL;
-  tagWindow = NULL;
+  elementsWindow = NULL;
   fileWindow = NULL;
-  elementWindow = NULL;
+  objectsWindow = NULL;
   objectDisplayWindow = NULL;
+  treesWindow = NULL;
 }
 
 /*****************************************************************************!
@@ -85,23 +86,23 @@ MainDisplayWindow::CreateSubWindows()
   widths = MainSystemConfig->GetWindowWidths();
 
   fileWindow            = new JSONFileWindow(filename, baseFilename, mainJSONObject);
-  tagWindow             = new MainTagWindow(mainJSONObject, objectsFormats);
-  elementWindow         = new JSONElementWindow(objectsFormats);
+  elementsWindow        = new MainTagWindow(mainJSONObject, objectsFormats);
+  objectsWindow         = new JSONElementWindow(objectsFormats);
   objectDisplayWindow   = new JSONFileObjectDisplayWindow();
 
   splitter->addWidget(fileWindow);
-  splitter->addWidget(tagWindow);
-  splitter->addWidget(elementWindow);
+  splitter->addWidget(elementsWindow);
+  splitter->addWidget(objectsWindow);
   splitter->addWidget(objectDisplayWindow);
   splitter->setSizes(widths);
   
-  connect(elementWindow,
+  connect(objectsWindow,
           SIGNAL(SignalTypeFormatSelected(QString)),
           this,
           SLOT(SlotFormatTypeSelected(QString)));
 
   connect(this, SIGNAL(SignalFormatTypeSelected(QString)),
-          tagWindow,
+          elementsWindow,
           SLOT(SlotFormatTypeSelected(QString)));
 
   connect(fileWindow,
@@ -116,7 +117,7 @@ MainDisplayWindow::CreateSubWindows()
 
   connect(this,
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
-          elementWindow,
+          objectsWindow,
           SLOT(SlotFileObjectSelected(QJsonObject)));
   
   connect(objectDisplayWindow,
@@ -126,10 +127,10 @@ MainDisplayWindow::CreateSubWindows()
 
   connect(this,
           SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
-          elementWindow,
+          objectsWindow,
           SLOT(SlotFileElementSelected(QString, QList<QString>)));
 
-  connect(elementWindow,
+  connect(objectsWindow,
           SIGNAL(SignalObjectFormatSelected(JSONObjectFormat*)),
           this,
           SLOT(SlotObjectFormatSelected(JSONObjectFormat*)));
@@ -145,8 +146,12 @@ MainDisplayWindow::CreateSubWindows()
           SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
   connect(this,
           SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
-          elementWindow,
+          objectsWindow,
           SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
+#if 0
+  treesWindow = new MainTreeWindows(filename, objectsFormats);
+  treesWindow->setParent(this);
+#endif  
 }
 
 /*****************************************************************************!
@@ -156,9 +161,9 @@ void
 MainDisplayWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
 
   size = InEvent->size();
   width = size.width();
@@ -168,6 +173,10 @@ MainDisplayWindow::resizeEvent
   if ( splitter ) {
     splitter->resize(width, height);
   }
+#if 0  
+  if ( treesWindow ) {
+  }
+#endif  
 }
 
 /*****************************************************************************!
@@ -231,10 +240,10 @@ MainDisplayWindow::SaveAtExit
   columnSizes = fileWindow->GetColumnWidths();
   MainSystemConfig->SetWindowSizeInfo(0, splitterSizes[0], columnSizes);
 
-  columnSizes = tagWindow->GetColumnWidths();
+  columnSizes = elementsWindow->GetColumnWidths();
   MainSystemConfig->SetWindowSizeInfo(1, splitterSizes[1], columnSizes);
 
-  columnSizes = elementWindow->GetColumnWidths();
+  columnSizes = objectsWindow->GetColumnWidths();
   MainSystemConfig->SetWindowSizeInfo(2, splitterSizes[2], columnSizes);
 
   columnSizes = objectDisplayWindow->GetColumnWidths();

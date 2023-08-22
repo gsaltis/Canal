@@ -26,7 +26,7 @@ SectionHeader::SectionHeader
 {
   QPalette pal;
   pal = palette();
-  pal.setBrush(QPalette::Window, QBrush(QColor(236, 240, 241)));
+  pal.setBrush(QPalette::Window, QBrush(QColor(229, 152, 102)));
   setPalette(pal);
   setAutoFillBackground(true);
   setFrameShadow(QFrame::Sunken);
@@ -84,9 +84,9 @@ void
 SectionHeader::resizeEvent
 (QResizeEvent* InEvent)
 {
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
 
   size = InEvent->size();
   width = size.width();

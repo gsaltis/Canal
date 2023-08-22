@@ -21,7 +21,7 @@
  * Function : JSONElementWindowSectionHeader
  *****************************************************************************/
 JSONElementWindowSectionHeader::JSONElementWindowSectionHeader
-() : SectionHeader()
+() : JSONFileWindowSectionHeader()
 {
   initialize();
 }
@@ -60,22 +60,4 @@ void
 JSONElementWindowSectionHeader::InitializeSubWindows()
 {
   
-}
-
-/*****************************************************************************!
- * Function : resizeEvent
- *****************************************************************************/
-void
-JSONElementWindowSectionHeader::resizeEvent
-(QResizeEvent* InEvent)
-{
-  QSize					size;  
-  int					width;
-  int					height;
-
-  size = InEvent->size();
-  width = size.width();
-  height = size.height();
-  (void)height;
-  (void)width;
 }

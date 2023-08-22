@@ -23,6 +23,7 @@
 #include "main.h"
 #include "JSONObjectFormatList.h"
 #include "common.h"
+#include "trace.h"
 
 /*****************************************************************************!
  * Local Macros
@@ -57,6 +58,9 @@ MainSystemConfig = NULL;
 QColor
 MainTreeHeaderColor = QColor(128, 128, 128);
 
+QList<QJsonObject>
+MainTopLevelObjects;
+
 /*****************************************************************************!
  * Function : main
  *****************************************************************************/
@@ -66,7 +70,7 @@ main
 {
   QString                               MainSourceFilename;
   QStringList                           args;
-  QApplication 				application(argc, argv);
+  QApplication                          application(argc, argv);
   QCommandLineParser                    parser;
 
   MainInitialize();
@@ -98,6 +102,7 @@ main
   // w->showMaximized();
   mainWindow->show();
   mainWindow->ResizeColumns();
+  TRACE_FUNCTION_INT(MainTopLevelObjects.count());
   return application.exec();
 }
 

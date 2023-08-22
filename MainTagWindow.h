@@ -84,6 +84,7 @@ class MainTagWindow : public QWidget
  //! Public Slots
  public slots :
   void                          SlotFormatTypeSelected  (QString InType);
+  void                          SlotElementCountChanged (int InCount);
 
  //! Public Signals
  signals :

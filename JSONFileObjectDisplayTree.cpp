@@ -82,6 +82,8 @@ JSONFileObjectDisplayTree::SlotFileObjectSelected
       item->setExpanded(true);
     }
   }
+  ExpandInnerCompoundStmt();
+  
 }
 
 /*****************************************************************************!
@@ -148,3 +150,50 @@ JSONFileObjectDisplayTree::SlotCollapseTree(void)
   }
 }
 
+/*****************************************************************************!
+ * Function : ExpandInnerCompoundStmt
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::ExpandInnerCompoundStmt(void)
+{
+  int                                   i, n;
+  bool                                  found = false;
+  JSONFileObjectDisplayTreeItem*        item;
+  JSONFileObjectDisplayTreeItem*        item2;
+  JSONFileObjectDisplayTreeItem*        item3;
+
+  n = topLevelItemCount();
+  for (i = 0; i < n; i++) {
+    item = (JSONFileObjectDisplayTreeItem*)topLevelItem(i);
+    if ( item->text(0) == "inner" ) {
+      found = true;
+      break;
+    }
+  }
+  if ( ! found ) {
+    return;
+  }
+
+  found = false;
+  n = item->childCount();
+  for (i = 0; i < n; i++) {
+    item2 = (JSONFileObjectDisplayTreeItem*)item->child(i);
+    if ( item2->text(0) == "CompoundStmt" ) {
+      found = true;
+      break;
+    }
+  }
+  if ( ! found ) {
+    return;
+  }
+
+  n = item2->childCount();
+  for (i = 0; i < n; i++) {
+    item3 = (JSONFileObjectDisplayTreeItem*)item2->child(i);
+    if ( item3->text(0) == "inner" ) {
+      item3->setExpanded(true);
+      item2->setExpanded(true);
+      return;
+    }
+  }
+}

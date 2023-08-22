@@ -52,6 +52,7 @@ class JSONFileObjectDisplayWindow : public QWidget
   GetColumnWidths
   ();
   
+  void                          FindCalls               (QString InFunctionName);
   
  //! Public Data
  public :
@@ -68,7 +69,14 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
+  bool                          ObjectIsFunctionDefinition      (QJsonObject InObject);
+  bool                          ObjectContainsCall      (QJsonObject InObject, QString InFunctionName);
+  QJsonArray                    GetFunctionCompountStmtInternals (QJsonObject InObject);
 
+  bool
+  ObjectElementContainsCall
+  (QJsonObject InObject, QString InFunctionName);
+  
  //! Private Data
  private :
   JSONFileObjectDisplayTree*    fileTree;

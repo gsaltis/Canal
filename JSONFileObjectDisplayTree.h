@@ -60,6 +60,7 @@ class JSONFileObjectDisplayTree : public QTreeWidget
  private :
   void                          initialize              ();
   void                          ExpandItem              (JSONFileObjectDisplayTreeItem* InItem);
+  void                          ExpandInnerCompoundStmt (void);
   void                          CollapseItem            (JSONFileObjectDisplayTreeItem* InItem);
  //! Private Data
  private :

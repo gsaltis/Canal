@@ -58,6 +58,7 @@ JSONElementWindow::initialize()
 {
   InitializeSubWindows();
   CreateSubWindows();
+  header->SetInnerCount(elementTree->topLevelItemCount());
 }
 
 /*****************************************************************************!
@@ -118,9 +119,9 @@ void
 JSONElementWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
   int                                   elementTreeH;
   
   size = InEvent->size();
