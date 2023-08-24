@@ -41,6 +41,16 @@
          "LOCATION",                                                    \
          __FILE__, __FUNCTION__, __LINE__);                             \
  
+#define TRACE_FUNCTION_START()                                          \
+  printf("%10s %50s::%30s:%05d\n",                                      \
+         "START",                                                       \
+         __FILE__, __FUNCTION__, __LINE__);                             \
+ 
+#define TRACE_FUNCTION_END()                                            \
+  printf("%10s %50s::%30s:%05d\n",                                      \
+         "END",                                                         \
+         __FILE__, __FUNCTION__, __LINE__);                             \
+ 
 /*****************************************************************************!
  * Exported Data
  *****************************************************************************/

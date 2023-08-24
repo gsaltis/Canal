@@ -21,9 +21,10 @@
  * Function : JSONFileTreeItem
  *****************************************************************************/
 JSONFileTreeItem::JSONFileTreeItem
-(int InType, QJsonObject InObject) : QTreeWidgetItem()
+(int InType, int InElementType, QJsonObject InObject) : QTreeWidgetItem()
 {
   type = InType;
+  elementType = InElementType;
   object = InObject;
   initialize();
 }
@@ -71,9 +72,9 @@ void
 JSONFileTreeItem::resizeEvent
 (QResizeEvent* InEvent)
 {
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
 
   size = InEvent->size();
   width = size.width();
@@ -102,3 +103,12 @@ JSONFileTreeItem::GetObject
   return object;
 }
 
+/*****************************************************************************!
+ * Function : GetElementType
+ *****************************************************************************/
+int
+JSONFileTreeItem::GetElementType
+()
+{
+  return elementType;
+}

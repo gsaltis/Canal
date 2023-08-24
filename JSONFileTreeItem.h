@@ -26,6 +26,10 @@
 #define JSONFILE_TREE_ITEM_CHILD        2
 #define JSONFILE_TREE_ITEM_INNER_TOP    3
 
+#define JSONFILE_TREE_ITEM_TYPE_NONE                    0
+#define JSONFILE_TREE_ITEM_TYPE_FUNCTION_DEF            1
+#define JSONFILE_TREE_ITEM_TYPE_FUNCTION_DECL           2
+
 /*****************************************************************************!
  * Exported Class : JSONFileTreeItem
  *****************************************************************************/
@@ -34,6 +38,7 @@ class JSONFileTreeItem : public QTreeWidgetItem
  //! Constructors
  public :
   JSONFileTreeItem              (int InType = JSONFILE_TREE_ITEM_TOP,
+                                 int InElementType = JSONFILE_TREE_ITEM_TYPE_NONE,
                                  QJsonObject InObject = QJsonObject());
 
  //! Destructor
@@ -44,7 +49,8 @@ class JSONFileTreeItem : public QTreeWidgetItem
  public :
   int                           GetType                 ();
   QJsonObject                   GetObject               ();  
-
+  int                           GetElementType          ();
+  
  //! Public Data
  public :
 
@@ -64,6 +70,7 @@ class JSONFileTreeItem : public QTreeWidgetItem
  //! Private Data
  private :
   int                           type;
+  int                           elementType;
   QJsonObject                   object;
   
  //! Public Slots

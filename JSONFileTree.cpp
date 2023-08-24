@@ -142,6 +142,7 @@ JSONFileTree::SetInnerItem
   QJsonObject                           locObj;
   bool                                  outFileFound = false;
   int                                   localCount = 0;
+  int                                   elementType;
   
   array = InValue->toArray();
   n = array.size();
@@ -149,8 +150,12 @@ JSONFileTree::SetInnerItem
     QJsonValue                          v = array[i];
     QJsonObject                         obj = v.toObject();
     JSONFileTreeItem*                   item;
-
+    elementType = JSONFILE_TREE_ITEM_TYPE_NONE;
+    
     kind = obj["kind"].toString();
+    if ( kind == "FunctionDecl" ) {
+      elementType = JSONFILE_TREE_ITEM_TYPE_FUNCTION_DECL;
+    }
     name = obj["name"].toString();
     inner = obj["inner"].toArray();
     for ( int j = 0; j < inner.size() ; j++ ) {
@@ -158,6 +163,7 @@ JSONFileTree::SetInnerItem
       QJsonObject                       obj = inner[j].toObject();
       QString                           k = obj["kind"].toString();
       if ( k == "CompoundStmt" ) {
+        elementType = JSONFILE_TREE_ITEM_TYPE_FUNCTION_DEF;
         color = QColor(128, 0, 0);
         break;
       }
@@ -169,8 +175,9 @@ JSONFileTree::SetInnerItem
       outFileFound = true;
     }
     if ( outFileFound ) {
+      TRACE_FUNCTION_QSTRING(kind);
       localCount++;
-      item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, obj);
+      item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, elementType, obj);
       MainTopLevelObjects << obj;
       item->setForeground(0, QBrush(color));
       item->setForeground(1, QBrush(color));

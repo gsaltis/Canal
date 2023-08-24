@@ -18,6 +18,7 @@
 #include "JSONFileObjectDisplayWindow.h"
 #include "Trace.h"
 #include "common.h"
+#include "JSONNavigate.h"
 
 /*****************************************************************************!
  * Function : JSONFileObjectDisplayWindow
@@ -262,23 +263,24 @@ void
 JSONFileObjectDisplayWindow::FindCalls
 (QString InFunctionName)
 {
+  QString                               name;
   int                                   n;
   int                                   i;
   QJsonObject                           obj;
 
   n = MainTopLevelObjects.count();
 
+  TRACE_FUNCTION_QSTRING(InFunctionName);
   for (i = 0; i < n; i++) {
     obj = MainTopLevelObjects[i];
+    name = obj["name"].toString();
     if ( ObjectIsFunctionDefinition(obj) ) {
-      break;
+      if ( ContainsCallExpr(obj, InFunctionName) ) {
+        TRACE_FUNCTION_QSTRING(name);
+      }
+      continue;
     }
   }
-  if ( i == n ) {
-    return;
-  }
-  
-  ObjectContainsCall(obj, InFunctionName);
 }
 
 /*****************************************************************************!
@@ -292,23 +294,14 @@ JSONFileObjectDisplayWindow::ObjectContainsCall
   int                                   n;
   int                                   i;
   QJsonArray                            innerArray;
-  QString                               name;
-
-  name = InObject["name"].toString();
-  TRACE_FUNCTION_QSTRING(name);
-  TRACE_FUNCTION_QSTRING(InFunctionName);
 
   innerArray = GetFunctionCompountStmtInternals(InObject);
-  TRACE_FUNCTION_LOCATION();
   n = innerArray.count();
-  TRACE_FUNCTION_LOCATION();
   for (i = 0; i < n; i++) {
     obj = innerArray[i].toObject();
     if ( ObjectElementContainsCall(obj, InFunctionName) ) {
-      TRACE_FUNCTION_LOCATION();
     }
   }
-  TRACE_FUNCTION_INT(innerArray.count());
   return true;
 }
 
@@ -365,10 +358,8 @@ JSONFileObjectDisplayWindow::GetFunctionCompountStmtInternals
   QJsonArray                            innerArray;
   QJsonValue                            innerValue;
 
-  TRACE_FUNCTION_LOCATION();
   innerValue = InObject["inner"];
   if ( ! innerValue.isArray() ) {
-    TRACE_FUNCTION_LOCATION();
     return QJsonArray();
   }
 
@@ -379,16 +370,13 @@ JSONFileObjectDisplayWindow::GetFunctionCompountStmtInternals
   for (i = 0; i < n; i++) {
     obj = innerArray[i].toObject();
     kind = obj["kind"].toString();
-    TRACE_FUNCTION_QSTRING(kind);
     if ( kind == "CompoundStmt" ) {
       innerValue = obj["inner"];
       if ( innerValue.isArray() ) {
-        TRACE_FUNCTION_LOCATION();
         return innerValue.toArray();
       }
     }
   }
-  TRACE_FUNCTION_LOCATION();
   return QJsonArray();
 }
 
@@ -405,18 +393,97 @@ JSONFileObjectDisplayWindow::ObjectElementContainsCall
   QJsonArray                            array;
 
   kind = InObject["kind"].toString();
-  TRACE_FUNCTION_QSTRING(kind);
   keys = InObject.keys();
 
+  if ( kind == "CallExpr" ) {
+    if (  CheckCallExpr(InObject, InFunctionName) ) {
+      return true;
+    }
+  }
   for ( auto i = keys.begin() ; i != keys.end() ; i++ ) {
     QString                             key = *i;
     value = InObject[key];
 
-    TRACE_FUNCTION_QSTRING(key);
     if ( value.isObject() ) {
       kind = value.toObject()["kind"].toString();
       if ( kind == "CallExpr") {
         return true;
+      }
+    }
+  }
+  return false;
+}
+
+/*****************************************************************************!
+ * Function : CheckCallExpr
+ *****************************************************************************/
+bool
+JSONFileObjectDisplayWindow::CheckCallExpr
+(QJsonObject InObject, QString InFunctionName)
+{
+  QJsonObject                           refDeclObj;
+  QString                               kind;
+  QJsonObject                           nameDeclObj;
+  QJsonObject                           nameObj;
+  QString                               name;
+  QJsonArray                            innerArray;
+
+  nameObj = InObject["inner"].toArray()[0].toObject();
+  kind = nameObj["kind"].toString();
+  if ( kind != "ImplicitCastExpr" ) {
+    return false;
+  }
+  nameDeclObj = nameObj["inner"].toArray()[0].toObject();
+  kind = nameDeclObj["kind"].toString();
+  if ( kind != "DeclRefExpr" ) {
+    return false;
+  }
+  refDeclObj = nameDeclObj["referencedDecl"].toObject();
+  name = refDeclObj["name"].toString();
+  return name == InFunctionName;
+}
+
+/*****************************************************************************!
+ * Function : ContainsCallExpr
+ *****************************************************************************/
+bool
+JSONFileObjectDisplayWindow::ContainsCallExpr
+(QJsonObject InObject, QString InName)
+{
+  QJsonValue                            val2;
+  int                                   n;
+  QJsonArray                            array;
+  QStringList                           keys;
+  QJsonValue                            val;
+  QJsonObject                           obj;
+
+  if ( InObject["kind"].toString() == "CallExpr" ) {
+    return CheckCallExpr(InObject, InName);
+  }
+
+  keys = InObject.keys();
+  for ( auto i = keys.begin(); i != keys.end() ; i++ ) {
+    QString                             key = *i;
+    val = InObject[key];
+    if ( val.isObject() ) {
+      obj = val.toObject();
+      if ( ContainsCallExpr(obj, InName) ) {
+        return true;
+      }
+      continue;
+    }
+    if ( val.isArray() ) {
+      array = val.toArray();
+      n = array.count();
+      for (int k = 0; k < n; k++) {
+        val2 = array[k];
+        if ( ! val2.isObject() ) {
+          continue;
+        }
+        obj = val2.toObject();
+        if ( ContainsCallExpr(obj, InName) ) {
+          return true;
+        }
       }
     }
   }

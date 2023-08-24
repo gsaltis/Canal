@@ -72,10 +72,13 @@ class JSONFileObjectDisplayWindow : public QWidget
   bool                          ObjectIsFunctionDefinition      (QJsonObject InObject);
   bool                          ObjectContainsCall      (QJsonObject InObject, QString InFunctionName);
   QJsonArray                    GetFunctionCompountStmtInternals (QJsonObject InObject);
-
+  bool                          ContainsCallExpr        (QJsonObject InObject, QString InName);
+  
   bool
   ObjectElementContainsCall
   (QJsonObject InObject, QString InFunctionName);
+
+  bool                          CheckCallExpr           (QJsonObject InObject, QString InFunctionName);
   
  //! Private Data
  private :

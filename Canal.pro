@@ -42,6 +42,7 @@ SOURCES                         += \
 				   JSONFileWindow.cpp                           \
 				   JSONFileWindowDialog.cpp                     \
 				   JSONFileWindowSectionHeader.cpp              \
+				   JSONNavigate.cpp                             \
 				   JSONObjectElementTree.cpp                    \
 				   JSONObjectElementTreeItem.cpp                \
 				   JSONObjectFormat.cpp                         \
@@ -55,7 +56,7 @@ SOURCES                         += \
 				   MainStacker.cpp                              \
 				   MainTagWindow.cpp                            \
 				   MainTagWindowSectionHeader.cpp               \
-                                   MainTreeWindows.cpp                          \
+				   MainTreeWindows.cpp                          \
 				   MainWindow.cpp                               \
 				   SectionHeader.cpp                            \
 				   SystemConfig.cpp                             \
@@ -77,6 +78,7 @@ HEADERS                         += \
 				   JSONFileWindow.h                             \
 				   JSONFileWindowDialog.h                       \
 				   JSONFileWindowSectionHeader.h                \
+				   JSONNavigate.h                               \
 				   JSONObjectElementTree.h                      \
 				   JSONObjectElementTreeItem.h                  \
 				   JSONObjectFormat.h                           \
@@ -90,7 +92,7 @@ HEADERS                         += \
 				   MainStacker.h                                \
 				   MainTagWindow.h                              \
 				   MainTagWindowSectionHeader.h                 \
-                                   MainTreeWindows.h                            \
+				   MainTreeWindows.h                            \
 				   MainWindow.h                                 \
 				   SectionHeader.h                              \
 				   SystemConfig.h                               \
