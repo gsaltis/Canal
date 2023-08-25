@@ -54,6 +54,7 @@ SystemConfig::Initialize
   }
   SystemName = "Canal";
   WindowWidths = QList<int>();
+  SectionHeaderBackgroundColor = QColor(229, 152, 102);
 }
 
 /*****************************************************************************!
@@ -73,6 +74,8 @@ void
 SystemConfig::Save
 ()
 {
+  QJsonArray                            colorArray;
+  QJsonObject                           sectionHeaderObj;
   QJsonArray                            columnArray;
   QJsonObject                           widthObj;
   QJsonArray                            widths;
@@ -110,6 +113,14 @@ SystemConfig::Save
     widths.append(QJsonValue(widthObj));
   }
   windowObj.insert("Widths", QJsonValue(widths));
+  sectionHeaderObj = QJsonObject();
+  colorArray = QJsonArray();
+  colorArray.push_back(SectionHeaderBackgroundColor.red());
+  colorArray.push_back(SectionHeaderBackgroundColor.green());
+  colorArray.push_back(SectionHeaderBackgroundColor.blue());
+  sectionHeaderObj.insert("BackgroundColor", colorArray);
+  windowObj.insert("SectionHeader", sectionHeaderObj);
+  
   obj.insert("Window", QJsonValue(windowObj));
 
   jsonDoc = QJsonDocument(obj);
@@ -169,6 +180,8 @@ void
 SystemConfig::ReadWindowInfo
 (QJsonObject InObj)
 {
+  QJsonArray                            colorArray;
+  QJsonObject                           sectionHeaderObj;
   QJsonArray                            columns;
   QJsonObject                           info;
   int                                   width;
@@ -177,6 +190,11 @@ SystemConfig::ReadWindowInfo
     return;
   }
 
+  sectionHeaderObj = InObj["SectionHeader"].toObject();
+  colorArray = sectionHeaderObj["BackgroundColor"].toArray();
+  if ( colorArray.count() == 3 ) {
+    SectionHeaderBackgroundColor = QColor(colorArray[0].toInt(), colorArray[1].toInt(), colorArray[2].toInt());
+  }
   sizesArray = InObj["Widths"].toArray();
   if ( sizesArray.count() != MAIN_DISPLAY_WINDOW_COUNT ) {
     return;
@@ -248,3 +266,12 @@ SystemConfig::SetWindowSizeInfo
   WindowsInfo[InIndex]->SetColumnWidths(InColumnWidths);
 }
 
+/*****************************************************************************!
+ * Function : GetSectionHeaderBackgroundColor
+ *****************************************************************************/
+QColor
+SystemConfig::GetSectionHeaderBackgroundColor
+()
+{
+  return SectionHeaderBackgroundColor;
+}

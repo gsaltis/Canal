@@ -26,7 +26,7 @@
 #define SECTION_HEADER_X                200
 #define SECTION_HEADER_Y                200
 #define SECTION_HEADER_WIDTH            200
-#define SECTION_HEADER_HEIGHT           25
+#define SECTION_HEADER_HEIGHT           30
 
 /*****************************************************************************!
  * Exported Class : SectionHeader
@@ -52,11 +52,15 @@ class SectionHeader : public QFrame
 
  //! Protected Methods
  protected :
+  void
+  SetBackgroundColor
+  (int InHeight);
 
  //! Protected Data
  protected :
   QLabel*                       HeaderText;
-
+  QColor                        backgroundColor;
+  
  //! Private Methods
  private :
   void                          initialize              ();

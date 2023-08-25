@@ -68,6 +68,10 @@ class SystemConfig : public QWidget
   void
   Read
   (void);
+
+  QColor
+  GetSectionHeaderBackgroundColor
+  ();
   
  //! Public Data
  public :
@@ -76,6 +80,9 @@ class SystemConfig : public QWidget
 
   QList<int>
   WindowWidths;
+
+  QColor
+  SectionHeaderBackgroundColor;
   
  //! Protected Methods
  protected :

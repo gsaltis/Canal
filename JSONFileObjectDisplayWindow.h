@@ -87,8 +87,6 @@ class JSONFileObjectDisplayWindow : public QWidget
   JSONFileObjectDisplayTree*    fileTree;
   SectionHeader*                header;
   QJsonObject                   fileObject;
-  QPushButton*                  ExpandButton;
-  QPushButton*                  CollapseButton;
   QPushButton*                  DisplayButton;
   QToolBar*                     Toolbar;
   
@@ -98,8 +96,6 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
   void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
   void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
-  void                          SlotExpandButtonClicked (bool InChecked);
-  void                          SlotCollapseButtonClicked (bool InChecked);
   void                          SlotDisplayButtonClicked (bool InChecked);
   void                          SlotCollapseElements    (void);
   void                          SlotExpandElements      (void);

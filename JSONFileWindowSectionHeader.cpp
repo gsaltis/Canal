@@ -56,7 +56,7 @@ JSONFileWindowSectionHeader::CreateSubWindows()
   //! Create label
   ElementCountLabel = new QLabel();
   ElementCountLabel->setParent(this);
-  ElementCountLabel->move(10, 1);
+  ElementCountLabel->move(10, 3);
   ElementCountLabel->resize(100, 20);
   ElementCountLabel->setText("Count");
   ElementCountLabel->setAlignment(Qt::AlignRight);
@@ -90,6 +90,7 @@ JSONFileWindowSectionHeader::resizeEvent
   width = size.width();
   height = size.height();
   
+  SetBackgroundColor(height);
   labelW = ElementCountLabel->size().width();
   labelX = width - (labelW + 5);
   headerW = width - (labelW + 10);

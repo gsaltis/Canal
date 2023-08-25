@@ -274,7 +274,7 @@ JSONFileTree::SlotItemClicked
   }
 }
 
-x/*****************************************************************************!
+/*****************************************************************************!
  * Function : SlotSizeValueChanged
  *****************************************************************************/
 void
@@ -301,6 +301,9 @@ JSONFileTree::SlotCallingFunctionFound
   n = topItem->childCount();
   for (i = 0; i < n; i++) {
     item = (JSONFileTreeItem*)topItem->child(i);
+    if ( item->GetElementType() != JSONFILE_TREE_ITEM_TYPE_FUNCTION_DEF ) {
+      continue;
+    }
     if ( item->text(1) == InFunctionName ) {
       font = item->font(0);
       font.setWeight(QFont::Bold);

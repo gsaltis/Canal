@@ -17,6 +17,7 @@
  * Local Headers
  *****************************************************************************/
 #include "SectionHeader.h"
+#include "common.h"
 
 /*****************************************************************************!
  * Function : SectionHeader
@@ -26,7 +27,9 @@ SectionHeader::SectionHeader
 {
   QPalette pal;
   pal = palette();
-  pal.setBrush(QPalette::Window, QBrush(QColor(229, 152, 102)));
+
+  backgroundColor = MainSystemConfig->GetSectionHeaderBackgroundColor();
+  pal.setBrush(QPalette::Window, QBrush(backgroundColor));
   setPalette(pal);
   setAutoFillBackground(true);
   setFrameShadow(QFrame::Sunken);
@@ -87,10 +90,13 @@ SectionHeader::resizeEvent
   QSize                                 size;  
   int                                   width;
   int                                   height;
-
+  
   size = InEvent->size();
   width = size.width();
   height = size.height();
+
+  SetBackgroundColor(height);
+  
   HeaderText->resize(width - HeaderText->pos().x(), height);
 }
 
@@ -103,3 +109,21 @@ SectionHeader::SetText
 {
   HeaderText->setText(InText);
 }
+
+/*****************************************************************************!
+ * Function : SetBackgroundColor
+ *****************************************************************************/
+void
+SectionHeader::SetBackgroundColor
+(int InHeight)
+{
+  QPalette                              pal;
+  QLinearGradient                       grad = QLinearGradient(0, 0, 0, InHeight);
+  grad.setColorAt(0, backgroundColor.darker(135));
+  grad.setColorAt(1, backgroundColor);
+  pal = palette();
+  pal.setBrush(QPalette::Window, QBrush(grad));
+  setPalette(pal);
+}
+
+  
