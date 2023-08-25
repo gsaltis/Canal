@@ -44,6 +44,7 @@ MainWindow::MainWindow
   CreateMenus();
   InitializeSubWindows();
   CreateSubWindows();
+  CreateConnections();
 }
 
 /*****************************************************************************!
@@ -119,6 +120,15 @@ MainWindow::CreateActions()
 {
   ActionExit = new QAction("E&xit", this);
   connect(ActionExit, SIGNAL(triggered()), this, SLOT(SlotExit()));
+
+  ActionSelectJSONWindow = new QAction("JSON Window", this);
+  connect(ActionSelectJSONWindow, SIGNAL(triggered()), this, SLOT(SlotSelectJSONWindow()));
+  ActionSelectJSONWindow->setCheckable(true);
+  ActionSelectJSONWindow->setChecked(true);
+  
+  ActionSelectDisplayWindow = new QAction("Display Window", this);
+  connect(ActionSelectDisplayWindow, SIGNAL(triggered()), this, SLOT(SlotSelectDisplayWindow()));
+  ActionSelectDisplayWindow->setCheckable(true);
 }
 
 /*****************************************************************************!
@@ -128,9 +138,13 @@ MainWindow::CreateActions()
 void
 MainWindow::CreateMenus()
 {
+  QMenu*                                windowMenu;
   menubar = menuBar();  
   fileMenu = menubar->addMenu("&File");
   fileMenu->addAction(ActionExit);
+  windowMenu = menubar->addMenu("&Windows");
+  windowMenu->addAction(ActionSelectJSONWindow);
+  windowMenu->addAction(ActionSelectDisplayWindow);
 }
 
 /*****************************************************************************!
@@ -160,4 +174,36 @@ MainWindow::ResizeColumns
 ()
 {
   displayWindow->ResizeColumns();
+}
+
+/*****************************************************************************!
+ * Function : SlotSelectJSONWindow
+ *****************************************************************************/
+void
+MainWindow::SlotSelectJSONWindow(void)
+{
+  ActionSelectDisplayWindow->setChecked(false);  
+  emit SignalSelectWindow(1);
+}
+
+/*****************************************************************************!
+ * Function : SlotSelectDisplayWindow
+ *****************************************************************************/
+void
+MainWindow::SlotSelectDisplayWindow(void)
+{
+  ActionSelectJSONWindow->setChecked(false);
+  emit SignalSelectWindow(2);
+}
+
+/*****************************************************************************!
+ * Function : CreateConnections
+ *****************************************************************************/
+void
+MainWindow::CreateConnections()
+{
+  connect(this,
+          SIGNAL(SignalSelectWindow(int)),
+          displayWindow,
+          SLOT(SlotSelectWindow(int)));
 }

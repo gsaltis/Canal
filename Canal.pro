@@ -58,7 +58,8 @@ SOURCES                         += \
 				   MainStacker.cpp                              \
 				   MainTagWindow.cpp                            \
 				   MainTagWindowSectionHeader.cpp               \
-				   MainTreeWindows.cpp                          \
+				   MainDisplayJSONTreesWindow.cpp               \
+                                   MainDisplayFunctionSVGWindow.cpp             \
 				   MainWindow.cpp                               \
 				   SectionHeader.cpp                            \
 				   SystemConfig.cpp                             \
@@ -94,7 +95,8 @@ HEADERS                         += \
 				   MainStacker.h                                \
 				   MainTagWindow.h                              \
 				   MainTagWindowSectionHeader.h                 \
-				   MainTreeWindows.h                            \
+				   MainDisplayJSONTreesWindow.h                 \
+                                   MainDisplayFunctionSVGWindow.h               \
 				   MainWindow.h                                 \
 				   SectionHeader.h                              \
 				   SystemConfig.h                               \

@@ -80,10 +80,16 @@ void
 MainDisplayWindow::CreateSubWindows()
 {
   QList<int>                            widths;
-  
+
+  treesWindow = new MainDisplayJSONTreesWindow(this, filename, baseFilename, mainJSONObject, objectsFormats);
+  functionSVGWindow = new MainDisplayFunctionSVGWindow(this, filename, baseFilename, mainJSONObject, objectsFormats);
+  functionSVGWindow->hide();
+
+#if 0
   splitter = new MainSplitter();
   splitter->setParent(this);
-
+  splitter->hide();
+  
   widths = MainSystemConfig->GetWindowWidths();
 
   fileWindow            = new JSONFileWindow(filename, baseFilename, mainJSONObject);
@@ -159,10 +165,7 @@ MainDisplayWindow::CreateSubWindows()
           SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
           objectsWindow,
           SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
-#if 0
-  treesWindow = new MainTreeWindows(filename, objectsFormats);
-  treesWindow->setParent(this);
-#endif  
+#endif
 }
 
 /*****************************************************************************!
@@ -184,10 +187,14 @@ MainDisplayWindow::resizeEvent
   if ( splitter ) {
     splitter->resize(width, height);
   }
-#if 0  
+
   if ( treesWindow ) {
+    treesWindow->resize(width, height);
   }
-#endif  
+  if ( functionSVGWindow ) {
+    functionSVGWindow->resize(width, height);
+  }
+
 }
 
 /*****************************************************************************!
@@ -311,4 +318,23 @@ MainDisplayWindow::SlotCallingFunctionFound
 (QString InFunctionName)
 {
   emit SignalCallingFunctionFound(InFunctionName);
+}
+
+/*****************************************************************************!
+ * Function : SlotSelectWindow
+ *****************************************************************************/
+void
+MainDisplayWindow::SlotSelectWindow
+(int InWindowIndex)
+{
+  if ( InWindowIndex == 1 ) {
+    treesWindow->show();
+    functionSVGWindow->hide();
+    return;
+  }
+  if ( InWindowIndex == 2 ) {
+    treesWindow->hide();
+    functionSVGWindow->show();
+    return;
+  }
 }

@@ -69,12 +69,14 @@ class MainWindow : public QMainWindow
   void                          resizeEvent             (QResizeEvent* InEvent);
   void                          CreateActions           ();
   void                          CreateMenus             ();
+  void                          CreateConnections       ();
   
  //! Private Data
  private :
   MainDisplayWindow*            displayWindow;
   QMenuBar*                     menubar;
   QMenu*                        fileMenu;
+  QMenu*                        windowMenu;
   QStatusBar*                   statusbar;
   QString                       filename;
   JSONObjectFormatList*         objectsFormats;
@@ -82,13 +84,18 @@ class MainWindow : public QMainWindow
  //! Public Slots
  public slots :
   void                          SlotExit                (void);
+  void                          SlotSelectJSONWindow    (void);
+  void                          SlotSelectDisplayWindow (void);
 
  //! Public Signals
  signals :
+  void                          SignalSelectWindow      (int InWindowIndex);
 
  //! Public Actions
  public :
   QAction*                      ActionExit;
+  QAction*                      ActionSelectJSONWindow;
+  QAction*                      ActionSelectDisplayWindow;
 
 };
 

@@ -29,6 +29,8 @@
 #include "JSONObjectFormatList.h"
 #include "JSONFileObjectDisplayWindow.h"
 #include "MainTreeWindows.h"
+#include "MainDisplayJSONTreesWindow.h"
+#include "MainDisplayFunctionSVGWindow.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -87,7 +89,8 @@ class MainDisplayWindow : public QWidget
   JSONFileObjectDisplayWindow*  objectDisplayWindow;
   MainStacker*                  stacker;
   
-  MainTreeWindows*              treesWindow;
+  MainDisplayJSONTreesWindow*   treesWindow;
+  MainDisplayFunctionSVGWindow* functionSVGWindow;
 
  //! Public Slots
  public slots :
@@ -97,6 +100,7 @@ class MainDisplayWindow : public QWidget
   void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
   void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
   void                          SlotCallingFunctionFound (QString InFunctionName);
+  void                          SlotSelectWindow        (int InWindowIndex);
   
  //! Public Signals
  signals :

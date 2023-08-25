@@ -62,11 +62,13 @@ static constexpr auto qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS = QtMocH
     "SlotFileElementSelected",
     "SlotObjectFormatSelected",
     "SlotObjectFormatIdentified",
-    "SlotCallingFunctionFound"
+    "SlotCallingFunctionFound",
+    "SlotSelectWindow",
+    "InWindowIndex"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t {
-    uint offsetsAndSizes[44];
+    uint offsetsAndSizes[48];
     char stringdata0[18];
     char stringdata1[25];
     char stringdata2[1];
@@ -89,6 +91,8 @@ struct qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t {
     char stringdata19[25];
     char stringdata20[27];
     char stringdata21[25];
+    char stringdata22[17];
+    char stringdata23[14];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -115,7 +119,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t qt_
         QT_MOC_LITERAL(312, 23),  // "SlotFileElementSelected"
         QT_MOC_LITERAL(336, 24),  // "SlotObjectFormatSelected"
         QT_MOC_LITERAL(361, 26),  // "SlotObjectFormatIdentified"
-        QT_MOC_LITERAL(388, 24)   // "SlotCallingFunctionFound"
+        QT_MOC_LITERAL(388, 24),  // "SlotCallingFunctionFound"
+        QT_MOC_LITERAL(413, 16),  // "SlotSelectWindow"
+        QT_MOC_LITERAL(430, 13)   // "InWindowIndex"
     },
     "MainDisplayWindow",
     "SignalFormatTypeSelected",
@@ -138,7 +144,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t qt_
     "SlotFileElementSelected",
     "SlotObjectFormatSelected",
     "SlotObjectFormatIdentified",
-    "SlotCallingFunctionFound"
+    "SlotCallingFunctionFound",
+    "SlotSelectWindow",
+    "InWindowIndex"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -150,7 +158,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainDisplayWindowENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -158,20 +166,21 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainDisplayWindowENDCLASS[] = {
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   86,    2, 0x06,    1 /* Public */,
-       4,    1,   89,    2, 0x06,    3 /* Public */,
-       5,    2,   92,    2, 0x06,    5 /* Public */,
-       8,    1,   97,    2, 0x06,    8 /* Public */,
-      11,    2,  100,    2, 0x06,   10 /* Public */,
-      13,    1,  105,    2, 0x06,   13 /* Public */,
+       1,    1,   92,    2, 0x06,    1 /* Public */,
+       4,    1,   95,    2, 0x06,    3 /* Public */,
+       5,    2,   98,    2, 0x06,    5 /* Public */,
+       8,    1,  103,    2, 0x06,    8 /* Public */,
+      11,    2,  106,    2, 0x06,   10 /* Public */,
+      13,    1,  111,    2, 0x06,   13 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      15,    1,  108,    2, 0x0a,   15 /* Public */,
-      16,    1,  111,    2, 0x0a,   17 /* Public */,
-      18,    2,  114,    2, 0x0a,   19 /* Public */,
-      19,    1,  119,    2, 0x0a,   22 /* Public */,
-      20,    2,  122,    2, 0x0a,   24 /* Public */,
-      21,    1,  127,    2, 0x0a,   27 /* Public */,
+      15,    1,  114,    2, 0x0a,   15 /* Public */,
+      16,    1,  117,    2, 0x0a,   17 /* Public */,
+      18,    2,  120,    2, 0x0a,   19 /* Public */,
+      19,    1,  125,    2, 0x0a,   22 /* Public */,
+      20,    2,  128,    2, 0x0a,   24 /* Public */,
+      21,    1,  133,    2, 0x0a,   27 /* Public */,
+      22,    1,  136,    2, 0x0a,   29 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -188,6 +197,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainDisplayWindowENDCLASS[] = {
     QMetaType::Void, 0x80000000 | 9,   10,
     QMetaType::Void, QMetaType::QString, QMetaType::QStringList,    6,    7,
     QMetaType::Void, QMetaType::QString,   14,
+    QMetaType::Void, QMetaType::Int,   23,
 
        0        // eod
 };
@@ -240,7 +250,10 @@ Q_CONSTINIT const QMetaObject MainDisplayWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
         // method 'SlotCallingFunctionFound'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        // method 'SlotSelectWindow'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>
     >,
     nullptr
 } };
@@ -263,6 +276,7 @@ void MainDisplayWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 9: _t->SlotObjectFormatSelected((*reinterpret_cast< std::add_pointer_t<JSONObjectFormat*>>(_a[1]))); break;
         case 10: _t->SlotObjectFormatIdentified((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2]))); break;
         case 11: _t->SlotCallingFunctionFound((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 12: _t->SlotSelectWindow((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -349,13 +363,13 @@ int MainDisplayWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     }
     return _id;
 }
