@@ -15,6 +15,8 @@
 #include <QWidget>
 #include <QJsonObject>
 #include <QPushButton>
+#include <QToolBar>
+#include <QAction>
 
 /*****************************************************************************!
  * Local Headers
@@ -88,6 +90,7 @@ class JSONFileObjectDisplayWindow : public QWidget
   QPushButton*                  ExpandButton;
   QPushButton*                  CollapseButton;
   QPushButton*                  DisplayButton;
+  QToolBar*                     Toolbar;
   
  //! Public Slots
  public slots :
@@ -98,6 +101,8 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          SlotExpandButtonClicked (bool InChecked);
   void                          SlotCollapseButtonClicked (bool InChecked);
   void                          SlotDisplayButtonClicked (bool InChecked);
+  void                          SlotCollapseElements    (void);
+  void                          SlotExpandElements      (void);
 
  //! Public Signals
  signals :
@@ -106,10 +111,14 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
   void                          SignalExpandTree        (void);
   void                          SignalCollapseTree        (void);
+  void                          SignalCallingFunctionFound (QString InFunctionName);
 
  //! Public Actions
  public :
   
+  QAction*                      ActionCollapseElements;
+  QAction*                      ActionExpandElements;
+
 };
 
 #endif /* _jsonfileobjectdisplaywindow_h_*/

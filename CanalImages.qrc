@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>Images/Expand.png</file>
+    <file>Images/Collapse.png</file>
+</qresource>
+</RCC>

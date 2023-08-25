@@ -15,9 +15,11 @@ QMAKE_CXXFLAGS                  += -g
 
 QMAKE_LIBS                      = 
 
+RESOURCES                       += CanalImages.qrc
+
 TARGET                          = canal
 
-VERSION                         = "0.1.0"
+VERSION                         = "0.2.0"
 QMAKE_TARGET_COMPANY            = "Greg Saltis"
 
 QMAKE_TARGET_PRODUCT            = "Canal"

@@ -12,6 +12,7 @@
 #include <QtGui>
 #include <QWidget>
 
+#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
@@ -95,6 +96,16 @@ MainDisplayWindow::CreateSubWindows()
   splitter->addWidget(objectsWindow);
   splitter->addWidget(objectDisplayWindow);
   splitter->setSizes(widths);
+
+  connect(objectDisplayWindow,
+          SIGNAL(SignalCallingFunctionFound(QString)),
+          this,
+          SLOT(SlotCallingFunctionFound(QString)));
+
+  connect(this,
+          SIGNAL(SignalCallingFunctionFound(QString)),
+          fileWindow,
+          SLOT(SlotCallingFunctionFound(QString)));
   
   connect(objectsWindow,
           SIGNAL(SignalTypeFormatSelected(QString)),
@@ -290,4 +301,14 @@ MainDisplayWindow::SlotObjectFormatIdentified
 (QString InTag, QStringList InKeys)
 {
   emit SignalFileElementIdentified(InTag, InKeys);
+}
+
+/*****************************************************************************!
+ * Function : SlotCallingFunctionFound
+ *****************************************************************************/
+void
+MainDisplayWindow::SlotCallingFunctionFound
+(QString InFunctionName)
+{
+  emit SignalCallingFunctionFound(InFunctionName);
 }

@@ -67,6 +67,8 @@ class JSONFileTree : public QTreeWidget
   void                          SetInnerItem            (JSONFileTreeItem* InItem, QJsonValue* InValue);
   void                          AddInnerObject          (JSONFileTreeItem* InItem, QJsonObject InObject);
   void                          SetObject               ();
+  JSONFileTreeItem*             FindTopLevelItemByName  (QString InName);
+  void                          ResetNameFonts          (void);
   
  //! Private Data
  private :
@@ -78,6 +80,7 @@ class JSONFileTree : public QTreeWidget
  public slots :
   void                          SlotItemClicked         (QTreeWidgetItem*, int);
   void                          SlotSizeValueChanged    (int InSize);
+  void                          SlotCallingFunctionFound (QString InFunctionName);
   
  //! Public Signals
  signals :

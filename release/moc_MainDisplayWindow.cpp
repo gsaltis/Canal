@@ -54,16 +54,19 @@ static constexpr auto qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS = QtMocH
     "InObjectFormat",
     "SignalFileElementIdentified",
     "InSearchTag",
+    "SignalCallingFunctionFound",
+    "InFunctionName",
     "SlotFormatTypeSelected",
     "SlotFileObjectSelected",
     "InObject",
     "SlotFileElementSelected",
     "SlotObjectFormatSelected",
-    "SlotObjectFormatIdentified"
+    "SlotObjectFormatIdentified",
+    "SlotCallingFunctionFound"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t {
-    uint offsetsAndSizes[38];
+    uint offsetsAndSizes[44];
     char stringdata0[18];
     char stringdata1[25];
     char stringdata2[1];
@@ -77,12 +80,15 @@ struct qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t {
     char stringdata10[15];
     char stringdata11[28];
     char stringdata12[12];
-    char stringdata13[23];
-    char stringdata14[23];
-    char stringdata15[9];
-    char stringdata16[24];
-    char stringdata17[25];
-    char stringdata18[27];
+    char stringdata13[27];
+    char stringdata14[15];
+    char stringdata15[23];
+    char stringdata16[23];
+    char stringdata17[9];
+    char stringdata18[24];
+    char stringdata19[25];
+    char stringdata20[27];
+    char stringdata21[25];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -101,12 +107,15 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t qt_
         QT_MOC_LITERAL(160, 14),  // "InObjectFormat"
         QT_MOC_LITERAL(175, 27),  // "SignalFileElementIdentified"
         QT_MOC_LITERAL(203, 11),  // "InSearchTag"
-        QT_MOC_LITERAL(215, 22),  // "SlotFormatTypeSelected"
-        QT_MOC_LITERAL(238, 22),  // "SlotFileObjectSelected"
-        QT_MOC_LITERAL(261, 8),  // "InObject"
-        QT_MOC_LITERAL(270, 23),  // "SlotFileElementSelected"
-        QT_MOC_LITERAL(294, 24),  // "SlotObjectFormatSelected"
-        QT_MOC_LITERAL(319, 26)   // "SlotObjectFormatIdentified"
+        QT_MOC_LITERAL(215, 26),  // "SignalCallingFunctionFound"
+        QT_MOC_LITERAL(242, 14),  // "InFunctionName"
+        QT_MOC_LITERAL(257, 22),  // "SlotFormatTypeSelected"
+        QT_MOC_LITERAL(280, 22),  // "SlotFileObjectSelected"
+        QT_MOC_LITERAL(303, 8),  // "InObject"
+        QT_MOC_LITERAL(312, 23),  // "SlotFileElementSelected"
+        QT_MOC_LITERAL(336, 24),  // "SlotObjectFormatSelected"
+        QT_MOC_LITERAL(361, 26),  // "SlotObjectFormatIdentified"
+        QT_MOC_LITERAL(388, 24)   // "SlotCallingFunctionFound"
     },
     "MainDisplayWindow",
     "SignalFormatTypeSelected",
@@ -121,12 +130,15 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainDisplayWindowENDCLASS_t qt_
     "InObjectFormat",
     "SignalFileElementIdentified",
     "InSearchTag",
+    "SignalCallingFunctionFound",
+    "InFunctionName",
     "SlotFormatTypeSelected",
     "SlotFileObjectSelected",
     "InObject",
     "SlotFileElementSelected",
     "SlotObjectFormatSelected",
-    "SlotObjectFormatIdentified"
+    "SlotObjectFormatIdentified",
+    "SlotCallingFunctionFound"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -138,26 +150,28 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainDisplayWindowENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   74,    2, 0x06,    1 /* Public */,
-       4,    1,   77,    2, 0x06,    3 /* Public */,
-       5,    2,   80,    2, 0x06,    5 /* Public */,
-       8,    1,   85,    2, 0x06,    8 /* Public */,
-      11,    2,   88,    2, 0x06,   10 /* Public */,
+       1,    1,   86,    2, 0x06,    1 /* Public */,
+       4,    1,   89,    2, 0x06,    3 /* Public */,
+       5,    2,   92,    2, 0x06,    5 /* Public */,
+       8,    1,   97,    2, 0x06,    8 /* Public */,
+      11,    2,  100,    2, 0x06,   10 /* Public */,
+      13,    1,  105,    2, 0x06,   13 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      13,    1,   93,    2, 0x0a,   13 /* Public */,
-      14,    1,   96,    2, 0x0a,   15 /* Public */,
-      16,    2,   99,    2, 0x0a,   17 /* Public */,
-      17,    1,  104,    2, 0x0a,   20 /* Public */,
-      18,    2,  107,    2, 0x0a,   22 /* Public */,
+      15,    1,  108,    2, 0x0a,   15 /* Public */,
+      16,    1,  111,    2, 0x0a,   17 /* Public */,
+      18,    2,  114,    2, 0x0a,   19 /* Public */,
+      19,    1,  119,    2, 0x0a,   22 /* Public */,
+      20,    2,  122,    2, 0x0a,   24 /* Public */,
+      21,    1,  127,    2, 0x0a,   27 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -165,13 +179,15 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainDisplayWindowENDCLASS[] = {
     QMetaType::Void, QMetaType::QString, QMetaType::QStringList,    6,    7,
     QMetaType::Void, 0x80000000 | 9,   10,
     QMetaType::Void, QMetaType::QString, QMetaType::QStringList,   12,    7,
+    QMetaType::Void, QMetaType::QString,   14,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString,    3,
-    QMetaType::Void, QMetaType::QJsonObject,   15,
+    QMetaType::Void, QMetaType::QJsonObject,   17,
     QMetaType::Void, QMetaType::QString, QMetaType::QStringList,    6,    7,
     QMetaType::Void, 0x80000000 | 9,   10,
     QMetaType::Void, QMetaType::QString, QMetaType::QStringList,    6,    7,
+    QMetaType::Void, QMetaType::QString,   14,
 
        0        // eod
 };
@@ -202,6 +218,9 @@ Q_CONSTINIT const QMetaObject MainDisplayWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
+        // method 'SignalCallingFunctionFound'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'SlotFormatTypeSelected'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
@@ -218,7 +237,10 @@ Q_CONSTINIT const QMetaObject MainDisplayWindow::staticMetaObject = { {
         // method 'SlotObjectFormatIdentified'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QStringList, std::false_type>
+        QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
+        // method 'SlotCallingFunctionFound'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>
     >,
     nullptr
 } };
@@ -234,11 +256,13 @@ void MainDisplayWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 2: _t->SignalFileElementSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<QString>>>(_a[2]))); break;
         case 3: _t->SignalObjectFormatSelected((*reinterpret_cast< std::add_pointer_t<JSONObjectFormat*>>(_a[1]))); break;
         case 4: _t->SignalFileElementIdentified((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2]))); break;
-        case 5: _t->SlotFormatTypeSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 6: _t->SlotFileObjectSelected((*reinterpret_cast< std::add_pointer_t<QJsonObject>>(_a[1]))); break;
-        case 7: _t->SlotFileElementSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<QString>>>(_a[2]))); break;
-        case 8: _t->SlotObjectFormatSelected((*reinterpret_cast< std::add_pointer_t<JSONObjectFormat*>>(_a[1]))); break;
-        case 9: _t->SlotObjectFormatIdentified((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2]))); break;
+        case 5: _t->SignalCallingFunctionFound((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 6: _t->SlotFormatTypeSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 7: _t->SlotFileObjectSelected((*reinterpret_cast< std::add_pointer_t<QJsonObject>>(_a[1]))); break;
+        case 8: _t->SlotFileElementSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<QString>>>(_a[2]))); break;
+        case 9: _t->SlotObjectFormatSelected((*reinterpret_cast< std::add_pointer_t<JSONObjectFormat*>>(_a[1]))); break;
+        case 10: _t->SlotObjectFormatIdentified((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2]))); break;
+        case 11: _t->SlotCallingFunctionFound((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -251,7 +275,7 @@ void MainDisplayWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< JSONObjectFormat* >(); break;
             }
             break;
-        case 8:
+        case 9:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -296,6 +320,13 @@ void MainDisplayWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
                 return;
             }
         }
+        {
+            using _t = void (MainDisplayWindow::*)(QString );
+            if (_t _q_method = &MainDisplayWindow::SignalCallingFunctionFound; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 5;
+                return;
+            }
+        }
     }
 }
 
@@ -318,13 +349,13 @@ int MainDisplayWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     }
     return _id;
 }
@@ -362,5 +393,12 @@ void MainDisplayWindow::SignalFileElementIdentified(QString _t1, QStringList _t2
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
+}
+
+// SIGNAL 5
+void MainDisplayWindow::SignalCallingFunctionFound(QString _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 5, _a);
 }
 QT_WARNING_POP

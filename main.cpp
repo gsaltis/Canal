@@ -102,7 +102,6 @@ main
   // w->showMaximized();
   mainWindow->show();
   mainWindow->ResizeColumns();
-  TRACE_FUNCTION_INT(MainTopLevelObjects.count());
   return application.exec();
 }
 

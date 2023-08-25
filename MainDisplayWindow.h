@@ -96,6 +96,7 @@ class MainDisplayWindow : public QWidget
   void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
   void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
   void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
+  void                          SlotCallingFunctionFound (QString InFunctionName);
   
  //! Public Signals
  signals :
@@ -104,6 +105,7 @@ class MainDisplayWindow : public QWidget
   void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
   void                          SignalObjectFormatSelected (JSONObjectFormat* InObjectFormat);
   void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
+  void                          SignalCallingFunctionFound (QString InFunctionName);
   
  //! Public Actions
  public :

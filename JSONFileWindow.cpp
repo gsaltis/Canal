@@ -76,6 +76,10 @@ JSONFileWindow::initialize()
           SIGNAL(SignalLocalCountSet(int)),
           this,
           SLOT(SlotLocalCountSet(int)));
+  connect (this,
+           SIGNAL(SignalCallingFunctionFound(QString)),
+           fileTree,
+           SLOT(SlotCallingFunctionFound(QString)));
 }
 
 /*****************************************************************************!
@@ -183,4 +187,14 @@ JSONFileWindow::SlotLocalCountSet
 (int InLocalCount)
 {
   header->SetInnerCount(InLocalCount);
+}
+
+/*****************************************************************************!
+ * Function : SlotCallingFunctionFound
+ *****************************************************************************/
+void
+JSONFileWindow::SlotCallingFunctionFound
+(QString InFunctionName)
+{
+  emit SignalCallingFunctionFound(InFunctionName);
 }

@@ -50,6 +50,12 @@ JSONFileObjectDisplayWindow::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
+  ActionCollapseElements = new QAction(QIcon(":/Images/Collapse.png"), "CollapseElements", this);
+  connect(ActionCollapseElements, SIGNAL(triggered()), this, SLOT(SlotCollapseElements()));
+  ActionExpandElements = new QAction(QIcon(":/Images/Expand.png"), "ExpandElements", this);
+  connect(ActionExpandElements, SIGNAL(triggered()), this, SLOT(SlotExpandElements()));
+  Toolbar->addAction(ActionCollapseElements);
+  Toolbar->addAction(ActionExpandElements);
 }
 
 /*****************************************************************************!
@@ -84,7 +90,12 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
           SIGNAL(SignalCollapseTree()),
           fileTree,
           SLOT(SlotCollapseTree()));
-  
+
+  Toolbar = new QToolBar(this);
+  Toolbar->resize(34, 100);
+  Toolbar->move(0, 0);
+  Toolbar->setOrientation(Qt::Vertical);
+  Toolbar->setIconSize(QSize(32, 32));
   ExpandButton = new QPushButton("Expand", header);
   ExpandButton->resize(60, 20);
   connect(ExpandButton,
@@ -124,6 +135,7 @@ void
 JSONFileObjectDisplayWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
+  int                                   fileTreeW;
   int                                   DisplayButtonX;
   int                                   DisplayButtonW;
   int                                   ExpandButtonX;
@@ -134,20 +146,34 @@ JSONFileObjectDisplayWindow::resizeEvent
   QSize                                 size;  
   int                                   width;
   int                                   height;
-
+  int                                   toolbarW;
+  int                                   toolbarH;
+  int                                   toolbarX;
+  int                                   toolbarY;
+  
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  fileTreeH = height - SECTION_HEADER_HEIGHT;
+
+  toolbarW = Toolbar->size().width();
+  toolbarX = width - toolbarW;
+  toolbarH = height - SECTION_HEADER_HEIGHT;
+  toolbarY = SECTION_HEADER_HEIGHT;
+  
+  fileTreeH = height - (SECTION_HEADER_HEIGHT);
+  fileTreeW = width - toolbarW;
   
   if ( fileTree ) {
-    fileTree->resize(width, fileTreeH);
+    fileTree->resize(fileTreeW, fileTreeH);
     fileTree->move(0, SECTION_HEADER_HEIGHT);
   }
   if ( header ) {
     header->resize(width, SECTION_HEADER_HEIGHT);
   }
 
+  Toolbar->move(toolbarX, toolbarY);
+  Toolbar->resize(toolbarW, toolbarH);
+  
   ExpandButtonW = ExpandButton->size().width();
   ExpandButtonX = width - (ExpandButtonW + 5);
   ExpandButton->move(ExpandButtonX, 1);
@@ -270,13 +296,12 @@ JSONFileObjectDisplayWindow::FindCalls
 
   n = MainTopLevelObjects.count();
 
-  TRACE_FUNCTION_QSTRING(InFunctionName);
   for (i = 0; i < n; i++) {
     obj = MainTopLevelObjects[i];
     name = obj["name"].toString();
     if ( ObjectIsFunctionDefinition(obj) ) {
       if ( ContainsCallExpr(obj, InFunctionName) ) {
-        TRACE_FUNCTION_QSTRING(name);
+        emit SignalCallingFunctionFound(name);
       }
       continue;
     }
@@ -488,4 +513,22 @@ JSONFileObjectDisplayWindow::ContainsCallExpr
     }
   }
   return false;
+}
+
+/*****************************************************************************!
+ * Function : SlotCollapseElements
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotCollapseElements(void)
+{
+  emit SignalCollapseTree();  
+}
+
+/*****************************************************************************!
+ * Function : SlotExpandElements
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotExpandElements(void)
+{
+  emit SignalExpandTree();
 }
