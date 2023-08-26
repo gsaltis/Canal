@@ -54,7 +54,6 @@ class MainDisplayWindow : public QWidget
  //! Public Methods
  public :
   void                          SaveAtExit              ();
-  void                          ResizeColumns           ();
   
  //! Public Data
  public :
@@ -75,40 +74,21 @@ class MainDisplayWindow : public QWidget
 
  //! Private Data
  private :
-  MainSplitter*                 splitter;
-  QSplitter*                    splitter2;
-  MainTagWindow*                elementsWindow;
-  JSONFileWindow*               fileWindow;
-  JSONElementWindow*            objectsWindow;
-  JSONFileObjectDisplayWindow*  objectDisplayWindow;
   QString                       filename;
   QString                       baseFilename;
   QJsonDocument                 jsonDoc;
   QJsonObject                   mainJSONObject;
   JSONObjectFormatList*         objectsFormats;
-  MainStacker*                  stacker;
   
   MainDisplayJSONTreesWindow*   treesWindow;
   MainDisplayFunctionSVGWindow* functionSVGWindow;
 
  //! Public Slots
  public slots :
-  void                          SlotFormatTypeSelected  (QString InType);
-  void                          SlotFileObjectSelected  (QJsonObject InObject);
-  void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
-  void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
-  void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
-  void                          SlotCallingFunctionFound (QString InFunctionName);
   void                          SlotSelectWindow        (int InWindowIndex);
   
  //! Public Signals
  signals :
-  void                          SignalFormatTypeSelected(QString InType);
-  void                          SignalFileObjectSelected(QJsonObject);
-  void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
-  void                          SignalObjectFormatSelected (JSONObjectFormat* InObjectFormat);
-  void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
-  void                          SignalCallingFunctionFound (QString InFunctionName);
   
  //! Public Actions
  public :

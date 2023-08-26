@@ -51,6 +51,10 @@ class MainDisplayJSONTreesWindow : public QWidget
  //! Public Methods
  public :
 
+  void
+  SaveAtExit
+  ();
+  
  //! Public Data
  public :
 
@@ -67,6 +71,7 @@ class MainDisplayJSONTreesWindow : public QWidget
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
   void                          CreateConnections       (void);
+  void                          SaveSplitterSizes       ();
 
  //! Private Data
  private :

@@ -12,7 +12,6 @@
 #include <QtGui>
 #include <QWidget>
 
-#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
@@ -65,12 +64,6 @@ MainDisplayWindow::Initialize()
 void
 MainDisplayWindow::InitializeSubWindows()
 {
-  splitter = NULL;
-  elementsWindow = NULL;
-  fileWindow = NULL;
-  objectsWindow = NULL;
-  objectDisplayWindow = NULL;
-  treesWindow = NULL;
 }
 
 /*****************************************************************************!
@@ -85,87 +78,6 @@ MainDisplayWindow::CreateSubWindows()
   functionSVGWindow = new MainDisplayFunctionSVGWindow(this, filename, baseFilename, mainJSONObject, objectsFormats);
   functionSVGWindow->hide();
 
-#if 0
-  splitter = new MainSplitter();
-  splitter->setParent(this);
-  splitter->hide();
-  
-  widths = MainSystemConfig->GetWindowWidths();
-
-  fileWindow            = new JSONFileWindow(filename, baseFilename, mainJSONObject);
-  elementsWindow        = new MainTagWindow(mainJSONObject, objectsFormats);
-  objectsWindow         = new JSONElementWindow(objectsFormats);
-  objectDisplayWindow   = new JSONFileObjectDisplayWindow();
-
-  splitter->addWidget(fileWindow);
-  splitter->addWidget(elementsWindow);
-  splitter->addWidget(objectsWindow);
-  splitter->addWidget(objectDisplayWindow);
-  splitter->setSizes(widths);
-
-  connect(objectDisplayWindow,
-          SIGNAL(SignalCallingFunctionFound(QString)),
-          this,
-          SLOT(SlotCallingFunctionFound(QString)));
-
-  connect(this,
-          SIGNAL(SignalCallingFunctionFound(QString)),
-          fileWindow,
-          SLOT(SlotCallingFunctionFound(QString)));
-  
-  connect(objectsWindow,
-          SIGNAL(SignalTypeFormatSelected(QString)),
-          this,
-          SLOT(SlotFormatTypeSelected(QString)));
-
-  connect(this, SIGNAL(SignalFormatTypeSelected(QString)),
-          elementsWindow,
-          SLOT(SlotFormatTypeSelected(QString)));
-
-  connect(fileWindow,
-          SIGNAL(SignalFileObjectSelected(QJsonObject)),
-          this,
-          SLOT(SlotFileObjectSelected(QJsonObject)));
-
-  connect(this,
-          SIGNAL(SignalFileObjectSelected(QJsonObject)),
-          objectDisplayWindow,
-          SLOT(SlotFileObjectSelected(QJsonObject)));
-
-  connect(this,
-          SIGNAL(SignalFileObjectSelected(QJsonObject)),
-          objectsWindow,
-          SLOT(SlotFileObjectSelected(QJsonObject)));
-  
-  connect(objectDisplayWindow,
-          SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
-          this,
-          SLOT(SlotFileElementSelected(QString, QList<QString>)));
-
-  connect(this,
-          SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
-          objectsWindow,
-          SLOT(SlotFileElementSelected(QString, QList<QString>)));
-
-  connect(objectsWindow,
-          SIGNAL(SignalObjectFormatSelected(JSONObjectFormat*)),
-          this,
-          SLOT(SlotObjectFormatSelected(JSONObjectFormat*)));
-
-  connect(this,
-          SIGNAL(SignalObjectFormatSelected(JSONObjectFormat*)),
-          objectDisplayWindow,
-          SLOT(SlotObjectFormatSelected(JSONObjectFormat*)));
-
-  connect(objectDisplayWindow,
-          SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
-          this,
-          SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
-  connect(this,
-          SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
-          objectsWindow,
-          SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
-#endif
 }
 
 /*****************************************************************************!
@@ -184,9 +96,6 @@ MainDisplayWindow::resizeEvent
   height = size.height();
   (void)height;
   (void)width;
-  if ( splitter ) {
-    splitter->resize(width, height);
-  }
 
   if ( treesWindow ) {
     treesWindow->resize(width, height);
@@ -224,100 +133,13 @@ MainDisplayWindow::HandleInputFilename(void)
 }
 
 /*****************************************************************************!
- * Function : SlotFormatTypeSelected
- *****************************************************************************/
-void
-MainDisplayWindow::SlotFormatTypeSelected
-(QString InType)
-{
-  emit SignalFormatTypeSelected(InType);
-}
-
-/*****************************************************************************!
- * Function : SlotFileObjectSelected
- *****************************************************************************/
-void
-MainDisplayWindow::SlotFileObjectSelected
-(QJsonObject InObject)
-{
-  emit SignalFileObjectSelected(InObject);
-}
-
-/*****************************************************************************!
  * Function : SaveAtExit
  *****************************************************************************/
 void
 MainDisplayWindow::SaveAtExit
 ()
 {
-  QList<int>                    splitterSizes;
-  QList<int>                    columnSizes;
-  
-  splitterSizes = splitter->sizes();
-
-  columnSizes = fileWindow->GetColumnWidths();
-  MainSystemConfig->SetWindowSizeInfo(0, splitterSizes[0], columnSizes);
-
-  columnSizes = elementsWindow->GetColumnWidths();
-  MainSystemConfig->SetWindowSizeInfo(1, splitterSizes[1], columnSizes);
-
-  columnSizes = objectsWindow->GetColumnWidths();
-  MainSystemConfig->SetWindowSizeInfo(2, splitterSizes[2], columnSizes);
-
-  columnSizes = objectDisplayWindow->GetColumnWidths();
-  MainSystemConfig->SetWindowSizeInfo(3, splitterSizes[3], columnSizes);
-
-  MainSystemConfig->Save();
-}
-
-/*****************************************************************************!
- * Function : SlotFileElementSelected
- *****************************************************************************/
-void
-MainDisplayWindow::SlotFileElementSelected
-(QString InTag, QList<QString> InKeys)
-{
-  emit SignalFileElementSelected(InTag, InKeys);
-}
-
-/*****************************************************************************!
- * Function : ResizeColumns
- *****************************************************************************/
-void
-MainDisplayWindow::ResizeColumns
-()
-{
-  fileWindow->SetColumnWidths(MainSystemConfig->GetColumnWidths(0));
-}
-
-/*****************************************************************************!
- * Function : SlotObjectFormatSelected
- *****************************************************************************/
-void
-MainDisplayWindow::SlotObjectFormatSelected
-(JSONObjectFormat* InObjectFormat)
-{
-  emit SignalObjectFormatSelected(InObjectFormat);
-}
-
-/*****************************************************************************!
- * Function : SlotObjectFormatIdentified
- *****************************************************************************/
-void
-MainDisplayWindow::SlotObjectFormatIdentified
-(QString InTag, QStringList InKeys)
-{
-  emit SignalFileElementIdentified(InTag, InKeys);
-}
-
-/*****************************************************************************!
- * Function : SlotCallingFunctionFound
- *****************************************************************************/
-void
-MainDisplayWindow::SlotCallingFunctionFound
-(QString InFunctionName)
-{
-  emit SignalCallingFunctionFound(InFunctionName);
+  treesWindow->SaveAtExit();
 }
 
 /*****************************************************************************!

@@ -49,11 +49,15 @@ class JSONFileWindow : public QWidget
  //! Public Methods
  public :
   QList<int>                    GetColumnWidths         (void);
+
   void
   SetColumnWidths
   (QList<int> InWidths);
 
-
+  void
+  ResizeColumns
+  (QList<int> InWidths);
+  
  //! Public Data
  public :
 

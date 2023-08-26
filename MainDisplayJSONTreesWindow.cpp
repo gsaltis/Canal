@@ -17,6 +17,7 @@
  *****************************************************************************/
 #include "MainDisplayJSONTreesWindow.h"
 #include "common.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : MainDisplayJSONTreesWindow
@@ -71,7 +72,6 @@ MainDisplayJSONTreesWindow::CreateSubWindows()
   splitter->setParent(this);
 
   widths = MainSystemConfig->GetWindowWidths();
-
   fileWindow            = new JSONFileWindow(filename, baseFilename, mainJSONObject);
   elementsWindow        = new MainTagWindow(mainJSONObject, objectsFormats);
   objectsWindow         = new JSONElementWindow(objectsFormats);
@@ -81,6 +81,34 @@ MainDisplayJSONTreesWindow::CreateSubWindows()
   splitter->addWidget(elementsWindow);
   splitter->addWidget(objectsWindow);
   splitter->addWidget(objectDisplayWindow);
+  splitter->setSizes(widths);
+}
+
+/*****************************************************************************!
+ * Function : SaveSplitterSizes
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SaveSplitterSizes
+()
+{
+  QList<int>                    splitterSizes;
+  QList<int>                    columnSizes;
+
+  splitterSizes = splitter->sizes();
+
+  columnSizes = fileWindow->GetColumnWidths();
+  MainSystemConfig->SetWindowSizeInfo(0, splitterSizes[0], columnSizes);
+
+  columnSizes = elementsWindow->GetColumnWidths();
+  MainSystemConfig->SetWindowSizeInfo(1, splitterSizes[1], columnSizes);
+
+  columnSizes = objectsWindow->GetColumnWidths();
+  MainSystemConfig->SetWindowSizeInfo(2, splitterSizes[2], columnSizes);
+
+  columnSizes = objectDisplayWindow->GetColumnWidths();
+  MainSystemConfig->SetWindowSizeInfo(3, splitterSizes[3], columnSizes);
+
+  MainSystemConfig->Save();
 }
 
 /*****************************************************************************!
@@ -244,3 +272,12 @@ MainDisplayJSONTreesWindow::SlotCallingFunctionFound
   emit SignalCallingFunctionFound(InFunctionName);
 }
 
+/*****************************************************************************!
+ * Function : SaveAtExit 
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SaveAtExit
+()
+{
+  SaveSplitterSizes();  
+}

@@ -198,3 +198,5 @@ JSONFileWindow::SlotCallingFunctionFound
 {
   emit SignalCallingFunctionFound(InFunctionName);
 }
+
+
