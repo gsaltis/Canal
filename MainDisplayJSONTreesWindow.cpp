@@ -57,6 +57,7 @@ MainDisplayJSONTreesWindow::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
+  CreateConnections();
 }
 
 /*****************************************************************************!
@@ -72,15 +73,14 @@ MainDisplayJSONTreesWindow::CreateSubWindows()
   widths = MainSystemConfig->GetWindowWidths();
 
   fileWindow            = new JSONFileWindow(filename, baseFilename, mainJSONObject);
-  tagWindow             = new MainTagWindow(mainJSONObject, objectsFormats);
-  elementWindow         = new JSONElementWindow(objectsFormats);
+  elementsWindow        = new MainTagWindow(mainJSONObject, objectsFormats);
+  objectsWindow         = new JSONElementWindow(objectsFormats);
   objectDisplayWindow   = new JSONFileObjectDisplayWindow();
 
   splitter->addWidget(fileWindow);
-  splitter->addWidget(tagWindow);
-  splitter->addWidget(elementWindow);
+  splitter->addWidget(elementsWindow);
+  splitter->addWidget(objectsWindow);
   splitter->addWidget(objectDisplayWindow);
-  splitter->setSizes(widths);  
 }
 
 /*****************************************************************************!
@@ -112,3 +112,135 @@ MainDisplayJSONTreesWindow::resizeEvent
     splitter->resize(width, height);
   }
 }
+
+/*****************************************************************************!
+ * Function : CreateConnections
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::CreateConnections(void)
+{
+
+  connect(objectDisplayWindow,
+          SIGNAL(SignalCallingFunctionFound(QString)),
+          this,
+          SLOT(SlotCallingFunctionFound(QString)));
+
+  connect(this,
+          SIGNAL(SignalCallingFunctionFound(QString)),
+          fileWindow,
+          SLOT(SlotCallingFunctionFound(QString)));
+  
+  connect(objectsWindow,
+          SIGNAL(SignalTypeFormatSelected(QString)),
+          this,
+          SLOT(SlotFormatTypeSelected(QString)));
+
+  connect(this, SIGNAL(SignalFormatTypeSelected(QString)),
+          elementsWindow,
+          SLOT(SlotFormatTypeSelected(QString)));
+
+  connect(fileWindow,
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
+          this,
+          SLOT(SlotFileObjectSelected(QJsonObject)));
+
+  connect(this,
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
+          objectDisplayWindow,
+          SLOT(SlotFileObjectSelected(QJsonObject)));
+
+  connect(this,
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
+          objectsWindow,
+          SLOT(SlotFileObjectSelected(QJsonObject)));
+  
+  connect(objectDisplayWindow,
+          SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
+          this,
+          SLOT(SlotFileElementSelected(QString, QList<QString>)));
+
+  connect(this,
+          SIGNAL(SignalFileElementSelected(QString, QList<QString>)),
+          objectsWindow,
+          SLOT(SlotFileElementSelected(QString, QList<QString>)));
+
+  connect(objectsWindow,
+          SIGNAL(SignalObjectFormatSelected(JSONObjectFormat*)),
+          this,
+          SLOT(SlotObjectFormatSelected(JSONObjectFormat*)));
+
+  connect(this,
+          SIGNAL(SignalObjectFormatSelected(JSONObjectFormat*)),
+          objectDisplayWindow,
+          SLOT(SlotObjectFormatSelected(JSONObjectFormat*)));
+
+  connect(objectDisplayWindow,
+          SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
+          this,
+          SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
+  connect(this,
+          SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
+          objectsWindow,
+          SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
+}
+
+/*****************************************************************************!
+ * Function : SlotFormatTypeSelected
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotFormatTypeSelected
+(QString InType)
+{
+  emit SignalFormatTypeSelected(InType);
+}
+
+/*****************************************************************************!
+ * Function : SlotFileObjectSelected
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotFileObjectSelected
+(QJsonObject InObject)
+{
+  emit SignalFileObjectSelected(InObject);
+}
+
+/*****************************************************************************!
+ * Function : SlotFileElementSelected
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotFileElementSelected
+(QString InTag, QList<QString> InKeys)
+{
+  emit SignalFileElementSelected(InTag, InKeys);
+}
+
+/*****************************************************************************!
+ * Function : SlotObjectFormatSelected
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotObjectFormatSelected
+(JSONObjectFormat* InObjectFormat)
+{
+  emit SignalObjectFormatSelected(InObjectFormat);
+}
+
+/*****************************************************************************!
+ * Function : SlotObjectFormatIdentified
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotObjectFormatIdentified
+(QString InTag, QStringList InKeys)
+{
+  emit SignalFileElementIdentified(InTag, InKeys);
+}
+
+/*****************************************************************************!
+ * Function : SlotCallingFunctionFound
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotCallingFunctionFound
+(QString InFunctionName)
+{
+  emit SignalCallingFunctionFound(InFunctionName);
+}
+

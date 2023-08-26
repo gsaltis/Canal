@@ -66,14 +66,17 @@ class MainDisplayJSONTreesWindow : public QWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
+  void                          CreateConnections       (void);
 
  //! Private Data
  private :
   MainSplitter*                 splitter;
-  MainTagWindow*                tagWindow;
+
+  MainTagWindow*                elementsWindow;
   JSONFileWindow*               fileWindow;
-  JSONElementWindow*            elementWindow;
+  JSONElementWindow*            objectsWindow;
   JSONFileObjectDisplayWindow*  objectDisplayWindow;
+
   JSONObjectFormatList*         objectsFormats;
 
   QString                       filename;
@@ -83,9 +86,21 @@ class MainDisplayJSONTreesWindow : public QWidget
   
  //! Public Slots
  public slots :
+  void                          SlotFormatTypeSelected  (QString InType);
+  void                          SlotFileObjectSelected  (QJsonObject InObject);
+  void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
+  void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
+  void                          SlotCallingFunctionFound (QString InFunctionName);
 
  //! Public Signals
  signals :
+  void                          SignalFormatTypeSelected(QString InType);
+  void                          SignalFileObjectSelected(QJsonObject);
+  void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
+  void                          SignalObjectFormatSelected (JSONObjectFormat* InObjectFormat);
+  void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
+  void                          SignalCallingFunctionFound (QString InFunctionName);
 
  //! Public Actions
  public :

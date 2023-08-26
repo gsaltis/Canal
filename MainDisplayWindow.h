@@ -28,7 +28,6 @@
 #include "JSONElementWindow.h"
 #include "JSONObjectFormatList.h"
 #include "JSONFileObjectDisplayWindow.h"
-#include "MainTreeWindows.h"
 #include "MainDisplayJSONTreesWindow.h"
 #include "MainDisplayFunctionSVGWindow.h"
 
@@ -81,12 +80,12 @@ class MainDisplayWindow : public QWidget
   MainTagWindow*                elementsWindow;
   JSONFileWindow*               fileWindow;
   JSONElementWindow*            objectsWindow;
+  JSONFileObjectDisplayWindow*  objectDisplayWindow;
   QString                       filename;
   QString                       baseFilename;
   QJsonDocument                 jsonDoc;
   QJsonObject                   mainJSONObject;
   JSONObjectFormatList*         objectsFormats;
-  JSONFileObjectDisplayWindow*  objectDisplayWindow;
   MainStacker*                  stacker;
   
   MainDisplayJSONTreesWindow*   treesWindow;
