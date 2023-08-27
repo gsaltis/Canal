@@ -93,9 +93,13 @@ main
     MainSourceFilename = args[0];
   }
 
+  if ( MainSourceFilename.isEmpty() ) {
+    fprintf(stderr, "Missing input filename\n");
+    return EXIT_FAILURE;
+  }
   mainWindow = new MainWindow(NULL, MainSourceFilename, &MainObjectsFormats);
-  mainWindow->resize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
-  mainWindow->move(MAIN_WINDOW_X, MAIN_WINDOW_Y);
+  mainWindow->resize(MainSystemConfig->GetMainWindowSize());
+  mainWindow->move(MainSystemConfig->GetMainWindowPosition());
   mainWindow->setWindowTitle(MainSystemConfig->GetSystemName() +
                              QString ( " : ") +
                              MainSourceFilename);

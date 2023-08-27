@@ -54,8 +54,8 @@ JSONFileObjectDisplayWindow::initialize()
   connect(ActionCollapseElements, SIGNAL(triggered()), this, SLOT(SlotCollapseElements()));
   ActionExpandElements = new QAction(QIcon(":/Images/Expand.png"), "ExpandElements", this);
   connect(ActionExpandElements, SIGNAL(triggered()), this, SLOT(SlotExpandElements()));
-  Toolbar->addAction(ActionCollapseElements);
   Toolbar->addAction(ActionExpandElements);
+  Toolbar->addAction(ActionCollapseElements);
 }
 
 /*****************************************************************************!

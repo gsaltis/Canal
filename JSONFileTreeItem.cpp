@@ -30,6 +30,19 @@ JSONFileTreeItem::JSONFileTreeItem
 }
 
 /*****************************************************************************!
+ * Function : JSONFileTreeItem
+ *****************************************************************************/
+JSONFileTreeItem::JSONFileTreeItem
+(QString InTitle, int InType, int InElementType, QJsonObject InObject) : QTreeWidgetItem()
+{
+  setText(0, InTitle);
+  type = InType;
+  elementType = InElementType;
+  object = InObject;
+  initialize();
+}
+
+/*****************************************************************************!
  * Function : ~JSONFileTreeItem
  *****************************************************************************/
 JSONFileTreeItem::~JSONFileTreeItem

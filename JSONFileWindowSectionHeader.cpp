@@ -52,6 +52,7 @@ JSONFileWindowSectionHeader::initialize()
 void
 JSONFileWindowSectionHeader::CreateSubWindows()
 {
+  QPalette                              pal;
 
   //! Create label
   ElementCountLabel = new QLabel();
@@ -60,6 +61,11 @@ JSONFileWindowSectionHeader::CreateSubWindows()
   ElementCountLabel->resize(100, 20);
   ElementCountLabel->setText("Count");
   ElementCountLabel->setAlignment(Qt::AlignRight);
+
+  pal = ElementCountLabel->palette();
+  pal.setBrush(QPalette::WindowText, Qt::white);
+  ElementCountLabel->setPalette(pal);
+  
   ElementCountLabel->setFont(QFont("Segoe UI", 12, QFont::Normal));
 }
 

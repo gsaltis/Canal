@@ -72,6 +72,14 @@ class SystemConfig : public QWidget
   QColor
   GetSectionHeaderBackgroundColor
   ();
+
+  QSize
+  GetMainWindowSize
+  ();
+
+  QPoint
+  GetMainWindowPosition
+  ();
   
  //! Public Data
  public :
@@ -100,7 +108,13 @@ class SystemConfig : public QWidget
  private :
   std::vector<WindowSizeInfo*>
   WindowsInfo;
-  
+
+  QSize
+  MainWindowSize;
+
+  QPoint
+  MainWindowPosition;
+    
  //! Public Slots
  public slots :
 

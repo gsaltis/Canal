@@ -67,17 +67,20 @@ MainDisplayJSONTreesWindow::initialize()
 void
 MainDisplayJSONTreesWindow::CreateSubWindows()
 {
+  QStringList                           keys;
   QList<int>                            widths;
   splitter = new MainSplitter();
   splitter->setParent(this);
 
   widths = MainSystemConfig->GetWindowWidths();
-  fileWindow            = new JSONFileWindow(filename, baseFilename, mainJSONObject);
+  keys = mainJSONObject.keys();
+
+  translationUnitWindow = new JSONFileWindow(filename, baseFilename, mainJSONObject);
   elementsWindow        = new MainTagWindow(mainJSONObject, objectsFormats);
   objectsWindow         = new JSONElementWindow(objectsFormats);
   objectDisplayWindow   = new JSONFileObjectDisplayWindow();
 
-  splitter->addWidget(fileWindow);
+  splitter->addWidget(translationUnitWindow);
   splitter->addWidget(elementsWindow);
   splitter->addWidget(objectsWindow);
   splitter->addWidget(objectDisplayWindow);
@@ -96,7 +99,7 @@ MainDisplayJSONTreesWindow::SaveSplitterSizes
 
   splitterSizes = splitter->sizes();
 
-  columnSizes = fileWindow->GetColumnWidths();
+  columnSizes = translationUnitWindow->GetColumnWidths();
   MainSystemConfig->SetWindowSizeInfo(0, splitterSizes[0], columnSizes);
 
   columnSizes = elementsWindow->GetColumnWidths();
@@ -155,7 +158,7 @@ MainDisplayJSONTreesWindow::CreateConnections(void)
 
   connect(this,
           SIGNAL(SignalCallingFunctionFound(QString)),
-          fileWindow,
+          translationUnitWindow,
           SLOT(SlotCallingFunctionFound(QString)));
   
   connect(objectsWindow,
@@ -167,7 +170,7 @@ MainDisplayJSONTreesWindow::CreateConnections(void)
           elementsWindow,
           SLOT(SlotFormatTypeSelected(QString)));
 
-  connect(fileWindow,
+  connect(translationUnitWindow,
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           this,
           SLOT(SlotFileObjectSelected(QJsonObject)));

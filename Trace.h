@@ -36,6 +36,24 @@
          __FILE__, __FUNCTION__, __LINE__,                              \
          #n, n.toStdString().c_str());                                  \
 
+#define TRACE_FUNCTION_QSIZE(n)                                         \
+  printf("%10s %50s::%30s:%05d : "                                      \
+         "%30s width = %d  "                                            \
+         "height = %d\n",                                               \
+         "QSTRING",                                                     \
+         __FILE__, __FUNCTION__, __LINE__,                              \
+         #n, n.width(),                                                 \
+         n.height());                                                   \
+
+#define TRACE_FUNCTION_QPOINT(n)                                        \
+  printf("%10s %50s::%30s:%05d : "                                      \
+         "%30s x = %d  "                                                \
+         "y = %d\n",                                                    \
+         "QSTRING",                                                     \
+         __FILE__, __FUNCTION__, __LINE__,                              \
+         #n, n.x(),                                                     \
+         n.y());                                                        \
+
 #define TRACE_FUNCTION_LOCATION()                                       \
   printf("%10s %50s::%30s:%05d\n",                                      \
          "LOCATION",                                                    \

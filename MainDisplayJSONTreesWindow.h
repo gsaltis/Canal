@@ -78,7 +78,7 @@ class MainDisplayJSONTreesWindow : public QWidget
   MainSplitter*                 splitter;
 
   MainTagWindow*                elementsWindow;
-  JSONFileWindow*               fileWindow;
+  JSONFileWindow*               translationUnitWindow;
   JSONElementWindow*            objectsWindow;
   JSONFileObjectDisplayWindow*  objectDisplayWindow;
 

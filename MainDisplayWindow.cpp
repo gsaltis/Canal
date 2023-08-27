@@ -77,7 +77,6 @@ MainDisplayWindow::CreateSubWindows()
   treesWindow = new MainDisplayJSONTreesWindow(this, filename, baseFilename, mainJSONObject, objectsFormats);
   functionSVGWindow = new MainDisplayFunctionSVGWindow(this, filename, baseFilename, mainJSONObject, objectsFormats);
   functionSVGWindow->hide();
-
 }
 
 /*****************************************************************************!

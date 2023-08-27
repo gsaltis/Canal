@@ -60,6 +60,7 @@ class SectionHeader : public QFrame
  protected :
   QLabel*                       HeaderText;
   QColor                        backgroundColor;
+  QColor                        textColor;
   
  //! Private Methods
  private :

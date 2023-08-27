@@ -41,6 +41,11 @@ class JSONFileTreeItem : public QTreeWidgetItem
                                  int InElementType = JSONFILE_TREE_ITEM_TYPE_NONE,
                                  QJsonObject InObject = QJsonObject());
 
+  JSONFileTreeItem              (QString InTitle,
+                                 int InType = JSONFILE_TREE_ITEM_TOP,
+                                 int InElementType = JSONFILE_TREE_ITEM_TYPE_NONE,
+                                 QJsonObject InObject = QJsonObject());
+
  //! Destructor
  public :
   ~JSONFileTreeItem             ();

@@ -34,16 +34,34 @@ JSONFileTree::JSONFileTree
 
   setColumnCount(2);
   head = new QTreeWidgetItem();
-  head->setText(0, "TAG");
+  head->setText(0, "NAME");
   head->setBackground(0, brush);
   resizeColumnToContents(0);
   
-  head->setText(1, "VALUE");
+  head->setText(1, "TYPE");
   head->setBackground(1, brush);
   setHeaderItem(head);
 
   header()->setStretchLastSection(true);
-  
+
+  EnumItems             = new JSONFileTreeItem("Enums", JSONFILE_TREE_ITEM_TOP);
+  RecordItems           = new JSONFileTreeItem("Records", JSONFILE_TREE_ITEM_TOP);
+  TypeDefItems          = new JSONFileTreeItem("Type Defs", JSONFILE_TREE_ITEM_TOP);
+  VariableItems         = new JSONFileTreeItem("Variables", JSONFILE_TREE_ITEM_TOP);
+  FunctionDeclItems     = new JSONFileTreeItem("Function Declarations", JSONFILE_TREE_ITEM_TOP);
+  FunctionDefItems      = new JSONFileTreeItem("Function Definitions", JSONFILE_TREE_ITEM_TOP);
+  OtherItems            = new JSONFileTreeItem("Other", JSONFILE_TREE_ITEM_TOP);
+  NonLocalItems         = new JSONFileTreeItem("Non-Local", JSONFILE_TREE_ITEM_TOP);
+
+  addTopLevelItem(EnumItems);
+  addTopLevelItem(RecordItems);
+  addTopLevelItem(TypeDefItems);
+  addTopLevelItem(VariableItems);
+  addTopLevelItem(FunctionDeclItems);
+  addTopLevelItem(FunctionDefItems);
+  addTopLevelItem(OtherItems);
+  addTopLevelItem(NonLocalItems);
+
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
   setPalette(pal);
@@ -68,6 +86,11 @@ JSONFileTree::initialize()
   InitializeSubWindows();  
   CreateSubWindows();
   setColumnCount(2);
+
+  connect(this,
+          SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+          this,
+          SLOT(SlotItemClicked(QTreeWidgetItem*, int)));
 }
 
 /*****************************************************************************!
@@ -77,31 +100,11 @@ void
 JSONFileTree::SetObject
 ()
 {
-  QStringList                           keys;
+  QJsonValue                            value;
 
-  keys = JSONFileObject.keys();
-  
-  for ( int i = 0 ; i < keys.size() ; i++ ) {
-    JSONFileTreeItem*                   item = new JSONFileTreeItem();
-    QJsonValue                          value = JSONFileObject[keys[i]];
-    
-    item->setText(0, keys[i]);
-    if ( value.isString() ) {
-      item->setText(1, value.toString());
-    } else if ( value.isDouble() ) {
-      QString s = QString("%1").arg(value.toInt());
-      item->setText(1, s);
-    }
-    addTopLevelItem(item);
-    if ( keys[i] == "inner" ) {
-      item->setExpanded(true);
-      SetInnerItem(item, &value);
-    }
-  }
-  connect(this,
-          SIGNAL(itemClicked(QTreeWidgetItem*, int)),
-          this,
-          SLOT(SlotItemClicked(QTreeWidgetItem*, int)));
+  value = JSONFileObject["inner"];
+  SetInnerItem(&value);
+  SortItems();
 }
 
 /*****************************************************************************!
@@ -132,7 +135,7 @@ JSONFileTree::CreateSubWindows()
  *****************************************************************************/
 void
 JSONFileTree::SetInnerItem
-(JSONFileTreeItem* InItem, QJsonValue* InValue)
+(QJsonValue* InValue)
 {
   QColor                                color;
   QJsonArray                            inner;
@@ -181,9 +184,31 @@ JSONFileTree::SetInnerItem
       MainTopLevelObjects << obj;
       item->setForeground(0, QBrush(color));
       item->setForeground(1, QBrush(color));
-      item->setText(0, kind);
-      item->setText(1, name);
-      InItem->addChild(item);
+      item->setText(0, name);
+      if ( elementType == JSONFILE_TREE_ITEM_TYPE_FUNCTION_DEF ) {
+        FunctionDefItems->addChild(item);
+      } else if ( elementType == JSONFILE_TREE_ITEM_TYPE_FUNCTION_DECL ) {
+        FunctionDeclItems->addChild(item);
+      } else if ( kind == "VarDecl" ) {
+        VariableItems->addChild(item);
+      } else if ( kind == "RecordDecl" ) {
+        RecordItems->addChild(item);
+      } else if ( kind == "TypedefDecl" ) {
+        TypeDefItems->addChild(item);
+      } else if ( kind == "EnumDecl" ) {
+        EnumItems->addChild(item);
+      } else {
+        item->setText(1, kind);
+        OtherItems->addChild(item);
+      }
+    } else {
+      item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, elementType, obj);
+      MainTopLevelObjects << obj;
+      item->setForeground(0, QBrush(color));
+      item->setForeground(1, QBrush(color));
+      item->setText(0, name);
+      item->setText(1, kind);
+      NonLocalItems->addChild(item);
     }
   }
   emit SignalLocalCountSet(localCount);
@@ -247,7 +272,7 @@ JSONFileTree::AddInnerObject
       continue;
     }
     if ( keys[i] == "inner" ) {
-      SetInnerItem(item, &value);
+      SetInnerItem(&value);
     }
   }
 }
@@ -297,18 +322,15 @@ JSONFileTree::SlotCallingFunctionFound
   JSONFileTreeItem*                     topItem;
   QFont                                 font;
 
-  topItem = FindTopLevelItemByName("inner");
+  topItem = FindTopLevelItemByName("Function Definitions");
   n = topItem->childCount();
   for (i = 0; i < n; i++) {
     item = (JSONFileTreeItem*)topItem->child(i);
-    if ( item->GetElementType() != JSONFILE_TREE_ITEM_TYPE_FUNCTION_DEF ) {
-      continue;
-    }
-    if ( item->text(1) == InFunctionName ) {
+    QString st = item->text(0);
+    if ( st == InFunctionName ) {
       font = item->font(0);
       font.setWeight(QFont::Bold);
       item->setFont(0, font);
-      item->setFont(1, font);
     }
   }
 }
@@ -347,7 +369,7 @@ JSONFileTree::ResetNameFonts(void)
   JSONFileTreeItem*                     topItem;
   QFont                                 font;
 
-  topItem = FindTopLevelItemByName("inner");
+  topItem = FindTopLevelItemByName("Function Definitions");
   n = topItem->childCount();
   for (i = 0; i < n; i++) {
     item = (JSONFileTreeItem*)topItem->child(i);
@@ -356,4 +378,20 @@ JSONFileTree::ResetNameFonts(void)
     item->setFont(0, font);
     item->setFont(1, font);
   }
+}
+
+/*****************************************************************************!
+ * Function : SortItems
+ *****************************************************************************/
+void
+JSONFileTree::SortItems(void)
+{ 
+  EnumItems->sortChildren(0, Qt::AscendingOrder);
+  RecordItems->sortChildren(0, Qt::AscendingOrder);
+  TypeDefItems->sortChildren(0, Qt::AscendingOrder);
+  VariableItems->sortChildren(0, Qt::AscendingOrder);
+  FunctionDeclItems->sortChildren(0, Qt::AscendingOrder);
+  FunctionDefItems->sortChildren(0, Qt::AscendingOrder);
+  OtherItems->sortChildren(0, Qt::AscendingOrder);
+  NonLocalItems->sortChildren(0, Qt::AscendingOrder);
 }

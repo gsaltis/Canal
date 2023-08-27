@@ -29,6 +29,7 @@ SectionHeader::SectionHeader
   pal = palette();
 
   backgroundColor = MainSystemConfig->GetSectionHeaderBackgroundColor();
+  textColor = QColor(Qt::white);
   pal.setBrush(QPalette::Window, QBrush(backgroundColor));
   setPalette(pal);
   setAutoFillBackground(true);
@@ -61,6 +62,7 @@ SectionHeader::initialize()
 void
 SectionHeader::CreateSubWindows()
 {
+  QPalette                              pal;
   //! Create label
   HeaderText = new QLabel();
   HeaderText->setParent(this);
@@ -69,6 +71,9 @@ SectionHeader::CreateSubWindows()
   HeaderText->setText("None");
   HeaderText->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
   HeaderText->setFont(QFont("Segoe UI", 12, QFont::Normal));
+  pal = HeaderText->palette();
+  pal.setBrush(QPalette::WindowText, QColor(textColor));
+  HeaderText->setPalette(pal);
 }
 
 /*****************************************************************************!

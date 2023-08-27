@@ -64,17 +64,26 @@ class JSONFileTree : public QTreeWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
-  void                          SetInnerItem            (JSONFileTreeItem* InItem, QJsonValue* InValue);
+  void                          SetInnerItem            (QJsonValue* InValue);
   void                          AddInnerObject          (JSONFileTreeItem* InItem, QJsonObject InObject);
   void                          SetObject               ();
   JSONFileTreeItem*             FindTopLevelItemByName  (QString InName);
   void                          ResetNameFonts          (void);
+  void                          SortItems               (void);
   
  //! Private Data
  private :
   QJsonObject                   JSONFileObject;
   QString                       filename;
   QString                       baseFilename;
+  JSONFileTreeItem*             EnumItems;
+  JSONFileTreeItem*             RecordItems;
+  JSONFileTreeItem*             TypeDefItems;
+  JSONFileTreeItem*             VariableItems;
+  JSONFileTreeItem*             FunctionDeclItems;
+  JSONFileTreeItem*             FunctionDefItems;
+  JSONFileTreeItem*             OtherItems;
+  JSONFileTreeItem*             NonLocalItems;
 
  //! Public Slots
  public slots :

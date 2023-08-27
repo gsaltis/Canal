@@ -74,6 +74,9 @@ void
 SystemConfig::Save
 ()
 {
+  QJsonObject                           mainWindowObj;
+  QJsonObject                           mainWindowSizeObj;
+  QJsonObject                           mainWindowPosObj;
   QJsonArray                            colorArray;
   QJsonObject                           sectionHeaderObj;
   QJsonArray                            columnArray;
@@ -120,7 +123,21 @@ SystemConfig::Save
   colorArray.push_back(SectionHeaderBackgroundColor.blue());
   sectionHeaderObj.insert("BackgroundColor", colorArray);
   windowObj.insert("SectionHeader", sectionHeaderObj);
-  
+
+  mainWindowObj = QJsonObject();
+  mainWindowSizeObj = QJsonObject();
+  mainWindowPosObj = QJsonObject();
+
+  mainWindowSizeObj.insert("width", MainWindowSize.width());
+  mainWindowSizeObj.insert("height", MainWindowSize.height());
+
+  mainWindowPosObj.insert("x", MainWindowPosition.x());
+  mainWindowPosObj.insert("y", MainWindowPosition.y());
+
+  mainWindowObj.insert("Size", mainWindowSizeObj);
+  mainWindowObj.insert("Position", mainWindowPosObj);
+
+  windowObj.insert("MainWindow", mainWindowObj);
   obj.insert("Window", QJsonValue(windowObj));
 
   jsonDoc = QJsonDocument(obj);
@@ -180,17 +197,29 @@ void
 SystemConfig::ReadWindowInfo
 (QJsonObject InObj)
 {
+  QStringList                           keys;
+  QJsonObject                           mainWindowObj;
+  QJsonObject                           mainWindowSizeObj;
+  QJsonObject                           mainWindowPosObj;
   QJsonArray                            colorArray;
   QJsonObject                           sectionHeaderObj;
   QJsonArray                            columns;
   QJsonObject                           info;
   int                                   width;
   QJsonArray                            sizesArray;
+
   if ( InObj.isEmpty() ) {
     return;
   }
 
+  mainWindowObj = InObj["MainWindow"].toObject();
+  mainWindowSizeObj = mainWindowObj["Size"].toObject();
+  mainWindowPosObj = mainWindowObj["Position"].toObject();
   sectionHeaderObj = InObj["SectionHeader"].toObject();
+
+  MainWindowSize = QSize(mainWindowSizeObj["width"].toInt(), mainWindowSizeObj["height"].toInt());
+  MainWindowPosition = QPoint(mainWindowPosObj["x"].toInt(), mainWindowPosObj["y"].toInt());
+  
   colorArray = sectionHeaderObj["BackgroundColor"].toArray();
   if ( colorArray.count() == 3 ) {
     SectionHeaderBackgroundColor = QColor(colorArray[0].toInt(), colorArray[1].toInt(), colorArray[2].toInt());
@@ -274,4 +303,24 @@ SystemConfig::GetSectionHeaderBackgroundColor
 ()
 {
   return SectionHeaderBackgroundColor;
+}
+
+/*****************************************************************************!
+ * Function : GetMainWindowSize
+ *****************************************************************************/
+QSize
+SystemConfig::GetMainWindowSize
+()
+{
+  return MainWindowSize;
+}
+
+/*****************************************************************************!
+ * Function : GetMainWindowPosition
+ *****************************************************************************/
+QPoint
+SystemConfig::GetMainWindowPosition
+()
+{
+  return MainWindowPosition;
 }
