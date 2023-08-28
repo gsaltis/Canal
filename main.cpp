@@ -61,6 +61,9 @@ MainTreeHeaderColor = QColor(128, 128, 128);
 QList<QJsonObject>
 MainTopLevelObjects;
 
+int
+MainFirstLocalElementIndex = 0;
+
 /*****************************************************************************!
  * Function : main
  *****************************************************************************/

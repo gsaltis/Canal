@@ -248,16 +248,79 @@ JSONFileObjectDisplayWindow::FindCalls
 
   n = MainTopLevelObjects.count();
 
-  for (i = 0; i < n; i++) {
+  for (i = MainFirstLocalElementIndex; i < n; i++) {
     obj = MainTopLevelObjects[i];
     name = obj["name"].toString();
     if ( ObjectIsFunctionDefinition(obj) ) {
-      if ( ContainsCallExpr(obj, InFunctionName) ) {
-        emit SignalCallingFunctionFound(name);
+      FunctionContainsReference(obj, InFunctionName);
+    }
+  }
+}
+
+/*****************************************************************************!
+ * Function : FunctionContainsReference
+ *****************************************************************************/
+bool
+JSONFileObjectDisplayWindow::FunctionContainsReference
+(QJsonObject InFunctionObject, QString InFunctionName)
+{
+  QString                               objectName;
+
+  objectName = InFunctionObject["name"].toString();
+  return ObjectContainsReference(objectName, InFunctionObject, InFunctionName);
+}
+
+/*****************************************************************************!
+ * Function : ObjectContainsReference
+ *****************************************************************************/
+bool
+JSONFileObjectDisplayWindow::ObjectContainsReference
+(QString InObjectName, QJsonObject InObject, QString InFunctionName)
+{
+  QString                               kind;
+  QString                               name;
+  QJsonArray                            array;
+  QJsonValue                            val2;
+  int                                   n;
+  QJsonValue                            val;
+  QJsonObject                           obj;
+  QString                               declName;
+  QStringList                           keys;
+
+  
+  keys = InObject.keys();
+  for ( auto i = keys.begin() ; i != keys.end() ; i++ ) {
+    QString                             key = *i;
+    if ( key == "referencedDecl" ) {
+      obj = InObject[key].toObject();
+      declName = obj["name"].toString();
+      if ( declName == InFunctionName ) {
+        emit SignalCallingFunctionFound(InObjectName);
+        return true;
+      }
+    }
+    val = InObject[key];
+    if ( val.isObject() ) {
+      if ( ObjectContainsReference(InObjectName, val.toObject(), InFunctionName) ) {
+        return true;
       }
       continue;
     }
+
+    if ( val.isArray() ) {
+      array = val.toArray();
+      n = array.count();
+      for ( int k = 0 ; k < n ; k++ ) {
+        val2 = array[k];
+        if ( val2.isObject() ) {
+          if ( ObjectContainsReference(InObjectName, val2.toObject(), InFunctionName) ) {
+            return true;
+          } 
+        }
+      }
+    }
   }
+  return false;
 }
 
 /*****************************************************************************!

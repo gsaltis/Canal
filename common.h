@@ -45,6 +45,10 @@ extern
 QList<QJsonObject>
 MainTopLevelObjects;
 
+extern
+int
+MainFirstLocalElementIndex;
+
 /*****************************************************************************!
  * Exported Functions
  *****************************************************************************/

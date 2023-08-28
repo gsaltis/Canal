@@ -177,6 +177,7 @@ JSONFileTree::SetInnerItem
     filename = locObj["file"].toString();
     if ( filename == baseFilename ) {
       outFileFound = true;
+      MainFirstLocalElementIndex = i;
     }
     if ( outFileFound ) {
       localCount++;
