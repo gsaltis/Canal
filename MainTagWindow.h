@@ -73,6 +73,10 @@ class MainTagWindow : public QWidget
   void                          ProcessArrayTagList     (QJsonArray InArray, QString InTag);
   JSONTagTreeItem*              FindItemByName          (QString InTag);
 
+  void
+  SetColumnWidths
+  (QList<int> InWidths);
+
  //! Private Data
  private :
   QJsonObject                   jsonObject;

@@ -87,6 +87,10 @@ class JSONFileObjectDisplayWindow : public QWidget
 
   bool                          ObjectContainsReference
   (QString InObjectName, QJsonObject InObject, QString InFunctionName);
+
+  void
+  SetColumnWidths
+  (QList<int> InWidths);
   
  //! Private Data
  private :

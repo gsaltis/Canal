@@ -32,6 +32,7 @@ JSONFileObjectDisplayWindow::JSONFileObjectDisplayWindow
   setPalette(pal);
   setAutoFillBackground(true);
   initialize();
+  SetColumnWidths(MainSystemConfig->GetColumnWidths(3));
 }
 
 /*****************************************************************************!
@@ -287,7 +288,6 @@ JSONFileObjectDisplayWindow::ObjectContainsReference
   QString                               declName;
   QStringList                           keys;
 
-  
   keys = InObject.keys();
   for ( auto i = keys.begin() ; i != keys.end() ; i++ ) {
     QString                             key = *i;
@@ -547,3 +547,15 @@ JSONFileObjectDisplayWindow::SlotExpandElements(void)
 {
   emit SignalExpandTree();
 }
+
+/*****************************************************************************!
+ * Function : SetColumnWidths
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SetColumnWidths
+(QList<int> InWidths)
+{
+  fileTree->setColumnWidth(0, InWidths[0]);
+  fileTree->setColumnWidth(1, InWidths[1]);
+}
+

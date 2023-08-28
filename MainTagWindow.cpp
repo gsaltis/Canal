@@ -17,6 +17,7 @@
  *****************************************************************************/
 #include "MainTagWindow.h"
 #include "JSONTagTreeItem.h"
+#include "common.h"
 
 /*****************************************************************************!
  * Function : MainTagWindow
@@ -32,6 +33,7 @@ MainTagWindow::MainTagWindow
   setPalette(pal);
   setAutoFillBackground(true);
   initialize();
+  SetColumnWidths(MainSystemConfig->GetColumnWidths(1));
 }
 
 /*****************************************************************************!
@@ -241,3 +243,15 @@ MainTagWindow::SlotElementCountChanged
 {
   header->SetInnerCount(InCount);
 }
+
+/*****************************************************************************!
+ * Function : SetColumnWidths
+ *****************************************************************************/
+void
+MainTagWindow::SetColumnWidths
+(QList<int> InWidths)
+{
+  tagTree->setColumnWidth(0, InWidths[0]);
+  tagTree->setColumnWidth(1, InWidths[1]);
+}
+

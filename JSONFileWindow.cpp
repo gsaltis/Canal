@@ -18,6 +18,7 @@
  *****************************************************************************/
 #include "JSONFileWindow.h"
 #include "Trace.h"
+#include "common.h"
 
 /*****************************************************************************!
  * Function : JSONFileWindow
@@ -41,6 +42,7 @@ JSONFileWindow::JSONFileWindow
   setAutoFillBackground(true);
   initialize();
   fileTree->Set(mainJSONObject, filename, basename);
+  SetColumnWidths(MainSystemConfig->GetColumnWidths(0));
 }
 
 /*****************************************************************************!
