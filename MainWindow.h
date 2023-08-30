@@ -80,6 +80,7 @@ class MainWindow : public QMainWindow
   QString                       filename;
   JSONObjectFormatList*         objectsFormats;
   int                           windowIndex;
+  QString                       pathName;
   
  //! Public Slots
  public slots :
@@ -92,6 +93,7 @@ class MainWindow : public QMainWindow
  signals :
   void                          SignalSelectWindow      (int InWindowIndex);
   void                          SignalClearChildren     (void);
+  void                          SignalSetMessageNormal  (QString InMessage);
 
  //! Public Actions
  public :

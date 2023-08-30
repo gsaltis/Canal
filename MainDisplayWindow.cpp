@@ -67,6 +67,7 @@ MainDisplayWindow::Initialize()
 void
 MainDisplayWindow::InitializeSubWindows()
 {
+  messageWindow = NULL;
 }
 
 /*****************************************************************************!
@@ -80,6 +81,8 @@ MainDisplayWindow::CreateSubWindows()
   treesWindow = new MainDisplayJSONTreesWindow(this, filename, baseFilename, mainJSONObject, objectsFormats);
   functionSVGWindow = new MainDisplayFunctionSVGWindow(this, filename, baseFilename, mainJSONObject, objectsFormats);
   functionSVGWindow->hide();
+  messageWindow = new MainMessageWindow();
+  messageWindow->setParent(this);
 }
 
 /*****************************************************************************!
@@ -89,6 +92,8 @@ void
 MainDisplayWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
+  int                                   messageWindowY;
+  int                                   h;
   QSize                                 size;  
   int                                   width;
   int                                   height;
@@ -96,16 +101,21 @@ MainDisplayWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  (void)height;
-  (void)width;
+
+  h = height - MAIN_MESSAGE_WINDOW_HEIGHT;
 
   if ( treesWindow ) {
-    treesWindow->resize(width, height);
+    treesWindow->resize(width, h);
   }
   if ( functionSVGWindow ) {
-    functionSVGWindow->resize(width, height);
+    functionSVGWindow->resize(width, h);
   }
-
+  messageWindowY = height - MAIN_MESSAGE_WINDOW_HEIGHT;
+  
+  if ( messageWindow ) {
+    messageWindow->resize(width, MAIN_MESSAGE_WINDOW_HEIGHT);
+    messageWindow->move(0, messageWindowY);
+  }
 }
 
 /*****************************************************************************!
@@ -182,6 +192,10 @@ MainDisplayWindow::CreateConnections(void)
           SIGNAL(SignalClearChildren()),
           treesWindow,
           SLOT(SlotClearChildren()));
+  connect(this,
+          SIGNAL(SignalSetMessageNormal(QString)),
+          messageWindow,
+          SLOT(SlotSetMessageNormal(QString)));
 }
 
 /*****************************************************************************!
@@ -194,4 +208,14 @@ MainDisplayWindow::OpenNewFile
   filename = InFilename;
   HandleInputFilename();
   treesWindow->OpenNewFile(filename, baseFilename, mainJSONObject);
+}
+
+/*****************************************************************************!
+ * Function : SlotSetMessageNormal
+ *****************************************************************************/
+void
+MainDisplayWindow::SlotSetMessageNormal
+(QString InMessage)
+{
+  emit SignalSetMessageNormal(InMessage);
 }

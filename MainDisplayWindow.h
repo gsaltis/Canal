@@ -30,6 +30,7 @@
 #include "JSONFileObjectDisplayWindow.h"
 #include "MainDisplayJSONTreesWindow.h"
 #include "MainDisplayFunctionSVGWindow.h"
+#include "MainMessageWindow.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -84,15 +85,18 @@ class MainDisplayWindow : public QWidget
   int                           windowIndex;
   MainDisplayJSONTreesWindow*   treesWindow;
   MainDisplayFunctionSVGWindow* functionSVGWindow;
+  MainMessageWindow*            messageWindow;
 
  //! Public Slots
  public slots :
   void                          SlotSelectWindow        (int InWindowIndex);
   void                          SlotClearChildren       (void);
+  void                          SlotSetMessageNormal    (QString InMessage);
   
  //! Public Signals
  signals :
   void                          SignalClearChildren     (void);
+  void                          SignalSetMessageNormal  (QString InMessage);
   
  //! Public Actions
  public :

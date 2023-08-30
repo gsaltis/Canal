@@ -116,12 +116,13 @@ main
     }
   }
 
+  QFileInfo                     fileInfo(MainSourceFilename);
   mainWindow = new MainWindow(NULL, MainSourceFilename, &MainObjectsFormats, windowIndex);
   mainWindow->resize(MainSystemConfig->GetMainWindowSize());
   mainWindow->move(MainSystemConfig->GetMainWindowPosition());
   mainWindow->setWindowTitle(MainSystemConfig->GetSystemName() +
                              QString ( " : ") +
-                             MainSourceFilename);
+                             fileInfo.fileName());
   mainWindow->setWindowIcon(QIcon(":/Images/Canal.png"));
   mainWindow->show();
   return application.exec();

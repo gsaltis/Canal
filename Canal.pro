@@ -56,6 +56,7 @@ SOURCES                         += \
 				   JSONTagTree.cpp                              \
 				   JSONTagTreeItem.cpp                          \
 				   MainDisplayWindow.cpp                        \
+                                   MainMessageWindow.cpp                        \
 				   MainSplitter.cpp                             \
 				   MainStacker.cpp                              \
 				   MainTagWindow.cpp                            \
@@ -95,6 +96,7 @@ HEADERS                         += \
 				   JSONTagTree.h                                \
 				   JSONTagTreeItem.h                            \
 				   MainDisplayWindow.h                          \
+                                   MainMessageWindow.h                          \                                   
 				   MainSplitter.h                               \
 				   MainStacker.h                                \
 				   MainTagWindow.h                              \

@@ -66,6 +66,7 @@ MainWindow::~MainWindow
 void
 MainWindow::Initialize()
 {
+  pathName = "./";
   filename = QString();
   setWindowTitle(MainSystemConfig->GetSystemName());  
 }
@@ -214,6 +215,10 @@ MainWindow::CreateConnections()
           SIGNAL(SignalClearChildren()),
           displayWindow,
           SLOT(SlotClearChildren()));
+  connect(this,
+          SIGNAL(SignalSetMessageNormal(QString)),
+          displayWindow,
+          SLOT(SlotSetMessageNormal(QString)));
 }
 
 /*****************************************************************************!
@@ -222,13 +227,26 @@ MainWindow::CreateConnections()
 void
 MainWindow::SlotFileOpen(void)
 {
+  QString                               fname;
   QString                               fileNameTmp;
+
   fileNameTmp = QFileDialog::getOpenFileName(this,
-     tr("Open JSON File"), "./", tr("JSON Files (*.json);;Any file (*)"));
+                                             tr("Open JSON File"),
+                                             pathName,
+                                             tr("JSON Files (*.json);;Any file (*)"));
   emit SignalClearChildren();
   filename = fileNameTmp;
+  QFileInfo                             fileInfo(filename);
+
+  pathName = fileInfo.path();
+  fname = fileInfo.fileName();
+  
   setWindowTitle(MainSystemConfig->GetSystemName() +
                  QString ( " : ") +
-                 filename);
+                 fname);
+  setCursor(Qt::WaitCursor);
+  emit SignalSetMessageNormal("Reading File");
+  QCoreApplication::processEvents();
   displayWindow->OpenNewFile(filename);
+  setCursor(Qt::ArrowCursor);
 }
