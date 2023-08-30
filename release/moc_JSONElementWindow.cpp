@@ -55,15 +55,17 @@ static constexpr auto qt_meta_stringdata_CLASSJSONElementWindowENDCLASS = QtMocH
     "InSearchTag",
     "SignalFileObjectSelected",
     "InObject",
+    "SignalClearChildren",
     "SlotTypeFormatSelected",
     "SlotFileElementSelected",
     "SlotObjectFormatSelected",
     "SlotObjectFormatIdentified",
-    "SlotFileObjectSelected"
+    "SlotFileObjectSelected",
+    "SlotClearChildren"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSJSONElementWindowENDCLASS_t {
-    uint offsetsAndSizes[38];
+    uint offsetsAndSizes[42];
     char stringdata0[18];
     char stringdata1[25];
     char stringdata2[1];
@@ -78,11 +80,13 @@ struct qt_meta_stringdata_CLASSJSONElementWindowENDCLASS_t {
     char stringdata11[12];
     char stringdata12[25];
     char stringdata13[9];
-    char stringdata14[23];
-    char stringdata15[24];
-    char stringdata16[25];
-    char stringdata17[27];
-    char stringdata18[23];
+    char stringdata14[20];
+    char stringdata15[23];
+    char stringdata16[24];
+    char stringdata17[25];
+    char stringdata18[27];
+    char stringdata19[23];
+    char stringdata20[18];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSJSONElementWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -102,11 +106,13 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSJSONElementWindowENDCLASS_t qt_
         QT_MOC_LITERAL(178, 11),  // "InSearchTag"
         QT_MOC_LITERAL(190, 24),  // "SignalFileObjectSelected"
         QT_MOC_LITERAL(215, 8),  // "InObject"
-        QT_MOC_LITERAL(224, 22),  // "SlotTypeFormatSelected"
-        QT_MOC_LITERAL(247, 23),  // "SlotFileElementSelected"
-        QT_MOC_LITERAL(271, 24),  // "SlotObjectFormatSelected"
-        QT_MOC_LITERAL(296, 26),  // "SlotObjectFormatIdentified"
-        QT_MOC_LITERAL(323, 22)   // "SlotFileObjectSelected"
+        QT_MOC_LITERAL(224, 19),  // "SignalClearChildren"
+        QT_MOC_LITERAL(244, 22),  // "SlotTypeFormatSelected"
+        QT_MOC_LITERAL(267, 23),  // "SlotFileElementSelected"
+        QT_MOC_LITERAL(291, 24),  // "SlotObjectFormatSelected"
+        QT_MOC_LITERAL(316, 26),  // "SlotObjectFormatIdentified"
+        QT_MOC_LITERAL(343, 22),  // "SlotFileObjectSelected"
+        QT_MOC_LITERAL(366, 17)   // "SlotClearChildren"
     },
     "JSONElementWindow",
     "SignalTypeFormatSelected",
@@ -122,11 +128,13 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSJSONElementWindowENDCLASS_t qt_
     "InSearchTag",
     "SignalFileObjectSelected",
     "InObject",
+    "SignalClearChildren",
     "SlotTypeFormatSelected",
     "SlotFileElementSelected",
     "SlotObjectFormatSelected",
     "SlotObjectFormatIdentified",
-    "SlotFileObjectSelected"
+    "SlotFileObjectSelected",
+    "SlotClearChildren"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -138,26 +146,28 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSJSONElementWindowENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   74,    2, 0x06,    1 /* Public */,
-       4,    2,   77,    2, 0x06,    3 /* Public */,
-       7,    1,   82,    2, 0x06,    6 /* Public */,
-      10,    2,   85,    2, 0x06,    8 /* Public */,
-      12,    1,   90,    2, 0x06,   11 /* Public */,
+       1,    1,   86,    2, 0x06,    1 /* Public */,
+       4,    2,   89,    2, 0x06,    3 /* Public */,
+       7,    1,   94,    2, 0x06,    6 /* Public */,
+      10,    2,   97,    2, 0x06,    8 /* Public */,
+      12,    1,  102,    2, 0x06,   11 /* Public */,
+      14,    0,  105,    2, 0x06,   13 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      14,    1,   93,    2, 0x0a,   13 /* Public */,
-      15,    2,   96,    2, 0x0a,   15 /* Public */,
-      16,    1,  101,    2, 0x0a,   18 /* Public */,
-      17,    2,  104,    2, 0x0a,   20 /* Public */,
-      18,    1,  109,    2, 0x0a,   23 /* Public */,
+      15,    1,  106,    2, 0x0a,   14 /* Public */,
+      16,    2,  109,    2, 0x0a,   16 /* Public */,
+      17,    1,  114,    2, 0x0a,   19 /* Public */,
+      18,    2,  117,    2, 0x0a,   21 /* Public */,
+      19,    1,  122,    2, 0x0a,   24 /* Public */,
+      20,    0,  125,    2, 0x0a,   26 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -165,6 +175,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSJSONElementWindowENDCLASS[] = {
     QMetaType::Void, 0x80000000 | 8,    9,
     QMetaType::Void, QMetaType::QString, QMetaType::QStringList,   11,    6,
     QMetaType::Void, QMetaType::QJsonObject,   13,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -172,6 +183,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSJSONElementWindowENDCLASS[] = {
     QMetaType::Void, 0x80000000 | 8,    9,
     QMetaType::Void, QMetaType::QString, QMetaType::QStringList,    5,    6,
     QMetaType::Void, QMetaType::QJsonObject,   13,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -202,6 +214,8 @@ Q_CONSTINIT const QMetaObject JSONElementWindow::staticMetaObject = { {
         // method 'SignalFileObjectSelected'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QJsonObject, std::false_type>,
+        // method 'SignalClearChildren'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'SlotTypeFormatSelected'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
@@ -218,7 +232,9 @@ Q_CONSTINIT const QMetaObject JSONElementWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
         // method 'SlotFileObjectSelected'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QJsonObject, std::false_type>
+        QtPrivate::TypeAndForceComplete<QJsonObject, std::false_type>,
+        // method 'SlotClearChildren'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
@@ -234,11 +250,13 @@ void JSONElementWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 2: _t->SignalObjectFormatSelected((*reinterpret_cast< std::add_pointer_t<JSONObjectFormat*>>(_a[1]))); break;
         case 3: _t->SignalFileElementIdentified((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2]))); break;
         case 4: _t->SignalFileObjectSelected((*reinterpret_cast< std::add_pointer_t<QJsonObject>>(_a[1]))); break;
-        case 5: _t->SlotTypeFormatSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 6: _t->SlotFileElementSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<QString>>>(_a[2]))); break;
-        case 7: _t->SlotObjectFormatSelected((*reinterpret_cast< std::add_pointer_t<JSONObjectFormat*>>(_a[1]))); break;
-        case 8: _t->SlotObjectFormatIdentified((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2]))); break;
-        case 9: _t->SlotFileObjectSelected((*reinterpret_cast< std::add_pointer_t<QJsonObject>>(_a[1]))); break;
+        case 5: _t->SignalClearChildren(); break;
+        case 6: _t->SlotTypeFormatSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 7: _t->SlotFileElementSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<QString>>>(_a[2]))); break;
+        case 8: _t->SlotObjectFormatSelected((*reinterpret_cast< std::add_pointer_t<JSONObjectFormat*>>(_a[1]))); break;
+        case 9: _t->SlotObjectFormatIdentified((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2]))); break;
+        case 10: _t->SlotFileObjectSelected((*reinterpret_cast< std::add_pointer_t<QJsonObject>>(_a[1]))); break;
+        case 11: _t->SlotClearChildren(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -251,7 +269,7 @@ void JSONElementWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< JSONObjectFormat* >(); break;
             }
             break;
-        case 7:
+        case 8:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -296,6 +314,13 @@ void JSONElementWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
                 return;
             }
         }
+        {
+            using _t = void (JSONElementWindow::*)();
+            if (_t _q_method = &JSONElementWindow::SignalClearChildren; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 5;
+                return;
+            }
+        }
     }
 }
 
@@ -318,13 +343,13 @@ int JSONElementWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     }
     return _id;
 }
@@ -362,5 +387,11 @@ void JSONElementWindow::SignalFileObjectSelected(QJsonObject _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
+}
+
+// SIGNAL 5
+void JSONElementWindow::SignalClearChildren()
+{
+    QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
 }
 QT_WARNING_POP

@@ -56,6 +56,7 @@ MainTagWindow::initialize()
   PopulateTree();
   header->SetText("JSON ELEMENTS");
   SlotElementCountChanged(tagTree->topLevelItemCount());
+  CreateConnections();
 }
 
 /*****************************************************************************!
@@ -255,3 +256,35 @@ MainTagWindow::SetColumnWidths
   tagTree->setColumnWidth(1, InWidths[1]);
 }
 
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+MainTagWindow::SlotClearChildren(void)
+{
+  emit SignalClearChildren();
+}
+
+/*****************************************************************************!
+ * Function : CreateConnections
+ *****************************************************************************/
+void
+MainTagWindow::CreateConnections(void)
+{
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          tagTree,
+          SLOT(SlotClearChildren()));
+}
+
+/*****************************************************************************!
+ * Function : OpenNewFile
+ *****************************************************************************/
+void
+MainTagWindow::OpenNewFile(QJsonObject InJsonObject)
+{
+  jsonObject = InJsonObject;
+  BuildTagList(jsonObject, "TranslationUnitDecl");
+  PopulateTree();
+  SlotElementCountChanged(tagTree->topLevelItemCount());
+}

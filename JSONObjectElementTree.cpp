@@ -278,3 +278,26 @@ JSONObjectElementTree::UnSelectItem(void)
     item->setFont(0, QFont("Segoe UI", 10, QFont::Normal));
   }
 }
+
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+JSONObjectElementTree::SlotClearChildren(void)
+{
+  clear();
+}
+
+/*****************************************************************************!
+ * Function : DisplayObjectFormats
+ *****************************************************************************/
+void
+JSONObjectElementTree::DisplayObjectFormats(void)
+{
+  JSONObjectElementTreeItem*            item;
+  for ( auto i = objectsFormats->begin(); i != objectsFormats->end(); i++ ) {
+    JSONObjectFormat*                           obj = *i;
+    item = new JSONObjectElementTreeItem(obj);
+    addTopLevelItem(item);
+  }
+}

@@ -45,7 +45,7 @@ class MainDisplayWindow : public QWidget
 
  //! Constructors
  public :
-  MainDisplayWindow             (QString InFilename, JSONObjectFormatList* InObjectsFormats);
+  MainDisplayWindow             (QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex);
 
  //! Destructor
  public :
@@ -54,6 +54,7 @@ class MainDisplayWindow : public QWidget
  //! Public Methods
  public :
   void                          SaveAtExit              ();
+  void                          OpenNewFile             (QString InFilename);
   
  //! Public Data
  public :
@@ -71,6 +72,7 @@ class MainDisplayWindow : public QWidget
   void                          CreateSubWindows        ();
   void                          resizeEvent             (QResizeEvent* InEvent);
   void                          HandleInputFilename     (void);
+  void                          CreateConnections       (void);
 
  //! Private Data
  private :
@@ -79,16 +81,18 @@ class MainDisplayWindow : public QWidget
   QJsonDocument                 jsonDoc;
   QJsonObject                   mainJSONObject;
   JSONObjectFormatList*         objectsFormats;
-  
+  int                           windowIndex;
   MainDisplayJSONTreesWindow*   treesWindow;
   MainDisplayFunctionSVGWindow* functionSVGWindow;
 
  //! Public Slots
  public slots :
   void                          SlotSelectWindow        (int InWindowIndex);
+  void                          SlotClearChildren       (void);
   
  //! Public Signals
  signals :
+  void                          SignalClearChildren     (void);
   
  //! Public Actions
  public :

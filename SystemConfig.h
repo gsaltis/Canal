@@ -80,7 +80,11 @@ class SystemConfig : public QWidget
   QPoint
   GetMainWindowPosition
   ();
-  
+
+  QColor
+  GetDisplayWindowBackgroundColor
+  ();
+    
  //! Public Data
  public :
   QString
@@ -91,7 +95,10 @@ class SystemConfig : public QWidget
 
   QColor
   SectionHeaderBackgroundColor;
-  
+
+  QColor
+  displayWindowBackgroundColor;
+
  //! Protected Methods
  protected :
 

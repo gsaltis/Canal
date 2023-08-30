@@ -75,7 +75,9 @@ main
   QStringList                           args;
   QApplication                          application(argc, argv);
   QCommandLineParser                    parser;
-
+  QString                               st;
+  int                                   windowIndex = 1;
+  
   MainInitialize();
   
   atexit(MainExisting);
@@ -87,6 +89,11 @@ main
   parser.addHelpOption();
   parser.addVersionOption();
   parser.setApplicationDescription("C/C++ Analyzer Helper");
+  QCommandLineOption windowOption = QCommandLineOption(QStringList() << "w" << "window",
+                                                       QCoreApplication::translate("main", "Select active window"),
+                                                       QCoreApplication::translate("main", "window"),
+                                                       QString("1"));
+  parser.addOption(windowOption);
   parser.addPositionalArgument("source", "Specify source input file");
 
   parser.process(application);
@@ -100,13 +107,22 @@ main
     fprintf(stderr, "Missing input filename\n");
     return EXIT_FAILURE;
   }
-  mainWindow = new MainWindow(NULL, MainSourceFilename, &MainObjectsFormats);
+
+  st = parser.value(windowOption);
+  if ( ! st.isEmpty() ) {
+    int n = st.toInt();
+    if ( n == 1 || n == 2 ) {
+      windowIndex = n;
+    }
+  }
+
+  mainWindow = new MainWindow(NULL, MainSourceFilename, &MainObjectsFormats, windowIndex);
   mainWindow->resize(MainSystemConfig->GetMainWindowSize());
   mainWindow->move(MainSystemConfig->GetMainWindowPosition());
   mainWindow->setWindowTitle(MainSystemConfig->GetSystemName() +
                              QString ( " : ") +
                              MainSourceFilename);
-  // w->showMaximized();
+  mainWindow->setWindowIcon(QIcon(":/Images/Canal.png"));
   mainWindow->show();
   return application.exec();
 }

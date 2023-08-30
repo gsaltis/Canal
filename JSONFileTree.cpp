@@ -69,6 +69,7 @@ JSONFileTree::JSONFileTree
   initialize();
 }
 
+
 /*****************************************************************************!
  * Function : ~JSONFileTree
  *****************************************************************************/
@@ -395,4 +396,20 @@ JSONFileTree::SortItems(void)
   FunctionDefItems->sortChildren(0, Qt::AscendingOrder);
   OtherItems->sortChildren(0, Qt::AscendingOrder);
   NonLocalItems->sortChildren(0, Qt::AscendingOrder);
+}
+
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+JSONFileTree::SlotClearChildren(void)
+{
+  EnumItems->takeChildren();
+  RecordItems->takeChildren();
+  TypeDefItems->takeChildren();
+  VariableItems->takeChildren();
+  FunctionDeclItems->takeChildren();
+  FunctionDefItems->takeChildren();
+  OtherItems->takeChildren();
+  NonLocalItems->takeChildren();
 }

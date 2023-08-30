@@ -46,6 +46,7 @@ class JSONObjectElementTree : public QTreeWidget
 
  //! Public Methods
  public :
+  void                          DisplayObjectFormats    (void);
 
  //! Public Data
  public :
@@ -78,6 +79,7 @@ class JSONObjectElementTree : public QTreeWidget
   void
   SlotFileObjectSelected
   (QJsonObject InObject);
+  void                          SlotClearChildren       (void);
 
  //! Public Signals
  signals :

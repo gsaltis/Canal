@@ -101,6 +101,10 @@ JSONElementWindow::CreateSubWindows()
           SIGNAL(SignalObjectFormatSelected(JSONObjectFormat*)),
           this,
           SLOT(SlotObjectFormatSelected(JSONObjectFormat*)));
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          elementTree,
+          SLOT(SlotClearChildren()));
 }
 
 /*****************************************************************************!
@@ -205,4 +209,24 @@ JSONElementWindow::SlotFileObjectSelected
 (QJsonObject InObject)
 {
   emit SignalFileObjectSelected(InObject);
+}
+
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+JSONElementWindow::SlotClearChildren(void)
+{
+  emit SignalClearChildren();
+}
+
+/*****************************************************************************!
+ * Function : OpenNewFile
+ *****************************************************************************/
+void
+JSONElementWindow::OpenNewFile
+()
+{
+  elementTree->DisplayObjectFormats();
+  header->SetInnerCount(elementTree->topLevelItemCount());
 }

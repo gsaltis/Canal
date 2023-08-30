@@ -51,6 +51,7 @@ class JSONElementWindow : public QWidget
   QList<int>
   GetColumnWidths
   ();
+  void                          OpenNewFile             ();
 
  //! Public Data
  public :
@@ -101,6 +102,7 @@ class JSONElementWindow : public QWidget
 
   void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
   void                          SlotFileObjectSelected  (QJsonObject InObject);
+  void                          SlotClearChildren       (void);
   
  //! Public Signals
  signals :
@@ -123,6 +125,7 @@ class JSONElementWindow : public QWidget
   void
   SignalFileObjectSelected
   (QJsonObject InObject);
+  void                          SignalClearChildren     (void);
   
  //! Public Actions
  public :

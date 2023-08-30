@@ -1,6 +1,6 @@
 /*****************************************************************************
- * FILE NAME    : MainDisplayFunctionSVGWindow.cpp
- * DATE         : August 25 2023
+ * FILE NAME    : JSONFileObjectElementDisplayWindow.cpp
+ * DATE         : August 29 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
@@ -15,33 +15,26 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "MainDisplayFunctionSVGWindow.h"
-#include "common.h"
+#include "JSONFileObjectElementDisplayWindow.h"
 
 /*****************************************************************************!
- * Function : MainDisplayFunctionSVGWindow
+ * Function : JSONFileObjectElementDisplayWindow
  *****************************************************************************/
-MainDisplayFunctionSVGWindow::MainDisplayFunctionSVGWindow
-(QWidget* InParent, QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject, JSONObjectFormatList* InObjectsFormats) :
-  QWidget(InParent)
+JSONFileObjectElementDisplayWindow::JSONFileObjectElementDisplayWindow
+() : QWidget()
 {
-  QPalette pal;
-  filename = InFilename;
-  baseFilename = InBaseFilename;
-  mainJSONObject = InMainJSONObject;
-  formatList = InObjectsFormats;
-  
+  QPalette                                      pal;
   pal = palette();
-  pal.setBrush(QPalette::Window, MainSystemConfig->GetDisplayWindowBackgroundColor());
+  pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
   setPalette(pal);
   setAutoFillBackground(true);
   initialize();
 }
 
 /*****************************************************************************!
- * Function : ~MainDisplayFunctionSVGWindow
+ * Function : ~JSONFileObjectElementDisplayWindow
  *****************************************************************************/
-MainDisplayFunctionSVGWindow::~MainDisplayFunctionSVGWindow
+JSONFileObjectElementDisplayWindow::~JSONFileObjectElementDisplayWindow
 ()
 {
 }
@@ -50,7 +43,7 @@ MainDisplayFunctionSVGWindow::~MainDisplayFunctionSVGWindow
  * Function : initialize
  *****************************************************************************/
 void
-MainDisplayFunctionSVGWindow::initialize()
+JSONFileObjectElementDisplayWindow::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
@@ -60,48 +53,38 @@ MainDisplayFunctionSVGWindow::initialize()
  * Function : CreateSubWindows
  *****************************************************************************/
 void
-MainDisplayFunctionSVGWindow::CreateSubWindows()
+JSONFileObjectElementDisplayWindow::CreateSubWindows()
 {
-  functionNamesWindow = new DisplayFunctionSVGNamePane();
-  functionNamesWindow->setParent(this);
+  
 }
 
 /*****************************************************************************!
  * Function : InitializeSubWindows
  *****************************************************************************/
 void
-MainDisplayFunctionSVGWindow::InitializeSubWindows()
+JSONFileObjectElementDisplayWindow::InitializeSubWindows()
 {
-  functionNamesWindow = NULL;
+  
 }
 
 /*****************************************************************************!
  * Function : resizeEvent
  *****************************************************************************/
 void
-MainDisplayFunctionSVGWindow::resizeEvent
+JSONFileObjectElementDisplayWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
-  int                                   functionNamesWindowH;
-  int                                   functionNamesWindowW;
-  int                                   functionNamesWindowY;
-  int                                   functionNamesWindowX;
+  QPalette                              pal;
   QSize                                 size;  
-  int                                   width;
   int                                   height;
 
   size = InEvent->size();
-  width = size.width();
   height = size.height();
-  (void)width;
 
-  functionNamesWindowX = 0;
-  functionNamesWindowY = 0;
-  functionNamesWindowW = DISPLAY_FUNCTION_SVGNAME_PANE_WIDTH;
-  functionNamesWindowH = height;
-    
-  if ( functionNamesWindow ) {
-    functionNamesWindow->move(functionNamesWindowX, functionNamesWindowY);
-    functionNamesWindow->resize(functionNamesWindowW, functionNamesWindowH);
-  }
+  QLinearGradient                       grad(0, 0, 0, height);
+  grad.setColorAt(0, QColor(240, 240, 240));
+  grad.setColorAt(1, QColor(208, 208, 208));
+  pal = palette();
+  pal.setBrush(QPalette::Window, QBrush(grad));
+  setPalette(pal);
 }

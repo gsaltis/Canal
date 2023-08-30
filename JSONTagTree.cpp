@@ -88,13 +88,22 @@ void
 JSONTagTree::resizeEvent
 (QResizeEvent* InEvent)
 {
-  QSize					size;  
-  int					width;
-  int					height;
+  QSize                                 size;  
+  int                                   width;
+  int                                   height;
 
   size = InEvent->size();
   width = size.width();
   height = size.height();
   (void)height;
   (void)width;
+}
+
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+JSONTagTree::SlotClearChildren(void)
+{
+  clear();
 }

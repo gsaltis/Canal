@@ -1,11 +1,11 @@
 /*****************************************************************************
- * FILE NAME    : MainDisplayFunctionSVGWindow.h
- * DATE         : August 25 2023
+ * FILE NAME    : DisplayFunctionSVGNamePane.h
+ * DATE         : August 28 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _maindisplayfunctionsvgwindow_h_
-#define _maindisplayfunctionsvgwindow_h_
+#ifndef _displayfunctionsvgnamepane_h_
+#define _displayfunctionsvgnamepane_h_
 
 /*****************************************************************************!
  * Global Headers
@@ -13,36 +13,33 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
-#include <QJsonObject>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONObjectFormatList.h"
-#include "DisplayFunctionSVGNamePane.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define MAIN_DISPLAY_FUNCTION_SVGWINDOW_X 200
-#define MAIN_DISPLAY_FUNCTION_SVGWINDOW_Y 200
-#define MAIN_DISPLAY_FUNCTION_SVGWINDOW_WIDTH 200
-#define MAIN_DISPLAY_FUNCTION_SVGWINDOW_HEIGHT 200
+#define DISPLAY_FUNCTION_SVGNAME_PANE_X 0
+#define DISPLAY_FUNCTION_SVGNAME_PANE_Y 0
+#define DISPLAY_FUNCTION_SVGNAME_PANE_WIDTH 400
+#define DISPLAY_FUNCTION_SVGNAME_PANE_HEIGHT 200
 
 /*****************************************************************************!
- * Exported Class : MainDisplayFunctionSVGWindow
+ * Exported Class : DisplayFunctionSVGNamePane
  *****************************************************************************/
-class MainDisplayFunctionSVGWindow : public QWidget
+class DisplayFunctionSVGNamePane : public QWidget
 {
   Q_OBJECT;
 
  //! Constructors
  public :
-  MainDisplayFunctionSVGWindow          (QWidget* InParent, QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject, JSONObjectFormatList* InObjectsFormats);
+  DisplayFunctionSVGNamePane    ();
 
  //! Destructor
  public :
-  ~MainDisplayFunctionSVGWindow ();
+  ~DisplayFunctionSVGNamePane   ();
 
  //! Public Methods
  public :
@@ -62,15 +59,10 @@ class MainDisplayFunctionSVGWindow : public QWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
-
+  void                          paintEvent              (QPaintEvent* InEvent);
+  
  //! Private Data
  private :
-  QString                       filename;
-  QString                       baseFilename;
-  QJsonObject                   mainJSONObject;
-  JSONObjectFormatList*         formatList;
-  
-  DisplayFunctionSVGNamePane*   functionNamesWindow;
 
  //! Public Slots
  public slots :
@@ -83,4 +75,4 @@ class MainDisplayFunctionSVGWindow : public QWidget
 
 };
 
-#endif /* _maindisplayfunctionsvgwindow_h_*/
+#endif /* _displayfunctionsvgnamepane_h_*/

@@ -40,8 +40,8 @@ class MainWindow : public QMainWindow
 
  //! Constructors
  public :
-  MainWindow                    (QString InFilename, JSONObjectFormatList* InObjectsFormats);
-  MainWindow                    (QWidget*, QString InFilename, JSONObjectFormatList* InObjectsFormats);
+  MainWindow                    (QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex);
+  MainWindow                    (QWidget*, QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex);
 
  //! Destructor
  public :
@@ -79,22 +79,26 @@ class MainWindow : public QMainWindow
   QStatusBar*                   statusbar;
   QString                       filename;
   JSONObjectFormatList*         objectsFormats;
-
+  int                           windowIndex;
+  
  //! Public Slots
  public slots :
   void                          SlotExit                (void);
   void                          SlotSelectJSONWindow    (void);
   void                          SlotSelectDisplayWindow (void);
+  void                          SlotFileOpen            (void);
 
  //! Public Signals
  signals :
   void                          SignalSelectWindow      (int InWindowIndex);
+  void                          SignalClearChildren     (void);
 
  //! Public Actions
  public :
   QAction*                      ActionExit;
   QAction*                      ActionSelectJSONWindow;
   QAction*                      ActionSelectDisplayWindow;
+  QAction*                      ActionFileOpen;
 
 };
 

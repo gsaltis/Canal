@@ -105,6 +105,7 @@ JSONFileObjectDisplayTree::SlotItemSelected
   item = (JSONFileObjectDisplayTreeItem*)InItem;
   value = item->GetValue();
 
+  emit SignalValueSelected(value);
   if ( ! value.isObject() ) {
     return;
   }
@@ -196,4 +197,13 @@ JSONFileObjectDisplayTree::ExpandInnerCompoundStmt(void)
       return;
     }
   }
+}
+
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::SlotClearChildren(void)
+{
+  clear();
 }

@@ -52,6 +52,7 @@ class MainTagWindow : public QWidget
   QList<int>
   GetColumnWidths
   ();
+  void                          OpenNewFile             (QJsonObject InJsonObject);
 
  //! Public Data
  public :
@@ -76,6 +77,7 @@ class MainTagWindow : public QWidget
   void
   SetColumnWidths
   (QList<int> InWidths);
+  void                          CreateConnections       (void);
 
  //! Private Data
  private :
@@ -89,10 +91,12 @@ class MainTagWindow : public QWidget
  public slots :
   void                          SlotFormatTypeSelected  (QString InType);
   void                          SlotElementCountChanged (int InCount);
+  void                          SlotClearChildren       (void);
 
  //! Public Signals
  signals :
-
+  void                          SignalClearChildren     (void);
+  
  //! Public Actions
  public :
 

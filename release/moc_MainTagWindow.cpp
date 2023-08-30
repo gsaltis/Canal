@@ -41,39 +41,47 @@ namespace {
 struct qt_meta_stringdata_CLASSMainTagWindowENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSMainTagWindowENDCLASS = QtMocHelpers::stringData(
     "MainTagWindow",
-    "SlotFormatTypeSelected",
+    "SignalClearChildren",
     "",
+    "SlotFormatTypeSelected",
     "InType",
     "SlotElementCountChanged",
-    "InCount"
+    "InCount",
+    "SlotClearChildren"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainTagWindowENDCLASS_t {
-    uint offsetsAndSizes[12];
+    uint offsetsAndSizes[16];
     char stringdata0[14];
-    char stringdata1[23];
+    char stringdata1[20];
     char stringdata2[1];
-    char stringdata3[7];
-    char stringdata4[24];
-    char stringdata5[8];
+    char stringdata3[23];
+    char stringdata4[7];
+    char stringdata5[24];
+    char stringdata6[8];
+    char stringdata7[18];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainTagWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
 Q_CONSTINIT static const qt_meta_stringdata_CLASSMainTagWindowENDCLASS_t qt_meta_stringdata_CLASSMainTagWindowENDCLASS = {
     {
         QT_MOC_LITERAL(0, 13),  // "MainTagWindow"
-        QT_MOC_LITERAL(14, 22),  // "SlotFormatTypeSelected"
-        QT_MOC_LITERAL(37, 0),  // ""
-        QT_MOC_LITERAL(38, 6),  // "InType"
-        QT_MOC_LITERAL(45, 23),  // "SlotElementCountChanged"
-        QT_MOC_LITERAL(69, 7)   // "InCount"
+        QT_MOC_LITERAL(14, 19),  // "SignalClearChildren"
+        QT_MOC_LITERAL(34, 0),  // ""
+        QT_MOC_LITERAL(35, 22),  // "SlotFormatTypeSelected"
+        QT_MOC_LITERAL(58, 6),  // "InType"
+        QT_MOC_LITERAL(65, 23),  // "SlotElementCountChanged"
+        QT_MOC_LITERAL(89, 7),  // "InCount"
+        QT_MOC_LITERAL(97, 17)   // "SlotClearChildren"
     },
     "MainTagWindow",
-    "SlotFormatTypeSelected",
+    "SignalClearChildren",
     "",
+    "SlotFormatTypeSelected",
     "InType",
     "SlotElementCountChanged",
-    "InCount"
+    "InCount",
+    "SlotClearChildren"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -85,20 +93,28 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainTagWindowENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    0,   38,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   26,    2, 0x0a,    1 /* Public */,
-       4,    1,   29,    2, 0x0a,    3 /* Public */,
+       3,    1,   39,    2, 0x0a,    2 /* Public */,
+       5,    1,   42,    2, 0x0a,    4 /* Public */,
+       7,    0,   45,    2, 0x0a,    6 /* Public */,
+
+ // signals: parameters
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QString,    3,
-    QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::QString,    4,
+    QMetaType::Void, QMetaType::Int,    6,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -112,12 +128,16 @@ Q_CONSTINIT const QMetaObject MainTagWindow::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSMainTagWindowENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<MainTagWindow, std::true_type>,
+        // method 'SignalClearChildren'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'SlotFormatTypeSelected'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'SlotElementCountChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<int, std::false_type>
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'SlotClearChildren'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
@@ -128,9 +148,20 @@ void MainTagWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         auto *_t = static_cast<MainTagWindow *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->SlotFormatTypeSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 1: _t->SlotElementCountChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 0: _t->SignalClearChildren(); break;
+        case 1: _t->SlotFormatTypeSelected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 2: _t->SlotElementCountChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 3: _t->SlotClearChildren(); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (MainTagWindow::*)();
+            if (_t _q_method = &MainTagWindow::SignalClearChildren; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 0;
+                return;
+            }
         }
     }
 }
@@ -154,14 +185,20 @@ int MainTagWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 4)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 4;
     }
     return _id;
+}
+
+// SIGNAL 0
+void MainTagWindow::SignalClearChildren()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP

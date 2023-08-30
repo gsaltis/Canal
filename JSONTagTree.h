@@ -66,6 +66,7 @@ class JSONTagTree : public QTreeWidget
 
  //! Public Slots
  public slots :
+  void                          SlotClearChildren       (void);
 
  //! Public Signals
  signals :

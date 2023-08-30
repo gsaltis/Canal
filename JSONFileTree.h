@@ -90,6 +90,7 @@ class JSONFileTree : public QTreeWidget
   void                          SlotItemClicked         (QTreeWidgetItem*, int);
   void                          SlotSizeValueChanged    (int InSize);
   void                          SlotCallingFunctionFound (QString InFunctionName);
+  void                          SlotClearChildren       (void);
   
  //! Public Signals
  signals :

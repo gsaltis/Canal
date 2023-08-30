@@ -24,6 +24,7 @@
 #include "JSONFileObjectDisplayTree.h"
 #include "JSONObjectFormat.h"
 #include "SectionHeader.h"
+#include "JSONFileObjectElementDisplayWindow.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -91,6 +92,7 @@ class JSONFileObjectDisplayWindow : public QWidget
   void
   SetColumnWidths
   (QList<int> InWidths);
+  void                          DisplayParmVarDecl      (QJsonObject InObject);
   
  //! Private Data
  private :
@@ -100,6 +102,8 @@ class JSONFileObjectDisplayWindow : public QWidget
   QPushButton*                  DisplayButton;
   QToolBar*                     Toolbar;
   
+  JSONFileObjectElementDisplayWindow* elementDisplayWindow;
+
  //! Public Slots
  public slots :
   void                          SlotFileObjectSelected  (QJsonObject);
@@ -109,6 +113,8 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          SlotDisplayButtonClicked (bool InChecked);
   void                          SlotCollapseElements    (void);
   void                          SlotExpandElements      (void);
+  void                          SlotValueSelected       (QJsonValue InValue);
+  void                          SlotClearChildren       (void);
 
  //! Public Signals
  signals :
@@ -118,6 +124,7 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          SignalExpandTree        (void);
   void                          SignalCollapseTree        (void);
   void                          SignalCallingFunctionFound (QString InFunctionName);
+  void                          SignalClearChildren     (void);
 
  //! Public Actions
  public :

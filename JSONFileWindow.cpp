@@ -82,6 +82,10 @@ JSONFileWindow::initialize()
            SIGNAL(SignalCallingFunctionFound(QString)),
            fileTree,
            SLOT(SlotCallingFunctionFound(QString)));
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          fileTree,
+          SLOT(SlotClearChildren()));
 }
 
 /*****************************************************************************!
@@ -203,3 +207,25 @@ JSONFileWindow::SlotCallingFunctionFound
 }
 
 
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+JSONFileWindow::SlotClearChildren(void)
+{
+  emit SignalClearChildren();
+}
+
+/*****************************************************************************!
+ * Function : OpenNewFile
+ *****************************************************************************/
+void
+JSONFileWindow::OpenNewFile
+(QString InFilename, QString InBasename, QJsonObject InMainJSONObject)
+{
+  TRACE_FUNCTION_QSTRING(InFilename);
+  mainJSONObject = InMainJSONObject;
+  basename = InBasename;
+  filename = InFilename;
+  fileTree->Set(mainJSONObject, filename, basename);
+}

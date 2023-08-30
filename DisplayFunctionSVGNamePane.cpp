@@ -1,6 +1,6 @@
 /*****************************************************************************
- * FILE NAME    : MainDisplayFunctionSVGWindow.cpp
- * DATE         : August 25 2023
+ * FILE NAME    : DisplayFunctionSVGNamePane.cpp
+ * DATE         : August 28 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
@@ -12,36 +12,31 @@
 #include <QtGui>
 #include <QWidget>
 
+#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "MainDisplayFunctionSVGWindow.h"
-#include "common.h"
+#include "DisplayFunctionSVGNamePane.h"
+#include "Trace.h"
 
 /*****************************************************************************!
- * Function : MainDisplayFunctionSVGWindow
+ * Function : DisplayFunctionSVGNamePane
  *****************************************************************************/
-MainDisplayFunctionSVGWindow::MainDisplayFunctionSVGWindow
-(QWidget* InParent, QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject, JSONObjectFormatList* InObjectsFormats) :
-  QWidget(InParent)
+DisplayFunctionSVGNamePane::DisplayFunctionSVGNamePane
+() : QWidget()
 {
   QPalette pal;
-  filename = InFilename;
-  baseFilename = InBaseFilename;
-  mainJSONObject = InMainJSONObject;
-  formatList = InObjectsFormats;
-  
   pal = palette();
-  pal.setBrush(QPalette::Window, MainSystemConfig->GetDisplayWindowBackgroundColor());
+  pal.setBrush(QPalette::Window, QBrush(QColor(0, 255, 255)));
   setPalette(pal);
   setAutoFillBackground(true);
   initialize();
 }
 
 /*****************************************************************************!
- * Function : ~MainDisplayFunctionSVGWindow
+ * Function : ~DisplayFunctionSVGNamePane
  *****************************************************************************/
-MainDisplayFunctionSVGWindow::~MainDisplayFunctionSVGWindow
+DisplayFunctionSVGNamePane::~DisplayFunctionSVGNamePane
 ()
 {
 }
@@ -50,7 +45,7 @@ MainDisplayFunctionSVGWindow::~MainDisplayFunctionSVGWindow
  * Function : initialize
  *****************************************************************************/
 void
-MainDisplayFunctionSVGWindow::initialize()
+DisplayFunctionSVGNamePane::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
@@ -60,32 +55,27 @@ MainDisplayFunctionSVGWindow::initialize()
  * Function : CreateSubWindows
  *****************************************************************************/
 void
-MainDisplayFunctionSVGWindow::CreateSubWindows()
+DisplayFunctionSVGNamePane::CreateSubWindows()
 {
-  functionNamesWindow = new DisplayFunctionSVGNamePane();
-  functionNamesWindow->setParent(this);
+  
 }
 
 /*****************************************************************************!
  * Function : InitializeSubWindows
  *****************************************************************************/
 void
-MainDisplayFunctionSVGWindow::InitializeSubWindows()
+DisplayFunctionSVGNamePane::InitializeSubWindows()
 {
-  functionNamesWindow = NULL;
+  
 }
 
 /*****************************************************************************!
  * Function : resizeEvent
  *****************************************************************************/
 void
-MainDisplayFunctionSVGWindow::resizeEvent
+DisplayFunctionSVGNamePane::resizeEvent
 (QResizeEvent* InEvent)
 {
-  int                                   functionNamesWindowH;
-  int                                   functionNamesWindowW;
-  int                                   functionNamesWindowY;
-  int                                   functionNamesWindowX;
   QSize                                 size;  
   int                                   width;
   int                                   height;
@@ -93,15 +83,53 @@ MainDisplayFunctionSVGWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
+  (void)height;
   (void)width;
+}
 
-  functionNamesWindowX = 0;
-  functionNamesWindowY = 0;
-  functionNamesWindowW = DISPLAY_FUNCTION_SVGNAME_PANE_WIDTH;
-  functionNamesWindowH = height;
-    
-  if ( functionNamesWindow ) {
-    functionNamesWindow->move(functionNamesWindowX, functionNamesWindowY);
-    functionNamesWindow->resize(functionNamesWindowW, functionNamesWindowH);
+/*****************************************************************************!
+ * Function : paintEvent
+ *****************************************************************************/
+void
+DisplayFunctionSVGNamePane::paintEvent
+(QPaintEvent* InEvent)
+{
+  QPainter                      painter(this);
+  QSize                         s = size();
+  QPen                          darkPen;
+  QPen                          lightPen;
+  QBrush                        brush;
+  QLinearGradient               gradient(0, 0, 0, s.height());
+  int                           i;
+  int                           width = 3;
+  
+  (void)InEvent;
+  gradient.setColorAt(0, QColor(255, 255, 240));
+  gradient.setColorAt(1, QColor(192, 192, 180));
+  
+  painter.setBrush(QBrush(gradient));
+  painter.drawRect(0, 0, s.width(), s.height());
+
+  darkPen = QPen(QColor(224, 224, 224));
+  darkPen.setWidth(1);
+
+  lightPen = QPen(QColor(128, 128, 128));
+  lightPen.setWidth(1);
+
+  painter.setPen(darkPen);
+  for ( i = 0 ; i < width ; i++ ) {
+    painter.drawLine(i, i,  s.width() - 1, i);
   }
+  for ( i = 0 ; i < width ; i++ ) {
+    painter.drawLine(s.width() - i, i, s.width() - i, s.height() - i);
+  }
+  painter.setPen(lightPen);
+  for ( i = 0 ; i < width ; i++ ) {
+    painter.drawLine(i, s.height() - i,  s.width() - i, s.height() - i);
+  }
+  for ( i = 0 ; i < width ; i++ ) {
+    painter.drawLine(i, i,  i, s.height() - i);
+  }
+
+  painter.end();
 }

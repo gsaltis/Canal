@@ -54,6 +54,7 @@ class MainDisplayJSONTreesWindow : public QWidget
   void
   SaveAtExit
   ();
+  void                          OpenNewFile             (QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject);
   
  //! Public Data
  public :
@@ -97,7 +98,9 @@ class MainDisplayJSONTreesWindow : public QWidget
   void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
   void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
   void                          SlotCallingFunctionFound (QString InFunctionName);
+  void                          SlotClearChildren       (void);
 
+  
  //! Public Signals
  signals :
   void                          SignalFormatTypeSelected(QString InType);
@@ -106,6 +109,7 @@ class MainDisplayJSONTreesWindow : public QWidget
   void                          SignalObjectFormatSelected (JSONObjectFormat* InObjectFormat);
   void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
   void                          SignalCallingFunctionFound (QString InFunctionName);
+  void                          SignalClearChildren     (void);
 
  //! Public Actions
  public :

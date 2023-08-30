@@ -33,11 +33,13 @@ DEFINES                         += \
 SOURCES                         += \
 				   CanalDB.cpp                                  \
 				   DirectoryManagement.cpp                      \
+                                   DisplayFunctionSVGNamePane.cpp               \
 				   JSONElementWindow.cpp                        \
 				   JSONElementWindowSectionHeader.cpp           \
 				   JSONFileObjectDisplayTree.cpp                \
 				   JSONFileObjectDisplayTreeItem.cpp            \
 				   JSONFileObjectDisplayWindow.cpp              \
+				   JSONFileObjectElementDisplayWindow.cpp       \
 				   JSONFileTree.cpp                             \
 				   JSONFileTreeHeader.cpp                       \
 				   JSONFileTreeItem.cpp                         \
@@ -70,10 +72,12 @@ SOURCES                         += \
 HEADERS                         += \
 				   CanalDB.h                                    \
 				   DirectoryManagement.h                        \
+                                   DisplayFunctionSVGNamePane.h                 \
 				   JSONElementWindow.h                          \
 				   JSONElementWindowSectionHeader.h             \
 				   JSONFileObjectDisplayTree.h                  \
 				   JSONFileObjectDisplayTreeItem.h              \
+				   JSONFileObjectElementDisplayWindow.h         \
 				   JSONFileObjectDisplayWindow.h                \
 				   JSONFileTree.h                               \
 				   JSONFileTreeHeader.h                         \

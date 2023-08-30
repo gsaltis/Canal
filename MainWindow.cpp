@@ -13,19 +13,23 @@
 #include <QWidget>
 #include <QMenuBar>
 #include <QStatusBar>
+#include <QFileDialog>
 
+#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
 #include "MainWindow.h"
+#include "Trace.h"
 #include "common.h"
 
 /*****************************************************************************!
  * Function : MainWindow
  *****************************************************************************/
 MainWindow::MainWindow
-(QString InFilename,  JSONObjectFormatList* InObjectsFormats) : QMainWindow()
+(QString InFilename,  JSONObjectFormatList* InObjectsFormats, int InWindowIndex) : QMainWindow()
 {
+  windowIndex = InWindowIndex;
   objectsFormats = InObjectsFormats;
   Initialize();
   filename = InFilename;
@@ -35,8 +39,9 @@ MainWindow::MainWindow
  * Function : MainWindow
  *****************************************************************************/
 MainWindow::MainWindow
-(QWidget* parent, QString InFilename, JSONObjectFormatList* InObjectsFormats) : QMainWindow(parent)
+(QWidget* parent, QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex) : QMainWindow(parent)
 {
+  windowIndex = InWindowIndex;
   objectsFormats = InObjectsFormats;
   Initialize();
   filename = InFilename;
@@ -72,7 +77,7 @@ MainWindow::Initialize()
 void
 MainWindow::CreateSubWindows()
 {
-  displayWindow = new MainDisplayWindow(filename, objectsFormats);
+  displayWindow = new MainDisplayWindow(filename, objectsFormats, windowIndex);
   displayWindow->setParent(this);
   statusbar = statusBar();
 }
@@ -124,11 +129,18 @@ MainWindow::CreateActions()
   ActionSelectJSONWindow = new QAction("JSON Window", this);
   connect(ActionSelectJSONWindow, SIGNAL(triggered()), this, SLOT(SlotSelectJSONWindow()));
   ActionSelectJSONWindow->setCheckable(true);
-  ActionSelectJSONWindow->setChecked(true);
+  if ( windowIndex == 1 ) {
+    ActionSelectJSONWindow->setChecked(true);
+  }
   
   ActionSelectDisplayWindow = new QAction("Display Window", this);
   connect(ActionSelectDisplayWindow, SIGNAL(triggered()), this, SLOT(SlotSelectDisplayWindow()));
   ActionSelectDisplayWindow->setCheckable(true);
+  if ( windowIndex == 2 ) {
+    ActionSelectDisplayWindow->setChecked(true);
+  }
+  ActionFileOpen = new QAction("Open", this);
+  connect(ActionFileOpen, SIGNAL(triggered()), this, SLOT(SlotFileOpen()));
 }
 
 /*****************************************************************************!
@@ -141,6 +153,8 @@ MainWindow::CreateMenus()
   QMenu*                                windowMenu;
   menubar = menuBar();  
   fileMenu = menubar->addMenu("&File");
+  fileMenu->addAction(ActionFileOpen);
+  
   fileMenu->addAction(ActionExit);
   windowMenu = menubar->addMenu("&Windows");
   windowMenu->addAction(ActionSelectJSONWindow);
@@ -196,4 +210,25 @@ MainWindow::CreateConnections()
           SIGNAL(SignalSelectWindow(int)),
           displayWindow,
           SLOT(SlotSelectWindow(int)));
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          displayWindow,
+          SLOT(SlotClearChildren()));
+}
+
+/*****************************************************************************!
+ * Function : SlotFileOpen
+ *****************************************************************************/
+void
+MainWindow::SlotFileOpen(void)
+{
+  QString                               fileNameTmp;
+  fileNameTmp = QFileDialog::getOpenFileName(this,
+     tr("Open JSON File"), "./", tr("JSON Files (*.json);;Any file (*)"));
+  emit SignalClearChildren();
+  filename = fileNameTmp;
+  setWindowTitle(MainSystemConfig->GetSystemName() +
+                 QString ( " : ") +
+                 filename);
+  displayWindow->OpenNewFile(filename);
 }

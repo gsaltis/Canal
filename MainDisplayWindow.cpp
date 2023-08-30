@@ -23,11 +23,12 @@
  * Function : MainDisplayWindow
  *****************************************************************************/
 MainDisplayWindow::MainDisplayWindow
-(QString InFilename, JSONObjectFormatList* InObjectsFormats) : QWidget()
+(QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex) : QWidget()
 {
   objectsFormats = InObjectsFormats;
   QPalette                              pal;
 
+  windowIndex = InWindowIndex;
   filename = InFilename;
   if ( ! filename.isEmpty() ) {
     HandleInputFilename();
@@ -56,6 +57,8 @@ MainDisplayWindow::Initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
+  SlotSelectWindow(windowIndex);
+  CreateConnections();
 }
 
 /*****************************************************************************!
@@ -158,4 +161,37 @@ MainDisplayWindow::SlotSelectWindow
     functionSVGWindow->show();
     return;
   }
+}
+
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+MainDisplayWindow::SlotClearChildren(void)
+{
+  emit SignalClearChildren();
+}
+
+/*****************************************************************************!
+ * Function : CreateConnections
+ *****************************************************************************/
+void
+MainDisplayWindow::CreateConnections(void)
+{
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          treesWindow,
+          SLOT(SlotClearChildren()));
+}
+
+/*****************************************************************************!
+ * Function : OpenNewFile
+ *****************************************************************************/
+void
+MainDisplayWindow::OpenNewFile
+(QString InFilename)
+{
+  filename = InFilename;
+  HandleInputFilename();
+  treesWindow->OpenNewFile(filename, baseFilename, mainJSONObject);
 }

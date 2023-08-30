@@ -74,6 +74,7 @@ void
 SystemConfig::Save
 ()
 {
+  QJsonObject                           displayWindowObj;
   QJsonObject                           mainWindowObj;
   QJsonObject                           mainWindowSizeObj;
   QJsonObject                           mainWindowPosObj;
@@ -137,9 +138,18 @@ SystemConfig::Save
   mainWindowObj.insert("Size", mainWindowSizeObj);
   mainWindowObj.insert("Position", mainWindowPosObj);
 
+  displayWindowObj = QJsonObject();
+  colorArray = QJsonArray();
+  colorArray.push_back(displayWindowBackgroundColor.red());
+  colorArray.push_back(displayWindowBackgroundColor.green());
+  colorArray.push_back(displayWindowBackgroundColor.blue());
+  displayWindowObj.insert("BackgroundColor", colorArray);
+  
+    
   windowObj.insert("MainWindow", mainWindowObj);
+  windowObj.insert("DisplayWindow", displayWindowObj);
   obj.insert("Window", QJsonValue(windowObj));
-
+  
   jsonDoc = QJsonDocument(obj);
   st = QString(jsonDoc.toJson());
   file.setFileName(filename);
@@ -197,6 +207,8 @@ void
 SystemConfig::ReadWindowInfo
 (QJsonObject InObj)
 {
+  QJsonArray                            displayWindowColorArray;
+  QJsonObject                           displayWindowObj;
   QStringList                           keys;
   QJsonObject                           mainWindowObj;
   QJsonObject                           mainWindowSizeObj;
@@ -212,6 +224,12 @@ SystemConfig::ReadWindowInfo
     return;
   }
 
+  displayWindowObj = InObj["DisplayWindow"].toObject();
+  displayWindowColorArray = displayWindowObj["BackgroundColor"].toArray();
+  displayWindowBackgroundColor = QColor(displayWindowColorArray[0].toInt(),
+                                        displayWindowColorArray[1].toInt(),
+                                        displayWindowColorArray[2].toInt());
+  
   mainWindowObj = InObj["MainWindow"].toObject();
   mainWindowSizeObj = mainWindowObj["Size"].toObject();
   mainWindowPosObj = mainWindowObj["Position"].toObject();
@@ -259,6 +277,16 @@ SystemConfig::GetWindowWidths
     widths << WindowsInfo[i]->GetWindowWidth();
   }
   return widths;
+}
+
+/*****************************************************************************!
+ * Function : GetDisplayWindowBackgroundColor
+ *****************************************************************************/
+QColor
+SystemConfig::GetDisplayWindowBackgroundColor
+()
+{
+  return displayWindowBackgroundColor;
 }
 
 /*****************************************************************************!

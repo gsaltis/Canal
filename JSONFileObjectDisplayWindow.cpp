@@ -92,6 +92,16 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
           fileTree,
           SLOT(SlotCollapseTree()));
 
+  connect(fileTree,
+          SIGNAL(SignalValueSelected(QJsonValue)),
+          this,
+          SLOT(SlotValueSelected(QJsonValue)));
+
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          fileTree,
+          SLOT(SlotClearChildren()));
+  
   Toolbar = new QToolBar(this);
   Toolbar->resize(34, 100);
   Toolbar->move(0, 0);
@@ -103,6 +113,8 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
           SIGNAL(clicked(bool)),
           this,
           SLOT(SlotDisplayButtonClicked(bool)));
+  elementDisplayWindow = new JSONFileObjectElementDisplayWindow();
+  elementDisplayWindow->setParent(this);
 }
 
 /*****************************************************************************!
@@ -113,6 +125,7 @@ JSONFileObjectDisplayWindow::InitializeSubWindows()
 {
   fileTree = NULL;  
   header = NULL;
+  elementDisplayWindow = NULL;
 }
 
 /*****************************************************************************!
@@ -122,6 +135,10 @@ void
 JSONFileObjectDisplayWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
+  int                                   elementDisplayWindowW;
+  int                                   elementDisplayWindowY;
+  int                                   elementDisplayWindowH;
+  int                                   elementDisplayWindowX;
   int                                   fileTreeW;
   int                                   DisplayButtonX;
   int                                   DisplayButtonW;
@@ -143,8 +160,13 @@ JSONFileObjectDisplayWindow::resizeEvent
   toolbarH = height - SECTION_HEADER_HEIGHT;
   toolbarY = SECTION_HEADER_HEIGHT;
   
-  fileTreeH = height - (SECTION_HEADER_HEIGHT);
+  fileTreeH = height - (SECTION_HEADER_HEIGHT + JSONFILE_OBJECT_ELEMENT_DISPLAY_WINDOW_HEIGHT);
   fileTreeW = width - toolbarW;
+
+  elementDisplayWindowX = 0;
+  elementDisplayWindowH = JSONFILE_OBJECT_ELEMENT_DISPLAY_WINDOW_HEIGHT;
+  elementDisplayWindowY = height - elementDisplayWindowH;
+  elementDisplayWindowW = width - toolbarW;
   
   if ( fileTree ) {
     fileTree->resize(fileTreeW, fileTreeH);
@@ -161,6 +183,10 @@ JSONFileObjectDisplayWindow::resizeEvent
   DisplayButtonX = width - (DisplayButtonW + 5);
   DisplayButton->move(DisplayButtonX, 1);
   DisplayButton->resize(DisplayButtonW, SECTION_HEADER_HEIGHT - 2);
+  if ( elementDisplayWindow ) {
+    elementDisplayWindow->move(elementDisplayWindowX, elementDisplayWindowY);
+    elementDisplayWindow->resize(elementDisplayWindowW, elementDisplayWindowH);
+  }
 }
 
 /*****************************************************************************!
@@ -559,3 +585,52 @@ JSONFileObjectDisplayWindow::SetColumnWidths
   fileTree->setColumnWidth(1, InWidths[1]);
 }
 
+/*****************************************************************************!
+ * Function : SlotValueSelected
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotValueSelected
+(QJsonValue InValue)
+{
+  QJsonObject                           obj;
+  QString                               kind;
+  if ( InValue.type() != QJsonValue::Object ) {
+    return;
+  }
+
+  obj = InValue.toObject();
+  kind = obj["kind"].toString();
+  if ( kind == "ParmVarDecl" ) {
+    DisplayParmVarDecl(obj);
+    return;
+  }
+}
+
+/*****************************************************************************!
+ * Function : DisplayParmVarDecl
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::DisplayParmVarDecl
+(QJsonObject InObject)
+{
+  QJsonObject                           typeObj;
+  QString                               name;
+  QString                               type;
+
+  name = InObject["name"].toString();
+  typeObj = InObject["type"].toObject();
+  type = typeObj["qualType"].toString();
+
+  TRACE_FUNCTION_QSTRING(name);
+  TRACE_FUNCTION_QSTRING(type);
+}
+
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotClearChildren(void)
+{
+  header->SetText("");
+  emit SignalClearChildren();
+}

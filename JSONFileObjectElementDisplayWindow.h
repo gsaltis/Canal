@@ -1,11 +1,11 @@
 /*****************************************************************************
- * FILE NAME    : MainDisplayFunctionSVGWindow.h
- * DATE         : August 25 2023
+ * FILE NAME    : JSONFileObjectElementDisplayWindow.h
+ * DATE         : August 29 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _maindisplayfunctionsvgwindow_h_
-#define _maindisplayfunctionsvgwindow_h_
+#ifndef _jsonfileobjectelementdisplaywindow_h_
+#define _jsonfileobjectelementdisplaywindow_h_
 
 /*****************************************************************************!
  * Global Headers
@@ -13,36 +13,33 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
-#include <QJsonObject>
 
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
-#include "JSONObjectFormatList.h"
-#include "DisplayFunctionSVGNamePane.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
-#define MAIN_DISPLAY_FUNCTION_SVGWINDOW_X 200
-#define MAIN_DISPLAY_FUNCTION_SVGWINDOW_Y 200
-#define MAIN_DISPLAY_FUNCTION_SVGWINDOW_WIDTH 200
-#define MAIN_DISPLAY_FUNCTION_SVGWINDOW_HEIGHT 200
+#define JSONFILE_OBJECT_ELEMENT_DISPLAY_WINDOW_X 200
+#define JSONFILE_OBJECT_ELEMENT_DISPLAY_WINDOW_Y 200
+#define JSONFILE_OBJECT_ELEMENT_DISPLAY_WINDOW_WIDTH 200
+#define JSONFILE_OBJECT_ELEMENT_DISPLAY_WINDOW_HEIGHT 200
 
 /*****************************************************************************!
- * Exported Class : MainDisplayFunctionSVGWindow
+ * Exported Class : JSONFileObjectElementDisplayWindow
  *****************************************************************************/
-class MainDisplayFunctionSVGWindow : public QWidget
+class JSONFileObjectElementDisplayWindow : public QWidget
 {
   Q_OBJECT;
 
  //! Constructors
  public :
-  MainDisplayFunctionSVGWindow          (QWidget* InParent, QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject, JSONObjectFormatList* InObjectsFormats);
+  JSONFileObjectElementDisplayWindow ();
 
  //! Destructor
  public :
-  ~MainDisplayFunctionSVGWindow ();
+  ~JSONFileObjectElementDisplayWindow ();
 
  //! Public Methods
  public :
@@ -65,12 +62,6 @@ class MainDisplayFunctionSVGWindow : public QWidget
 
  //! Private Data
  private :
-  QString                       filename;
-  QString                       baseFilename;
-  QJsonObject                   mainJSONObject;
-  JSONObjectFormatList*         formatList;
-  
-  DisplayFunctionSVGNamePane*   functionNamesWindow;
 
  //! Public Slots
  public slots :
@@ -83,4 +74,4 @@ class MainDisplayFunctionSVGWindow : public QWidget
 
 };
 
-#endif /* _maindisplayfunctionsvgwindow_h_*/
+#endif /* _jsonfileobjectelementdisplaywindow_h_*/

@@ -213,6 +213,25 @@ MainDisplayJSONTreesWindow::CreateConnections(void)
           SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
           objectsWindow,
           SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
+
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          translationUnitWindow,
+          SLOT(SlotClearChildren()));
+
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          elementsWindow,
+          SLOT(SlotClearChildren()));
+
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          objectsWindow,
+          SLOT(SlotClearChildren()));
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          objectDisplayWindow,
+          SLOT(SlotClearChildren()));
 }
 
 /*****************************************************************************!
@@ -283,4 +302,28 @@ MainDisplayJSONTreesWindow::SaveAtExit
 ()
 {
   SaveSplitterSizes();  
+}
+
+/*****************************************************************************!
+ * Function : SlotClearChildren
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotClearChildren(void)
+{
+  emit SignalClearChildren();
+}
+
+/*****************************************************************************!
+ * Function : OpenNewFile
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::OpenNewFile
+(QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject)
+{
+  filename = InFilename;
+  baseFilename = InBaseFilename;
+  mainJSONObject = InMainJSONObject;
+  translationUnitWindow->OpenNewFile(filename, baseFilename, mainJSONObject);
+  elementsWindow->OpenNewFile(mainJSONObject);
+  objectsWindow->OpenNewFile();
 }

@@ -57,6 +57,7 @@ class JSONFileWindow : public QWidget
   void
   ResizeColumns
   (QList<int> InWidths);
+  void                          OpenNewFile             (QString InFilename, QString InBasename, QJsonObject InMainJSONObject);
   
  //! Public Data
  public :
@@ -89,12 +90,14 @@ class JSONFileWindow : public QWidget
   void                          SlotSizeValueChanged    (int InSize);
   void                          SlotLocalCountSet       (int InLocalCount);
   void                          SlotCallingFunctionFound (QString InFunctionName);
+  void                          SlotClearChildren       (void);
   
  //! Public Signals
  signals :
   void                          SignalFileObjectSelected(QJsonObject InObject);
   void                          SignalSizeValueChanged  (int InSize);
   void                          SignalCallingFunctionFound (QString InFunctionName);
+  void                          SignalClearChildren     (void);
 
  //! Public Actions
  public :
