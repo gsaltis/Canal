@@ -25,6 +25,7 @@
 #include "JSONObjectFormat.h"
 #include "SectionHeader.h"
 #include "JSONFileObjectElementDisplayWindow.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -43,7 +44,7 @@ class JSONFileObjectDisplayWindow : public QWidget
 
  //! Constructors
  public :
-  JSONFileObjectDisplayWindow   ();
+  JSONFileObjectDisplayWindow   (TranslationUnitObject* InTranslationUnit);
 
  //! Destructor
  public :
@@ -56,7 +57,10 @@ class JSONFileObjectDisplayWindow : public QWidget
   ();
   
   void                          FindCalls               (QString InFunctionName);
-  
+
+  void
+  OpenNewFile
+  (TranslationUnitObject* InTranslationUnit);
  //! Public Data
  public :
 
@@ -101,7 +105,7 @@ class JSONFileObjectDisplayWindow : public QWidget
   QJsonObject                   fileObject;
   QPushButton*                  DisplayButton;
   QToolBar*                     Toolbar;
-  
+  TranslationUnitObject*        TranslationUnit;
   JSONFileObjectElementDisplayWindow* elementDisplayWindow;
 
  //! Public Slots

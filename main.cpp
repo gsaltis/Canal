@@ -24,6 +24,7 @@
 #include "JSONObjectFormatList.h"
 #include "common.h"
 #include "trace.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Local Macros
@@ -61,8 +62,8 @@ MainTreeHeaderColor = QColor(128, 128, 128);
 QList<QJsonObject>
 MainTopLevelObjects;
 
-int
-MainFirstLocalElementIndex = 0;
+TranslationUnitObject*
+TranslationUnit = NULL;
 
 /*****************************************************************************!
  * Function : main
@@ -79,7 +80,7 @@ main
   int                                   windowIndex = 1;
   
   MainInitialize();
-  
+
   atexit(MainExisting);
   application.setApplicationName("Canal");
   application.setApplicationVersion("0.1.0");
@@ -116,8 +117,10 @@ main
     }
   }
 
+  TranslationUnit->SetFilename(MainSourceFilename);
+
   QFileInfo                     fileInfo(MainSourceFilename);
-  mainWindow = new MainWindow(NULL, MainSourceFilename, &MainObjectsFormats, windowIndex);
+  mainWindow = new MainWindow(TranslationUnit, windowIndex);
   mainWindow->resize(MainSystemConfig->GetMainWindowSize());
   mainWindow->move(MainSystemConfig->GetMainWindowPosition());
   mainWindow->setWindowTitle(MainSystemConfig->GetSystemName() +
@@ -146,6 +149,8 @@ void
 MainInitialize
 ()
 {
+  TranslationUnit = new TranslationUnitObject();
+  
   MainDirectoryManager = new DirectoryManagement();
   MainSystemConfig = new SystemConfig();
   MainSystemConfig->Read();

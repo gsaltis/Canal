@@ -24,8 +24,9 @@
  * Function : JSONFileObjectDisplayWindow
  *****************************************************************************/
 JSONFileObjectDisplayWindow::JSONFileObjectDisplayWindow
-() : QWidget()
+(TranslationUnitObject* InTranslationUnit) : QWidget()
 {
+  TranslationUnit = InTranslationUnit;
   QPalette pal;
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
@@ -275,7 +276,7 @@ JSONFileObjectDisplayWindow::FindCalls
 
   n = MainTopLevelObjects.count();
 
-  for (i = MainFirstLocalElementIndex; i < n; i++) {
+  for (i = TranslationUnit->GetFirstFunctionIndex(); i < n; i++) {
     obj = MainTopLevelObjects[i];
     name = obj["name"].toString();
     if ( ObjectIsFunctionDefinition(obj) ) {
@@ -633,4 +634,14 @@ JSONFileObjectDisplayWindow::SlotClearChildren(void)
 {
   header->SetText("");
   emit SignalClearChildren();
+}
+
+/*****************************************************************************!
+ * Function : OpenNewFile
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::OpenNewFile
+(TranslationUnitObject* InTranslationUnit)
+{
+  TranslationUnit = InTranslationUnit;
 }

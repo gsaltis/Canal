@@ -20,6 +20,7 @@
  *****************************************************************************/
 #include "JSONObjectFormatList.h"
 #include "JSONObjectElementTreeItem.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -38,7 +39,7 @@ class JSONObjectElementTree : public QTreeWidget
 
  //! Constructors
  public :
-  JSONObjectElementTree         (JSONObjectFormatList* InObjectsFormats);
+  JSONObjectElementTree         (TranslationUnitObject* InTranslationUnit);
 
  //! Destructor
  public :
@@ -68,7 +69,7 @@ class JSONObjectElementTree : public QTreeWidget
   
  //! Private Data
  private :
-  JSONObjectFormatList*         objectsFormats;
+  TranslationUnitObject*        TranslationUnit;
   JSONObjectElementTreeItem*    lastTreeItem;
   
  //! Public Slots

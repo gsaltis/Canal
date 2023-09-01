@@ -20,6 +20,7 @@
 #include "JSONObjectFormatList.h"
 #include "JSONObjectElementTree.h"
 #include "JSONElementWindowSectionHeader.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -39,7 +40,7 @@ class JSONElementWindow : public QWidget
  //! Constructors
  public :
   JSONElementWindow
-  (JSONObjectFormatList* InObjectsFormats);
+  (TranslationUnitObject* InTranslationUnit);
 
  //! Destructor
  public :
@@ -51,7 +52,7 @@ class JSONElementWindow : public QWidget
   QList<int>
   GetColumnWidths
   ();
-  void                          OpenNewFile             ();
+  void                          OpenNewFile             (TranslationUnitObject* InTranslationUnit);
 
  //! Public Data
  public :
@@ -82,7 +83,7 @@ class JSONElementWindow : public QWidget
 
  //! Private Data
  private :
-  JSONObjectFormatList*                 objectsFormats;
+  TranslationUnitObject*                TranslationUnit;
   JSONObjectElementTree*                elementTree;
   JSONElementWindowSectionHeader*       header;
   

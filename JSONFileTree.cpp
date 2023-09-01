@@ -103,7 +103,7 @@ JSONFileTree::SetObject
 {
   QJsonValue                            value;
 
-  value = JSONFileObject["inner"];
+  value = TranslationUnit->GetJSONObject()["inner"];
   SetInnerItem(&value);
   SortItems();
 }
@@ -113,12 +113,9 @@ JSONFileTree::SetObject
  *****************************************************************************/
 void
 JSONFileTree::Set
-(QJsonObject InJSONFileObject, QString InFilename, QString InBaseFilename)
+(TranslationUnitObject* InTranslationUnit)
 {
-  baseFilename = InBaseFilename;
-  filename = InFilename;
-  JSONFileObject = InJSONFileObject;
-
+  TranslationUnit = InTranslationUnit;
   SetObject();
 }
 
@@ -138,6 +135,7 @@ void
 JSONFileTree::SetInnerItem
 (QJsonValue* InValue)
 {
+  QString                               filename;
   QColor                                color;
   QJsonArray                            inner;
   QString                               name;
@@ -176,9 +174,9 @@ JSONFileTree::SetInnerItem
       
     locObj = obj["loc"].toObject();
     filename = locObj["file"].toString();
-    if ( filename == baseFilename ) {
+    if ( filename == TranslationUnit->GetBaseFilename() ) {
       outFileFound = true;
-      MainFirstLocalElementIndex = i;
+      TranslationUnit->SetFirstFunctionIndex(i);
     }
     if ( outFileFound ) {
       localCount++;

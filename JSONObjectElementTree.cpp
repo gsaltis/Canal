@@ -24,9 +24,9 @@
  * Function : JSONObjectElementTree
  *****************************************************************************/
 JSONObjectElementTree::JSONObjectElementTree
-(JSONObjectFormatList* InObjectsFormats) : QTreeWidget()
+(TranslationUnitObject* InTransationUnit) : QTreeWidget()
 {
-  objectsFormats = InObjectsFormats;
+  TranslationUnit = InTransationUnit;
   initialize();
 }
 
@@ -47,12 +47,14 @@ JSONObjectElementTree::initialize()
   JSONObjectElementTreeItem*            item;
   QTreeWidgetItem*                      head;
   QBrush                                brush(MainTreeHeaderColor);
+  JSONObjectFormatList*                 objectsFormats;
   
   head = new QTreeWidgetItem();
   head->setText(0, "OBJECTS");
   head->setBackground(0, brush);
   setHeaderItem(head);
 
+  objectsFormats = TranslationUnit->GetObjectFormats();
   lastTreeItem = NULL;
   
   for ( auto i = objectsFormats->begin(); i != objectsFormats->end(); i++ ) {
@@ -295,6 +297,8 @@ void
 JSONObjectElementTree::DisplayObjectFormats(void)
 {
   JSONObjectElementTreeItem*            item;
+  JSONObjectFormatList*                 objectsFormats = TranslationUnit->GetObjectFormats();
+  
   for ( auto i = objectsFormats->begin(); i != objectsFormats->end(); i++ ) {
     JSONObjectFormat*                           obj = *i;
     item = new JSONObjectElementTreeItem(obj);

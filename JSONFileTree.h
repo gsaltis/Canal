@@ -21,6 +21,7 @@
  * Local Headers
  *****************************************************************************/
 #include "JSONFileTreeItem.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -47,7 +48,7 @@ class JSONFileTree : public QTreeWidget
 
  //! Public Methods
  public :
-  void                          Set(QJsonObject InJSONFileObject, QString InFilename, QString InBaseFilename);
+  void                          Set(TranslationUnitObject* InTranslationUnit);
   
  //! Public Data
  public :
@@ -73,9 +74,7 @@ class JSONFileTree : public QTreeWidget
   
  //! Private Data
  private :
-  QJsonObject                   JSONFileObject;
-  QString                       filename;
-  QString                       baseFilename;
+  TranslationUnitObject*        TranslationUnit;
   JSONFileTreeItem*             EnumItems;
   JSONFileTreeItem*             RecordItems;
   JSONFileTreeItem*             TypeDefItems;
@@ -94,7 +93,7 @@ class JSONFileTree : public QTreeWidget
   
  //! Public Signals
  signals :
-  void                          SignalFileObjectSelected        (QJsonObject);
+  void                          SignalFileObjectSelected(QJsonObject);
   void                          SignalLocalCountSet     (int InLocalInnerCount);
   
  //! Public Actions

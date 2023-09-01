@@ -23,18 +23,11 @@
  * Function : MainDisplayJSONTreesWindow
  *****************************************************************************/
 MainDisplayJSONTreesWindow::MainDisplayJSONTreesWindow
-(QWidget* InParent, QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject, JSONObjectFormatList* InObjectsFormats) :
-  QWidget(InParent)
+(QWidget* InParent, TranslationUnitObject* InTranslationUnit) : QWidget(InParent)
 {
   QPalette pal;
-  filename = InFilename;
+  TranslationUnit = InTranslationUnit;
   
-  QFileInfo                             fileinfo(filename);
-
-  mainJSONObject = InMainJSONObject;
-  
-  objectsFormats = InObjectsFormats;
-  baseFilename = InBaseFilename;
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(255, 0, 0)));
   setPalette(pal);
@@ -67,18 +60,16 @@ MainDisplayJSONTreesWindow::initialize()
 void
 MainDisplayJSONTreesWindow::CreateSubWindows()
 {
-  QStringList                           keys;
   QList<int>                            widths;
   splitter = new MainSplitter();
   splitter->setParent(this);
 
   widths = MainSystemConfig->GetWindowWidths();
-  keys = mainJSONObject.keys();
 
-  translationUnitWindow = new JSONFileWindow(filename, baseFilename, mainJSONObject);
-  elementsWindow        = new MainTagWindow(mainJSONObject, objectsFormats);
-  objectsWindow         = new JSONElementWindow(objectsFormats);
-  objectDisplayWindow   = new JSONFileObjectDisplayWindow();
+  translationUnitWindow = new JSONFileWindow(TranslationUnit);
+  elementsWindow        = new MainTagWindow(TranslationUnit);
+  objectsWindow         = new JSONElementWindow(TranslationUnit);
+  objectDisplayWindow   = new JSONFileObjectDisplayWindow(TranslationUnit);
 
   splitter->addWidget(translationUnitWindow);
   splitter->addWidget(elementsWindow);
@@ -318,12 +309,11 @@ MainDisplayJSONTreesWindow::SlotClearChildren(void)
  *****************************************************************************/
 void
 MainDisplayJSONTreesWindow::OpenNewFile
-(QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject)
+(TranslationUnitObject* InTranslationUnit)
 {
-  filename = InFilename;
-  baseFilename = InBaseFilename;
-  mainJSONObject = InMainJSONObject;
-  translationUnitWindow->OpenNewFile(filename, baseFilename, mainJSONObject);
-  elementsWindow->OpenNewFile(mainJSONObject);
-  objectsWindow->OpenNewFile();
+  TranslationUnit = InTranslationUnit;
+  translationUnitWindow->OpenNewFile(TranslationUnit);
+  elementsWindow->OpenNewFile(TranslationUnit);
+  objectsWindow->OpenNewFile(TranslationUnit);
+  objectDisplayWindow->OpenNewFile(TranslationUnit);
 }

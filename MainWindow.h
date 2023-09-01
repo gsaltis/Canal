@@ -22,6 +22,7 @@
 #include "MainDisplayWindow.h"
 #include "SystemConfig.h"
 #include "JSONObjectFormatList.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -40,8 +41,7 @@ class MainWindow : public QMainWindow
 
  //! Constructors
  public :
-  MainWindow                    (QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex);
-  MainWindow                    (QWidget*, QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex);
+  MainWindow                    (TranslationUnitObject* InTranslationUnit, int InWindowIndex);
 
  //! Destructor
  public :
@@ -77,10 +77,9 @@ class MainWindow : public QMainWindow
   QMenu*                        fileMenu;
   QMenu*                        windowMenu;
   QStatusBar*                   statusbar;
-  QString                       filename;
-  JSONObjectFormatList*         objectsFormats;
   int                           windowIndex;
   QString                       pathName;
+  TranslationUnitObject*        TranslationUnit;
   
  //! Public Slots
  public slots :

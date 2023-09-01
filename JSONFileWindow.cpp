@@ -24,24 +24,17 @@
  * Function : JSONFileWindow
  *****************************************************************************/
 JSONFileWindow::JSONFileWindow
-(
- QString                                InFilename,
- QString                                InBasename,
- QJsonObject                            InMainJSONObject
-) : QWidget()
+(TranslationUnitObject* InTranslationUnit) : QWidget()
 {
   QPalette pal;
 
-  mainJSONObject = InMainJSONObject;
-  basename = InBasename;
-  filename = InFilename;
-
+  TranslationUnit = InTranslationUnit;
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(255, 0, 255)));
   setPalette(pal);
   setAutoFillBackground(true);
   initialize();
-  fileTree->Set(mainJSONObject, filename, basename);
+  fileTree->Set(TranslationUnit);
   SetColumnWidths(MainSystemConfig->GetColumnWidths(0));
 }
 
@@ -66,6 +59,14 @@ JSONFileWindow::initialize()
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           this,
           SLOT(SlotFileObjectSelected(QJsonObject)));
+  connect(this,
+          SIGNAL(SignalFileObjectSelected(QJsonObject)),
+          callTreeWindow,
+          SLOT(SlotFunctionSelected(QJsonObject)));
+  connect(this,
+          SIGNAL(SignalCallingFunctionFound(QString)),
+          callTreeWindow,
+          SLOT(SlotCallingFunctionFound(QString)));
   connect(header,
           SIGNAL(SignalSizeValueChanged(int)),
           this,
@@ -86,6 +87,10 @@ JSONFileWindow::initialize()
           SIGNAL(SignalClearChildren()),
           fileTree,
           SLOT(SlotClearChildren()));
+  connect(this,
+          SIGNAL(SignalClearChildren()),
+          callTreeWindow,
+          SLOT(SlotClearChildren()));
 }
 
 /*****************************************************************************!
@@ -99,6 +104,8 @@ JSONFileWindow::CreateSubWindows()
   header = new JSONFileWindowSectionHeader();
   header->SetText("TRANSLATION UNIT");
   header->setParent(this);
+  callTreeWindow = new CallTreeWindow();
+  callTreeWindow->setParent(this);
 }
 
 /*****************************************************************************!
@@ -109,6 +116,7 @@ JSONFileWindow::InitializeSubWindows()
 {
   fileTree = NULL;  
   header = NULL;
+  callTreeWindow = NULL;
 }
 
 /*****************************************************************************!
@@ -118,6 +126,10 @@ void
 JSONFileWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
+  int                                   callTreeWindowH;
+  int                                   callTreeWindowY;
+  int                                   callTreeWindowW;
+  int                                   callTreeWindowX;
   QSize                                 size;  
   int                                   width;
   int                                   height;
@@ -126,7 +138,12 @@ JSONFileWindow::resizeEvent
   size = InEvent->size();
   width = size.width();
   height = size.height();
-  fileTreeH = height - SECTION_HEADER_HEIGHT;
+  fileTreeH = height - (SECTION_HEADER_HEIGHT + CALL_TREE_WINDOW_HEIGHT);
+
+  callTreeWindowX = 0;
+  callTreeWindowH = CALL_TREE_WINDOW_HEIGHT;
+  callTreeWindowY = height - CALL_TREE_WINDOW_HEIGHT;
+  callTreeWindowW = width;
   
   if ( fileTree ) {
     fileTree->move(0, SECTION_HEADER_HEIGHT);
@@ -135,6 +152,10 @@ JSONFileWindow::resizeEvent
   if ( header ) {
     header->move(0, 0);
     header->resize(width, SECTION_HEADER_HEIGHT);
+  }
+  if ( callTreeWindow ) {
+    callTreeWindow->move(callTreeWindowX, callTreeWindowY);
+    callTreeWindow->resize(callTreeWindowW, callTreeWindowH);
   }
 }
 
@@ -221,11 +242,8 @@ JSONFileWindow::SlotClearChildren(void)
  *****************************************************************************/
 void
 JSONFileWindow::OpenNewFile
-(QString InFilename, QString InBasename, QJsonObject InMainJSONObject)
+(TranslationUnitObject* InTranslationUnit)
 {
-  TRACE_FUNCTION_QSTRING(InFilename);
-  mainJSONObject = InMainJSONObject;
-  basename = InBasename;
-  filename = InFilename;
-  fileTree->Set(mainJSONObject, filename, basename);
+  TranslationUnit = InTranslationUnit;
+  fileTree->Set(TranslationUnit);
 }

@@ -24,6 +24,7 @@
 #include "JSONElementWindow.h"
 #include "JSONFileObjectDisplayWindow.h"
 #include "JSONObjectFormatList.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -42,7 +43,7 @@ class MainDisplayJSONTreesWindow : public QWidget
 
  //! Constructors
  public :
-  MainDisplayJSONTreesWindow                    (QWidget* InParent, QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject, JSONObjectFormatList* InObjectsFormats);
+  MainDisplayJSONTreesWindow                    (QWidget* InParent, TranslationUnitObject* InTranslationUnit);
 
  //! Destructor
  public :
@@ -54,7 +55,7 @@ class MainDisplayJSONTreesWindow : public QWidget
   void
   SaveAtExit
   ();
-  void                          OpenNewFile             (QString InFilename, QString InBaseFilename, QJsonObject InMainJSONObject);
+  void                          OpenNewFile             (TranslationUnitObject* InTranslationUnit);
   
  //! Public Data
  public :
@@ -83,12 +84,8 @@ class MainDisplayJSONTreesWindow : public QWidget
   JSONElementWindow*            objectsWindow;
   JSONFileObjectDisplayWindow*  objectDisplayWindow;
 
-  JSONObjectFormatList*         objectsFormats;
-
-  QString                       filename;
-  QString                       baseFilename;
   QJsonDocument                 jsonDoc;
-  QJsonObject                   mainJSONObject;
+  TranslationUnitObject*        TranslationUnit;
   
  //! Public Slots
  public slots :

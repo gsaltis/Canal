@@ -23,14 +23,13 @@
  * Function : MainDisplayWindow
  *****************************************************************************/
 MainDisplayWindow::MainDisplayWindow
-(QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex) : QWidget()
+(TranslationUnitObject* InTranslationUnit, int InWindowIndex) : QWidget()
 {
-  objectsFormats = InObjectsFormats;
   QPalette                              pal;
 
+  TranslationUnit = InTranslationUnit;
   windowIndex = InWindowIndex;
-  filename = InFilename;
-  if ( ! filename.isEmpty() ) {
+  if ( ! TranslationUnit->GetFilename().isEmpty() ) {
     HandleInputFilename();
   }
   pal = palette();
@@ -78,8 +77,12 @@ MainDisplayWindow::CreateSubWindows()
 {
   QList<int>                            widths;
 
-  treesWindow = new MainDisplayJSONTreesWindow(this, filename, baseFilename, mainJSONObject, objectsFormats);
-  functionSVGWindow = new MainDisplayFunctionSVGWindow(this, filename, baseFilename, mainJSONObject, objectsFormats);
+  treesWindow = new MainDisplayJSONTreesWindow(this, TranslationUnit);
+
+  functionSVGWindow = new MainDisplayFunctionSVGWindow(this, TranslationUnit->GetFilename(),
+                                                       TranslationUnit->GetBaseFilename(),
+                                                       TranslationUnit->GetJSONObject(),
+                                                       TranslationUnit->GetObjectFormats());
   functionSVGWindow->hide();
   messageWindow = new MainMessageWindow();
   messageWindow->setParent(this);
@@ -126,6 +129,7 @@ MainDisplayWindow::HandleInputFilename(void)
 {
   QJsonParseError                       jsonError;
   QByteArray                            array;
+  QString                               filename = TranslationUnit->GetFilename();
   QFileInfo                             fileinfo(filename);
   QFile                                 file(filename);
 
@@ -140,8 +144,7 @@ MainDisplayWindow::HandleInputFilename(void)
     printf("JSON Parser error : %d : %s\n", jsonError.offset, jsonError.errorString().toStdString().c_str());
     return;
   }
-  baseFilename = fileinfo.completeBaseName();
-  mainJSONObject = jsonDoc.object();
+  TranslationUnit->SetJSONObject(jsonDoc.object());
 }
 
 /*****************************************************************************!
@@ -203,11 +206,10 @@ MainDisplayWindow::CreateConnections(void)
  *****************************************************************************/
 void
 MainDisplayWindow::OpenNewFile
-(QString InFilename)
+()
 {
-  filename = InFilename;
   HandleInputFilename();
-  treesWindow->OpenNewFile(filename, baseFilename, mainJSONObject);
+  treesWindow->OpenNewFile(TranslationUnit);
 }
 
 /*****************************************************************************!

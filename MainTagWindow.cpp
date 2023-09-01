@@ -23,10 +23,9 @@
  * Function : MainTagWindow
  *****************************************************************************/
 MainTagWindow::MainTagWindow
-(QJsonObject InJsonObject, JSONObjectFormatList* InObjectsFormats) : QWidget()
+(TranslationUnitObject* InTranslationUnit) : QWidget()
 {
-  objectsFormats = InObjectsFormats;
-  jsonObject = InJsonObject;
+  TranslationUnit = InTranslationUnit;
   QPalette pal;
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(128, 0, 0)));
@@ -50,7 +49,7 @@ MainTagWindow::~MainTagWindow
 void
 MainTagWindow::initialize()
 {
-  BuildTagList(jsonObject, "TranslationUnitDecl");
+  BuildTagList(TranslationUnit->GetJSONObject(), "TranslationUnitDecl");
   InitializeSubWindows();  
   CreateSubWindows();
   PopulateTree();
@@ -119,9 +118,9 @@ MainTagWindow::BuildTagList
 
   keys = InObject.keys();
 
-  if ( ! objectsFormats->Contains(InTag, keys) ) {
+  if ( ! TranslationUnit->GetObjectFormats()->Contains(InTag, keys) ) {
     JSONObjectFormat*                   objFormat = new JSONObjectFormat(InTag, keys);
-    *objectsFormats << objFormat;
+    TranslationUnit->GetObjectFormats()->append(objFormat);
   }
   for ( auto keyi = keys.begin() ; keyi != keys.end() ; keyi++ ) {
     QString                             key = *keyi;
@@ -281,10 +280,10 @@ MainTagWindow::CreateConnections(void)
  * Function : OpenNewFile
  *****************************************************************************/
 void
-MainTagWindow::OpenNewFile(QJsonObject InJsonObject)
+MainTagWindow::OpenNewFile(TranslationUnitObject* InTranslationUnit)
 {
-  jsonObject = InJsonObject;
-  BuildTagList(jsonObject, "TranslationUnitDecl");
+  TranslationUnit = InTranslationUnit;
+  BuildTagList(InTranslationUnit->GetJSONObject(), "TranslationUnitDecl");
   PopulateTree();
   SlotElementCountChanged(tagTree->topLevelItemCount());
 }

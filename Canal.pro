@@ -31,9 +31,12 @@ QT                              += core gui widgets
 DEFINES                         += \
 
 SOURCES                         += \
+				   CallTreeWindow.cpp                           \
+				   CallTreeWindowTree.cpp                       \
+				   CallTreeWindowTreeItem.cpp                   \
 				   CanalDB.cpp                                  \
 				   DirectoryManagement.cpp                      \
-                                   DisplayFunctionSVGNamePane.cpp               \
+				   DisplayFunctionSVGNamePane.cpp               \
 				   JSONElementWindow.cpp                        \
 				   JSONElementWindowSectionHeader.cpp           \
 				   JSONFileObjectDisplayTree.cpp                \
@@ -55,31 +58,35 @@ SOURCES                         += \
 				   JSONTagElementList.cpp                       \
 				   JSONTagTree.cpp                              \
 				   JSONTagTreeItem.cpp                          \
+				   MainDisplayFunctionSVGWindow.cpp             \
+				   MainDisplayJSONTreesWindow.cpp               \
 				   MainDisplayWindow.cpp                        \
-                                   MainMessageWindow.cpp                        \
+				   MainMessageWindow.cpp                        \
 				   MainSplitter.cpp                             \
 				   MainStacker.cpp                              \
 				   MainTagWindow.cpp                            \
 				   MainTagWindowSectionHeader.cpp               \
-				   MainDisplayJSONTreesWindow.cpp               \
-                                   MainDisplayFunctionSVGWindow.cpp             \
 				   MainWindow.cpp                               \
 				   SectionHeader.cpp                            \
 				   SystemConfig.cpp                             \
+				   TranslationUnitObject.cpp                    \
 				   WindowSizeInfo.cpp                           \
 				   main.cpp                                     \
 				   sqlite3.c                                    \
 
 HEADERS                         += \
+				   CallTreeWindow.h                             \
+				   CallTreeWindowTree.h                         \
+				   CallTreeWindowTreeItem.h                     \
 				   CanalDB.h                                    \
 				   DirectoryManagement.h                        \
-                                   DisplayFunctionSVGNamePane.h                 \
+				   DisplayFunctionSVGNamePane.h                 \
 				   JSONElementWindow.h                          \
 				   JSONElementWindowSectionHeader.h             \
 				   JSONFileObjectDisplayTree.h                  \
 				   JSONFileObjectDisplayTreeItem.h              \
-				   JSONFileObjectElementDisplayWindow.h         \
 				   JSONFileObjectDisplayWindow.h                \
+				   JSONFileObjectElementDisplayWindow.h         \
 				   JSONFileTree.h                               \
 				   JSONFileTreeHeader.h                         \
 				   JSONFileTreeItem.h                           \
@@ -95,17 +102,18 @@ HEADERS                         += \
 				   JSONTagElementList.h                         \
 				   JSONTagTree.h                                \
 				   JSONTagTreeItem.h                            \
+				   MainDisplayFunctionSVGWindow.h               \
+				   MainDisplayJSONTreesWindow.h                 \
 				   MainDisplayWindow.h                          \
-                                   MainMessageWindow.h                          \                                   
+				   MainMessageWindow.h                          \
 				   MainSplitter.h                               \
 				   MainStacker.h                                \
 				   MainTagWindow.h                              \
 				   MainTagWindowSectionHeader.h                 \
-				   MainDisplayJSONTreesWindow.h                 \
-                                   MainDisplayFunctionSVGWindow.h               \
 				   MainWindow.h                                 \
 				   SectionHeader.h                              \
 				   SystemConfig.h                               \
+				   TranslationUnitObject.h                      \
 				   WindowSizeInfo.h                             \
 				   sqlite3.h                                    \
 

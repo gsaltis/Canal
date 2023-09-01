@@ -31,6 +31,7 @@
 #include "MainDisplayJSONTreesWindow.h"
 #include "MainDisplayFunctionSVGWindow.h"
 #include "MainMessageWindow.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -46,7 +47,7 @@ class MainDisplayWindow : public QWidget
 
  //! Constructors
  public :
-  MainDisplayWindow             (QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex);
+  MainDisplayWindow             (TranslationUnitObject* InTranslationUnit, int InWindowIndex);
 
  //! Destructor
  public :
@@ -55,7 +56,7 @@ class MainDisplayWindow : public QWidget
  //! Public Methods
  public :
   void                          SaveAtExit              ();
-  void                          OpenNewFile             (QString InFilename);
+  void                          OpenNewFile             ();
   
  //! Public Data
  public :
@@ -77,15 +78,13 @@ class MainDisplayWindow : public QWidget
 
  //! Private Data
  private :
-  QString                       filename;
-  QString                       baseFilename;
-  QJsonDocument                 jsonDoc;
-  QJsonObject                   mainJSONObject;
-  JSONObjectFormatList*         objectsFormats;
-  int                           windowIndex;
   MainDisplayJSONTreesWindow*   treesWindow;
   MainDisplayFunctionSVGWindow* functionSVGWindow;
   MainMessageWindow*            messageWindow;
+
+  TranslationUnitObject*        TranslationUnit;
+  QJsonDocument                 jsonDoc;
+  int                           windowIndex;
 
  //! Public Slots
  public slots :

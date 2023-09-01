@@ -27,24 +27,12 @@
  * Function : MainWindow
  *****************************************************************************/
 MainWindow::MainWindow
-(QString InFilename,  JSONObjectFormatList* InObjectsFormats, int InWindowIndex) : QMainWindow()
+(TranslationUnitObject* InTranslationUnit, int InWindowIndex) : QMainWindow()
 {
+  TranslationUnit = InTranslationUnit;
+  
   windowIndex = InWindowIndex;
-  objectsFormats = InObjectsFormats;
   Initialize();
-  filename = InFilename;
-}
-
-/*****************************************************************************!
- * Function : MainWindow
- *****************************************************************************/
-MainWindow::MainWindow
-(QWidget* parent, QString InFilename, JSONObjectFormatList* InObjectsFormats, int InWindowIndex) : QMainWindow(parent)
-{
-  windowIndex = InWindowIndex;
-  objectsFormats = InObjectsFormats;
-  Initialize();
-  filename = InFilename;
   CreateActions();
   CreateMenus();
   InitializeSubWindows();
@@ -67,7 +55,6 @@ void
 MainWindow::Initialize()
 {
   pathName = "./";
-  filename = QString();
   setWindowTitle(MainSystemConfig->GetSystemName());  
 }
 
@@ -78,7 +65,7 @@ MainWindow::Initialize()
 void
 MainWindow::CreateSubWindows()
 {
-  displayWindow = new MainDisplayWindow(filename, objectsFormats, windowIndex);
+  displayWindow = new MainDisplayWindow(TranslationUnit, windowIndex);
   displayWindow->setParent(this);
   statusbar = statusBar();
 }
@@ -235,9 +222,10 @@ MainWindow::SlotFileOpen(void)
                                              pathName,
                                              tr("JSON Files (*.json);;Any file (*)"));
   emit SignalClearChildren();
-  filename = fileNameTmp;
-  QFileInfo                             fileInfo(filename);
+  TranslationUnit->SetFilename(fileNameTmp);
+  QFileInfo                             fileInfo(fileNameTmp);
 
+  
   pathName = fileInfo.path();
   fname = fileInfo.fileName();
   
@@ -247,6 +235,6 @@ MainWindow::SlotFileOpen(void)
   setCursor(Qt::WaitCursor);
   emit SignalSetMessageNormal("Reading File");
   QCoreApplication::processEvents();
-  displayWindow->OpenNewFile(filename);
+  displayWindow->OpenNewFile();
   setCursor(Qt::ArrowCursor);
 }

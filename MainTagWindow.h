@@ -23,6 +23,7 @@
 #include "JSONTagElementList.h"
 #include "JSONObjectFormatList.h"
 #include "MainTagWindowSectionHeader.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -41,7 +42,7 @@ class MainTagWindow : public QWidget
 
  //! Constructors
  public :
-  MainTagWindow                 (QJsonObject InJsonObject, JSONObjectFormatList* InObjectsFormats);
+  MainTagWindow                 (TranslationUnitObject* InTranslationUnit);
 
  //! Destructor
  public :
@@ -52,7 +53,7 @@ class MainTagWindow : public QWidget
   QList<int>
   GetColumnWidths
   ();
-  void                          OpenNewFile             (QJsonObject InJsonObject);
+  void                          OpenNewFile             (TranslationUnitObject* InTranslationUnit);
 
  //! Public Data
  public :
@@ -73,7 +74,7 @@ class MainTagWindow : public QWidget
   void                          PopulateTree            (void);
   void                          ProcessArrayTagList     (QJsonArray InArray, QString InTag);
   JSONTagTreeItem*              FindItemByName          (QString InTag);
-
+  
   void
   SetColumnWidths
   (QList<int> InWidths);
@@ -81,11 +82,10 @@ class MainTagWindow : public QWidget
 
  //! Private Data
  private :
-  QJsonObject                   jsonObject;
   JSONTagElementList            jsonTags;
   JSONTagTree*                  tagTree;
-  JSONObjectFormatList*         objectsFormats;
   MainTagWindowSectionHeader*   header;
+  TranslationUnitObject*        TranslationUnit;
 
  //! Public Slots
  public slots :

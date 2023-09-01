@@ -22,6 +22,8 @@
  *****************************************************************************/
 #include "JSONFileTree.h"
 #include "JSONFileWindowSectionHeader.h"
+#include "CallTreeWindow.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -40,7 +42,7 @@ class JSONFileWindow : public QWidget
 
  //! Constructors
  public :
-  JSONFileWindow                (QString InFilename, QString InBasename, QJsonObject InMainJSONObject);
+  JSONFileWindow                (TranslationUnitObject* InTranslationUnit);
 
  //! Destructor
  public :
@@ -57,7 +59,7 @@ class JSONFileWindow : public QWidget
   void
   ResizeColumns
   (QList<int> InWidths);
-  void                          OpenNewFile             (QString InFilename, QString InBasename, QJsonObject InMainJSONObject);
+  void                          OpenNewFile             (TranslationUnitObject* InTranslationUnitxo);
   
  //! Public Data
  public :
@@ -83,7 +85,9 @@ class JSONFileWindow : public QWidget
   QJsonArray                    innerObj;
   JSONFileTree*                 fileTree;
   JSONFileWindowSectionHeader*  header;
-
+  CallTreeWindow*               callTreeWindow;
+  TranslationUnitObject*        TranslationUnit;
+  
  //! Public Slots
  public slots :
   void                          SlotFileObjectSelected  (QJsonObject InObject);

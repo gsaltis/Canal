@@ -22,18 +22,10 @@
  * Function : JSONElementWindow
  *****************************************************************************/
 JSONElementWindow::JSONElementWindow
-(
- JSONObjectFormatList*                  InObjectsFormats
-) : QWidget()
+(TranslationUnitObject* InTranslationUnit) : QWidget()
 {
-  objectsFormats = InObjectsFormats;
-  std::sort(objectsFormats->begin(), objectsFormats->end(),
-            [] (JSONObjectFormat* InF1, JSONObjectFormat* InF2) {
-              if ( InF1->GetTag() == InF2->GetTag() ) {
-                return InF1->GetKeys().size() < InF2->GetKeys().size();
-              }
-              return InF1->GetTag() < InF2->GetTag();
-            });
+  TranslationUnit = InTranslationUnit;
+  TranslationUnit->SortObjectFormats();
   QPalette pal;
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(0, 255, 255)));
@@ -67,7 +59,7 @@ JSONElementWindow::initialize()
 void
 JSONElementWindow::CreateSubWindows()
 {
-  elementTree = new JSONObjectElementTree(objectsFormats);  
+  elementTree = new JSONObjectElementTree(TranslationUnit);  
   elementTree->setParent(this);
   header = new JSONElementWindowSectionHeader();
   header->setParent(this);
@@ -225,8 +217,9 @@ JSONElementWindow::SlotClearChildren(void)
  *****************************************************************************/
 void
 JSONElementWindow::OpenNewFile
-()
+(TranslationUnitObject* InTranslationUnit)
 {
+  TranslationUnit = InTranslationUnit;
   elementTree->DisplayObjectFormats();
   header->SetInnerCount(elementTree->topLevelItemCount());
 }
