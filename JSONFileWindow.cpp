@@ -13,6 +13,7 @@
 #include <QWidget>
 #include <QHeaderView>
 
+#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
@@ -55,10 +56,33 @@ JSONFileWindow::initialize()
   innerObj = mainJSONObject["inner"].toArray();
   InitializeSubWindows();  
   CreateSubWindows();
+  CreateConnections();
+}
+
+/*****************************************************************************!
+ * Function : CreateConnections
+ *****************************************************************************/
+void
+JSONFileWindow::CreateConnections()
+{
+  connect(callTreeWindow,
+          SIGNAL(SignalCallingFunctionObjectSelected(QJsonObject)),
+          this,
+          SLOT(SlotFileObjectSelected(QJsonObject)));
+
+  connect(fileTree,
+          SIGNAL(SignalFileObjectClicked()),
+          callTreeWindow,
+          SLOT(SlotClearLocal()));
+  
   connect(fileTree,
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           this,
           SLOT(SlotFileObjectSelected(QJsonObject)));
+  connect(fileTree,
+          SIGNAL(SignalFileObjectClicked()),
+          this,
+          SLOT(SlotFileObjectClicked()));
   connect(this,
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           callTreeWindow,
@@ -104,7 +128,7 @@ JSONFileWindow::CreateSubWindows()
   header = new JSONFileWindowSectionHeader();
   header->SetText("TRANSLATION UNIT");
   header->setParent(this);
-  callTreeWindow = new CallTreeWindow();
+  callTreeWindow = new CallTreeWindow(TranslationUnit);
   callTreeWindow->setParent(this);
 }
 
@@ -166,6 +190,7 @@ void
 JSONFileWindow::SlotFileObjectSelected
 (QJsonObject InObject)
 {
+  TRACE_FUNCTION_LOCATION();
   emit SignalFileObjectSelected(InObject);
 }
 
@@ -234,6 +259,7 @@ JSONFileWindow::SlotCallingFunctionFound
 void
 JSONFileWindow::SlotClearChildren(void)
 {
+  TRACE_FUNCTION_LOCATION();
   emit SignalClearChildren();
 }
 
@@ -246,4 +272,13 @@ JSONFileWindow::OpenNewFile
 {
   TranslationUnit = InTranslationUnit;
   fileTree->Set(TranslationUnit);
+}
+
+/*****************************************************************************!
+ * Function : SlotFileObjectClicked
+ *****************************************************************************/
+void
+JSONFileWindow::SlotFileObjectClicked(void)
+{
+  emit SignalFileObjectClicked();
 }

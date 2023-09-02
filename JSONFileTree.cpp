@@ -185,6 +185,12 @@ JSONFileTree::SetInnerItem
       item->setForeground(0, QBrush(color));
       item->setForeground(1, QBrush(color));
       item->setText(0, name);
+      if ( TranslationUnit->ObjectIsStatic(obj) ) {
+        QFont f = item->font(0);
+        f.setItalic(true);
+        item->setFont(0, f);
+        item->setFont(1, f);
+      }
       if ( elementType == JSONFILE_TREE_ITEM_TYPE_FUNCTION_DEF ) {
         FunctionDefItems->addChild(item);
       } else if ( elementType == JSONFILE_TREE_ITEM_TYPE_FUNCTION_DECL ) {
@@ -295,6 +301,8 @@ JSONFileTree::SlotItemClicked
   ResetNameFonts();
   if ( type == JSONFILE_TREE_ITEM_INNER_TOP ) {
     kind = object.value("kind").toString();
+    TRACE_FUNCTION_LOCATION();
+    emit SignalFileObjectClicked();
     emit SignalFileObjectSelected(object);
   }
 }

@@ -76,7 +76,8 @@ class JSONFileWindow : public QWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
-
+  void                          CreateConnections       ();
+  
  //! Private Data
  private :
   QString                       filename;
@@ -95,6 +96,7 @@ class JSONFileWindow : public QWidget
   void                          SlotLocalCountSet       (int InLocalCount);
   void                          SlotCallingFunctionFound (QString InFunctionName);
   void                          SlotClearChildren       (void);
+  void                          SlotFileObjectClicked   (void);
   
  //! Public Signals
  signals :
@@ -102,6 +104,7 @@ class JSONFileWindow : public QWidget
   void                          SignalSizeValueChanged  (int InSize);
   void                          SignalCallingFunctionFound (QString InFunctionName);
   void                          SignalClearChildren     (void);
+  void                          SignalFileObjectClicked (void);
 
  //! Public Actions
  public :

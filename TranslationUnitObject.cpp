@@ -137,3 +137,84 @@ TranslationUnitObject::SortObjectFormats
               return InF1->GetTag() < InF2->GetTag();
             });
 }
+
+/*****************************************************************************!
+ * Function : FindFunctionDefinitionObjectByName
+ *****************************************************************************/
+QJsonObject
+TranslationUnitObject::FindFunctionDefinitionObjectByName
+(QString InName)
+{
+  QJsonObject                           obj;
+  int                                   i;
+  int                                   n;
+  QJsonArray                            inner;
+
+  inner = JSONObject["inner"].toArray();
+  n = inner.count();
+  for ( i = firstFunctionIndex ; i < n ; i++ ) {
+    obj = inner[i].toObject();
+    if ( obj["name"].toString() == InName && ObjectIsFunctionDefinition(obj) ) {
+      return obj;
+    }
+  }
+  return QJsonObject();
+}
+
+/*****************************************************************************!
+ * Function : ObjectIsFunctionDefinition
+ *****************************************************************************/
+bool
+TranslationUnitObject::ObjectIsFunctionDefinition
+(QJsonObject InObject)
+{
+  int                                   i;
+  int                                   n;
+  QJsonArray                            innerArray;
+  QJsonValue                            innerValue;
+  QJsonObject                           obj;
+  QString                               kind;
+
+  kind = InObject["kind"].toString();
+  if (  kind.isEmpty() ) {
+    return false;
+  }
+
+  innerValue = InObject["inner"];
+  if ( ! innerValue.isArray() ) {
+    return false;
+  }
+
+  innerArray = innerValue.toArray();
+
+  n = innerArray.count();
+
+  for (i = 0; i < n; i++) {
+    obj = innerArray[i].toObject();
+    kind = obj["kind"].toString();
+    if ( kind == "CompoundStmt" ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+/*****************************************************************************!
+ * Function : ObjectIsStatic
+ *****************************************************************************/
+bool
+TranslationUnitObject::ObjectIsStatic
+(QJsonObject InObject)
+{
+  QJsonValue                            val;
+
+  val = InObject["storageClass"];
+  if ( ! val.isString() ) {
+    return false;
+  }
+  if ( val.toString() == "static" ) {
+    return true;
+  }
+  return false;
+}

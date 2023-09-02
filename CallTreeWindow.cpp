@@ -21,9 +21,11 @@
  * Function : CallTreeWindow
  *****************************************************************************/
 CallTreeWindow::CallTreeWindow
-() : QWidget()
+(TranslationUnitObject* InTranslationUnit) : QWidget()
 {
   QPalette pal;
+
+  TranslationUnit = InTranslationUnit;
   pal = palette();
   pal.setBrush(QPalette::Window, QBrush(QColor(255, 255, 255)));
   setPalette(pal);
@@ -69,6 +71,10 @@ CallTreeWindow::CreateConnections
           SIGNAL(SignalClearChildren()),
           callTree,
           SLOT(SlotClearChildren()));
+  connect(callTree,
+          SIGNAL(SignalCallingFunctionObjectSelected(QJsonObject)),
+          this,
+          SLOT(SlotCallingFunctionObjectSelected(QJsonObject)));
 }
 
 /*****************************************************************************!
@@ -77,7 +83,7 @@ CallTreeWindow::CreateConnections
 void
 CallTreeWindow::CreateSubWindows()
 {
-  callTree = new CallTreeWindowTree();  
+  callTree = new CallTreeWindowTree(TranslationUnit);  
   callTree->setParent(this);
   header = new SectionHeader();
   header->setParent(this);
@@ -147,3 +153,31 @@ CallTreeWindow::SlotClearChildren(void)
   emit SignalClearChildren();
 }
 
+/*****************************************************************************!
+ * Function : SlotCallingFunctionObjectSelected
+ *****************************************************************************/
+void
+CallTreeWindow::SlotCallingFunctionObjectSelected
+(QJsonObject InObject)
+{
+  emit SignalCallingFunctionObjectSelected(InObject);
+}
+
+/*****************************************************************************!
+ * Function : SlotClearLocal
+ *****************************************************************************/
+void
+CallTreeWindow::ClearLocal
+()
+{
+  callTree->ClearLocal();
+}
+
+/*****************************************************************************!
+ * Function : SlotClearLocal
+ *****************************************************************************/
+void
+CallTreeWindow::SlotClearLocal(void)
+{
+  callTree->ClearLocal();
+}

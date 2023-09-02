@@ -19,6 +19,7 @@
  *****************************************************************************/
 #include "CallTreeWindowTree.h"
 #include "SectionHeader.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -37,7 +38,7 @@ class CallTreeWindow : public QWidget
 
  //! Constructors
  public :
-  CallTreeWindow                ();
+  CallTreeWindow                (TranslationUnitObject* InTranslationUnit);
 
  //! Destructor
  public :
@@ -45,7 +46,10 @@ class CallTreeWindow : public QWidget
 
  //! Public Methods
  public :
-
+  void
+  ClearLocal
+  ();
+  
  //! Public Data
  public :
 
@@ -67,19 +71,22 @@ class CallTreeWindow : public QWidget
  private :
   CallTreeWindowTree*           callTree;
   SectionHeader*                header;
-
+  TranslationUnitObject*        TranslationUnit;
+  
  //! Public Slots
  public slots :
   void                          SlotFunctionSelected    (QJsonObject InObject);
   void                          SlotCallingFunctionFound (QString InFunctionName);
   void                          SlotClearChildren       (void);
+  void                          SlotCallingFunctionObjectSelected (QJsonObject InObject);
+  void                          SlotClearLocal          (void);
 
  //! Public Signals
  signals :
   void                          SignalFunctionSelected  (QJsonObject InObject);
   void                          SignalCallingFunctionFound      (QString InFunctionName);
   void                          SignalClearChildren     ();
-  
+  void                          SignalCallingFunctionObjectSelected     (QJsonObject InObject);
  //! Public Actions
  public :
 

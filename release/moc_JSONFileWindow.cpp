@@ -49,16 +49,18 @@ static constexpr auto qt_meta_stringdata_CLASSJSONFileWindowENDCLASS = QtMocHelp
     "SignalCallingFunctionFound",
     "InFunctionName",
     "SignalClearChildren",
+    "SignalFileObjectClicked",
     "SlotFileObjectSelected",
     "SlotSizeValueChanged",
     "SlotLocalCountSet",
     "InLocalCount",
     "SlotCallingFunctionFound",
-    "SlotClearChildren"
+    "SlotClearChildren",
+    "SlotFileObjectClicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSJSONFileWindowENDCLASS_t {
-    uint offsetsAndSizes[30];
+    uint offsetsAndSizes[34];
     char stringdata0[15];
     char stringdata1[25];
     char stringdata2[1];
@@ -68,12 +70,14 @@ struct qt_meta_stringdata_CLASSJSONFileWindowENDCLASS_t {
     char stringdata6[27];
     char stringdata7[15];
     char stringdata8[20];
-    char stringdata9[23];
-    char stringdata10[21];
-    char stringdata11[18];
-    char stringdata12[13];
-    char stringdata13[25];
-    char stringdata14[18];
+    char stringdata9[24];
+    char stringdata10[23];
+    char stringdata11[21];
+    char stringdata12[18];
+    char stringdata13[13];
+    char stringdata14[25];
+    char stringdata15[18];
+    char stringdata16[22];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSJSONFileWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -88,12 +92,14 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSJSONFileWindowENDCLASS_t qt_met
         QT_MOC_LITERAL(80, 26),  // "SignalCallingFunctionFound"
         QT_MOC_LITERAL(107, 14),  // "InFunctionName"
         QT_MOC_LITERAL(122, 19),  // "SignalClearChildren"
-        QT_MOC_LITERAL(142, 22),  // "SlotFileObjectSelected"
-        QT_MOC_LITERAL(165, 20),  // "SlotSizeValueChanged"
-        QT_MOC_LITERAL(186, 17),  // "SlotLocalCountSet"
-        QT_MOC_LITERAL(204, 12),  // "InLocalCount"
-        QT_MOC_LITERAL(217, 24),  // "SlotCallingFunctionFound"
-        QT_MOC_LITERAL(242, 17)   // "SlotClearChildren"
+        QT_MOC_LITERAL(142, 23),  // "SignalFileObjectClicked"
+        QT_MOC_LITERAL(166, 22),  // "SlotFileObjectSelected"
+        QT_MOC_LITERAL(189, 20),  // "SlotSizeValueChanged"
+        QT_MOC_LITERAL(210, 17),  // "SlotLocalCountSet"
+        QT_MOC_LITERAL(228, 12),  // "InLocalCount"
+        QT_MOC_LITERAL(241, 24),  // "SlotCallingFunctionFound"
+        QT_MOC_LITERAL(266, 17),  // "SlotClearChildren"
+        QT_MOC_LITERAL(284, 21)   // "SlotFileObjectClicked"
     },
     "JSONFileWindow",
     "SignalFileObjectSelected",
@@ -104,12 +110,14 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSJSONFileWindowENDCLASS_t qt_met
     "SignalCallingFunctionFound",
     "InFunctionName",
     "SignalClearChildren",
+    "SignalFileObjectClicked",
     "SlotFileObjectSelected",
     "SlotSizeValueChanged",
     "SlotLocalCountSet",
     "InLocalCount",
     "SlotCallingFunctionFound",
-    "SlotClearChildren"
+    "SlotClearChildren",
+    "SlotFileObjectClicked"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -121,37 +129,41 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSJSONFileWindowENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       5,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   68,    2, 0x06,    1 /* Public */,
-       4,    1,   71,    2, 0x06,    3 /* Public */,
-       6,    1,   74,    2, 0x06,    5 /* Public */,
-       8,    0,   77,    2, 0x06,    7 /* Public */,
+       1,    1,   80,    2, 0x06,    1 /* Public */,
+       4,    1,   83,    2, 0x06,    3 /* Public */,
+       6,    1,   86,    2, 0x06,    5 /* Public */,
+       8,    0,   89,    2, 0x06,    7 /* Public */,
+       9,    0,   90,    2, 0x06,    8 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       9,    1,   78,    2, 0x0a,    8 /* Public */,
-      10,    1,   81,    2, 0x0a,   10 /* Public */,
-      11,    1,   84,    2, 0x0a,   12 /* Public */,
-      13,    1,   87,    2, 0x0a,   14 /* Public */,
-      14,    0,   90,    2, 0x0a,   16 /* Public */,
+      10,    1,   91,    2, 0x0a,    9 /* Public */,
+      11,    1,   94,    2, 0x0a,   11 /* Public */,
+      12,    1,   97,    2, 0x0a,   13 /* Public */,
+      14,    1,  100,    2, 0x0a,   15 /* Public */,
+      15,    0,  103,    2, 0x0a,   17 /* Public */,
+      16,    0,  104,    2, 0x0a,   18 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QJsonObject,    3,
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void, QMetaType::QString,    7,
     QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QJsonObject,    3,
     QMetaType::Void, QMetaType::Int,    5,
-    QMetaType::Void, QMetaType::Int,   12,
+    QMetaType::Void, QMetaType::Int,   13,
     QMetaType::Void, QMetaType::QString,    7,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -177,6 +189,8 @@ Q_CONSTINIT const QMetaObject JSONFileWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'SignalClearChildren'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'SignalFileObjectClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'SlotFileObjectSelected'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QJsonObject, std::false_type>,
@@ -190,6 +204,8 @@ Q_CONSTINIT const QMetaObject JSONFileWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'SlotClearChildren'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'SlotFileObjectClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -205,11 +221,13 @@ void JSONFileWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 1: _t->SignalSizeValueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 2: _t->SignalCallingFunctionFound((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 3: _t->SignalClearChildren(); break;
-        case 4: _t->SlotFileObjectSelected((*reinterpret_cast< std::add_pointer_t<QJsonObject>>(_a[1]))); break;
-        case 5: _t->SlotSizeValueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 6: _t->SlotLocalCountSet((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 7: _t->SlotCallingFunctionFound((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 8: _t->SlotClearChildren(); break;
+        case 4: _t->SignalFileObjectClicked(); break;
+        case 5: _t->SlotFileObjectSelected((*reinterpret_cast< std::add_pointer_t<QJsonObject>>(_a[1]))); break;
+        case 6: _t->SlotSizeValueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 7: _t->SlotLocalCountSet((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 8: _t->SlotCallingFunctionFound((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 9: _t->SlotClearChildren(); break;
+        case 10: _t->SlotFileObjectClicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -242,6 +260,13 @@ void JSONFileWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
                 return;
             }
         }
+        {
+            using _t = void (JSONFileWindow::*)();
+            if (_t _q_method = &JSONFileWindow::SignalFileObjectClicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 4;
+                return;
+            }
+        }
     }
 }
 
@@ -264,13 +289,13 @@ int JSONFileWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 11)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 9;
+        _id -= 11;
     }
     return _id;
 }
@@ -300,5 +325,11 @@ void JSONFileWindow::SignalCallingFunctionFound(QString _t1)
 void JSONFileWindow::SignalClearChildren()
 {
     QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+}
+
+// SIGNAL 4
+void JSONFileWindow::SignalFileObjectClicked()
+{
+    QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
 }
 QT_WARNING_POP

@@ -51,7 +51,10 @@ class TranslationUnitObject : public QWidget
   void                          SetFilename             (QString InFilename);
   QString                       GetBaseFilename         (void);
   void                          SortObjectFormats       ();
- 
+  QJsonObject                   FindFunctionDefinitionObjectByName (QString InName);
+  bool                          ObjectIsFunctionDefinition      (QJsonObject InObject);
+  bool                          ObjectIsStatic                  (QJsonObject InObject);
+  
  //! Public Data
  public :
 

@@ -76,7 +76,6 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
-  bool                          ObjectIsFunctionDefinition      (QJsonObject InObject);
   bool                          ObjectContainsCall      (QJsonObject InObject, QString InFunctionName);
   QJsonArray                    GetFunctionCompountStmtInternals (QJsonObject InObject);
   bool                          ContainsCallExpr        (QJsonObject InObject, QString InName);

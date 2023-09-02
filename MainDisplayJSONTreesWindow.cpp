@@ -12,6 +12,7 @@
 #include <QtGui>
 #include <QWidget>
 
+#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
@@ -157,10 +158,11 @@ MainDisplayJSONTreesWindow::CreateConnections(void)
           this,
           SLOT(SlotFormatTypeSelected(QString)));
 
-  connect(this, SIGNAL(SignalFormatTypeSelected(QString)),
+  connect(this,
+          SIGNAL(SignalFormatTypeSelected(QString)),
           elementsWindow,
           SLOT(SlotFormatTypeSelected(QString)));
-
+  
   connect(translationUnitWindow,
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           this,
@@ -301,6 +303,7 @@ MainDisplayJSONTreesWindow::SaveAtExit
 void
 MainDisplayJSONTreesWindow::SlotClearChildren(void)
 {
+  TRACE_FUNCTION_LOCATION();
   emit SignalClearChildren();
 }
 
@@ -317,3 +320,4 @@ MainDisplayJSONTreesWindow::OpenNewFile
   objectsWindow->OpenNewFile(TranslationUnit);
   objectDisplayWindow->OpenNewFile(TranslationUnit);
 }
+

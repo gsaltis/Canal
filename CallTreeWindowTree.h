@@ -18,6 +18,7 @@
  * Local Headers
  *****************************************************************************/
 #include "CallTreeWindowTreeItem.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -36,7 +37,7 @@ class CallTreeWindowTree : public QTreeWidget
 
  //! Constructors
  public :
-  CallTreeWindowTree            ();
+  CallTreeWindowTree            (TranslationUnitObject* InTranslationUnit);
 
  //! Destructor
  public :
@@ -44,7 +45,10 @@ class CallTreeWindowTree : public QTreeWidget
 
  //! Public Methods
  public :
-
+  void
+  ClearLocal
+  ();
+  
  //! Public Data
  public :
 
@@ -60,19 +64,25 @@ class CallTreeWindowTree : public QTreeWidget
   void                          CreateSubWindows        ();
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
+  void                          CreateConnections       (void);
 
  //! Private Data
  private :
   CallTreeWindowTreeItem*       FunctionNameItem;
-
+  CallTreeWindowTreeItem*       lastCallingFunctionSelected;
+  TranslationUnitObject*        TranslationUnit;
+  bool                          locallyGenerated;
+  
  //! Public Slots
  public slots :
   void                          SlotFunctionSelected    (QJsonObject InObject);
   void                          SlotCallingFunctionFound (QString InFunctionName);
   void                          SlotClearChildren       (void);
+  void                          SlotItemSelected        (QTreeWidgetItem* InItem, int InColumn);
 
  //! Public Signals
  signals :
+  void                          SignalCallingFunctionObjectSelected (QJsonObject InObject);
 
  //! Public Actions
  public :

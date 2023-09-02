@@ -95,6 +95,7 @@ class JSONFileTree : public QTreeWidget
  signals :
   void                          SignalFileObjectSelected(QJsonObject);
   void                          SignalLocalCountSet     (int InLocalInnerCount);
+  void                          SignalFileObjectClicked (void);
   
  //! Public Actions
  public :

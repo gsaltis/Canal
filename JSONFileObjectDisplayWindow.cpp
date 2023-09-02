@@ -279,7 +279,7 @@ JSONFileObjectDisplayWindow::FindCalls
   for (i = TranslationUnit->GetFirstFunctionIndex(); i < n; i++) {
     obj = MainTopLevelObjects[i];
     name = obj["name"].toString();
-    if ( ObjectIsFunctionDefinition(obj) ) {
+    if ( TranslationUnit->ObjectIsFunctionDefinition(obj) ) {
       FunctionContainsReference(obj, InFunctionName);
     }
   }
@@ -371,45 +371,6 @@ JSONFileObjectDisplayWindow::ObjectContainsCall
   }
   return true;
 }
-
-/*****************************************************************************!
- * Function : ObjectIsFunctionDefinition
- *****************************************************************************/
-bool
-JSONFileObjectDisplayWindow::ObjectIsFunctionDefinition
-(QJsonObject InObject)
-{
-  int                                   i;
-  int                                   n;
-  QJsonArray                            innerArray;
-  QJsonValue                            innerValue;
-  QJsonObject                           obj;
-  QString                               kind;
-
-  kind = InObject["kind"].toString();
-  if (  kind.isEmpty() ) {
-    return false;
-  }
-
-  innerValue = InObject["inner"];
-  if ( ! innerValue.isArray() ) {
-    return false;
-  }
-
-  innerArray = innerValue.toArray();
-
-  n = innerArray.count();
-
-  for (i = 0; i < n; i++) {
-    obj = innerArray[i].toObject();
-    kind = obj["kind"].toString();
-    if ( kind == "CompoundStmt" ) {
-      return true;
-    }
-  }
-  return false;
-}
-
 
 /*****************************************************************************!
  * Function : GetFunctionCompountStmtInternals
@@ -621,9 +582,6 @@ JSONFileObjectDisplayWindow::DisplayParmVarDecl
   name = InObject["name"].toString();
   typeObj = InObject["type"].toObject();
   type = typeObj["qualType"].toString();
-
-  TRACE_FUNCTION_QSTRING(name);
-  TRACE_FUNCTION_QSTRING(type);
 }
 
 /*****************************************************************************!

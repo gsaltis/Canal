@@ -96,7 +96,6 @@ class MainDisplayJSONTreesWindow : public QWidget
   void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
   void                          SlotCallingFunctionFound (QString InFunctionName);
   void                          SlotClearChildren       (void);
-
   
  //! Public Signals
  signals :
