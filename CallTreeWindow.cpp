@@ -181,3 +181,14 @@ CallTreeWindow::SlotClearLocal(void)
 {
   callTree->ClearLocal();
 }
+
+/*****************************************************************************!
+ * Function : Set
+ *****************************************************************************/
+void
+CallTreeWindow::Set
+(TranslationUnitObject* InTranslationUnit)
+{
+  TranslationUnit = InTranslationUnit;
+  callTree->ClearLocal();
+}

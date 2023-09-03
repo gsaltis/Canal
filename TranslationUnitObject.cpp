@@ -218,3 +218,95 @@ TranslationUnitObject::ObjectIsStatic
   }
   return false;
 }
+
+/*****************************************************************************!
+ * Function : GetDeclStmtName
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetDeclStmtName
+(QJsonObject InObject)
+{
+  QString                               kind;
+  QJsonObject                           obj;
+  int                                   i;
+  QJsonValue                            val;
+  int                                   n;
+  QJsonArray                            inner;
+  QString                               name;
+  QJsonValue                            innerVal;
+
+  innerVal = InObject["inner"];
+
+  if ( ! innerVal.isArray() ) {
+    return name;
+  }
+
+  inner = innerVal.toArray();
+
+  n = inner.count();
+
+  for (i = 0; i < n; i++) {
+    val = inner[i];
+    if ( ! val.isObject() ) {
+      continue;
+    }
+    obj = val.toObject();
+    kind = obj["kind"].toString();
+    if ( kind != "VarDecl" ) {
+      continue;
+    }
+    name = obj["name"].toString();
+    break;
+  }
+  return name;
+}
+
+/*****************************************************************************!
+ * Function : GetCallExprName
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetCallExprName
+(QJsonObject InObject)
+{
+  QString                               name;
+  QJsonObject                           refDeclObj;
+  QString                               kind;
+  QJsonObject                           nameDeclObj;
+  QJsonObject                           nameObj;
+
+  name = QString();
+  
+  nameObj = InObject["inner"].toArray()[0].toObject();
+  kind = nameObj["kind"].toString();
+  if ( kind != "ImplicitCastExpr" ) {
+    return name;
+  }
+  nameDeclObj = nameObj["inner"].toArray()[0].toObject();
+  kind = nameDeclObj["kind"].toString();
+  if ( kind != "DeclRefExpr" ) {
+    return name;
+  }
+  refDeclObj = nameDeclObj["referencedDecl"].toObject();
+  name = refDeclObj["name"].toString();
+  return name;
+}
+
+/*****************************************************************************!
+ * Function : GetEnumConstantDeclName
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetEnumConstantDeclName
+(QJsonObject InObject)
+{
+  return InObject["name"].toString();
+}
+
+/*****************************************************************************!
+ * Function : GetFieldDeclName
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetFieldDeclName
+(QJsonObject InObject)
+{
+  return InObject["name"].toString();
+}

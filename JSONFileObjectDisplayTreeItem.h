@@ -36,6 +36,7 @@ class JSONFileObjectDisplayTreeItem : public QTreeWidgetItem
  //! Constructors
  public :
   JSONFileObjectDisplayTreeItem (QString InTag, QJsonValue InValue);
+  JSONFileObjectDisplayTreeItem (QString InTag, QString InName, QJsonValue InValue);
 
  //! Destructor
  public :
@@ -59,11 +60,13 @@ class JSONFileObjectDisplayTreeItem : public QTreeWidgetItem
   void                          initialize              ();
   void                          HandleObject            (QJsonObject InObject);
   void                          HandleArray             (QJsonArray InArray);
+  void                          Create                  ();
   
  //! Private Data
  private :
   QJsonValue                    value;
   QString                       tag;
+  QString                       name;
   
  //! Public Slots
  public slots :

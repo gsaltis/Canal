@@ -303,7 +303,6 @@ MainDisplayJSONTreesWindow::SaveAtExit
 void
 MainDisplayJSONTreesWindow::SlotClearChildren(void)
 {
-  TRACE_FUNCTION_LOCATION();
   emit SignalClearChildren();
 }
 

@@ -190,7 +190,6 @@ void
 JSONFileWindow::SlotFileObjectSelected
 (QJsonObject InObject)
 {
-  TRACE_FUNCTION_LOCATION();
   emit SignalFileObjectSelected(InObject);
 }
 
@@ -259,7 +258,6 @@ JSONFileWindow::SlotCallingFunctionFound
 void
 JSONFileWindow::SlotClearChildren(void)
 {
-  TRACE_FUNCTION_LOCATION();
   emit SignalClearChildren();
 }
 
@@ -272,6 +270,7 @@ JSONFileWindow::OpenNewFile
 {
   TranslationUnit = InTranslationUnit;
   fileTree->Set(TranslationUnit);
+  callTreeWindow->Set(TranslationUnit);
 }
 
 /*****************************************************************************!

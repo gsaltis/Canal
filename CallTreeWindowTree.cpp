@@ -141,7 +141,6 @@ CallTreeWindowTree::SlotCallingFunctionFound
 void
 CallTreeWindowTree::SlotClearChildren(void)
 {
-  TRACE_FUNCTION_LOCATION();
   if ( ! locallyGenerated ) {
     clear();
   }

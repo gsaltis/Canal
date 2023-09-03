@@ -49,6 +49,7 @@ class CallTreeWindow : public QWidget
   void
   ClearLocal
   ();
+  void                          Set                     (TranslationUnitObject* InTranslationUnit);
   
  //! Public Data
  public :

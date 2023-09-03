@@ -301,7 +301,6 @@ JSONFileTree::SlotItemClicked
   ResetNameFonts();
   if ( type == JSONFILE_TREE_ITEM_INNER_TOP ) {
     kind = object.value("kind").toString();
-    TRACE_FUNCTION_LOCATION();
     emit SignalFileObjectClicked();
     emit SignalFileObjectSelected(object);
   }

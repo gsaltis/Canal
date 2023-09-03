@@ -12,10 +12,13 @@
 #include <QtGui>
 #include <QWidget>
 
+#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
 #include "JSONFileObjectDisplayTreeItem.h"
+#include "TranslationUnitObject.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : JSONFileObjectDisplayTreeItem
@@ -23,10 +26,32 @@
 JSONFileObjectDisplayTreeItem::JSONFileObjectDisplayTreeItem
 (QString InTag, QJsonValue InValue) : QTreeWidgetItem()
 {
-  QBrush                                b;
+  name = QString();
   value = InValue;
   tag = InTag;
+  Create();
+}
 
+/*****************************************************************************!
+ * Function : JSONFileObjectDisplayTreeItem
+ *****************************************************************************/
+JSONFileObjectDisplayTreeItem::JSONFileObjectDisplayTreeItem
+(QString InTag, QString InName, QJsonValue InValue) : QTreeWidgetItem()
+{
+  name = InName;
+  value = InValue;
+  tag = InTag;
+  Create();
+}
+
+/*****************************************************************************!
+ * Function : Create
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTreeItem::Create
+()
+{
+  QBrush                                b;
   setFont(0, QFont("Segoe UI", -1, QFont::Medium));
   b = QBrush(QColor(0, 0, 128));
   setText(0, tag);
@@ -40,7 +65,10 @@ JSONFileObjectDisplayTreeItem::JSONFileObjectDisplayTreeItem
       break;
     }
     case QJsonValue::Object : {
-      setText(1, "");
+      if ( ! name.isEmpty() ) {
+        setText(1, name);
+        setFont(1, QFont("Segoe UI", -1, QFont::Bold));
+      }
       b = QBrush(QColor(128, 0, 0));
       HandleObject(value.toObject());
       break;
@@ -55,12 +83,12 @@ JSONFileObjectDisplayTreeItem::JSONFileObjectDisplayTreeItem
       int                       i;
       double                    d;
 
-      d = InValue.toDouble();
+      d = value.toDouble();
       if ( d != 0 ) {
         setText(1, QString("%1").arg(d));
         break;
       }
-      i = InValue.toInt();
+      i = value.toInt();
       setText(1, QString("%1").arg(i));
       break;
     }
@@ -73,6 +101,7 @@ JSONFileObjectDisplayTreeItem::JSONFileObjectDisplayTreeItem
     }
   }
   setForeground(0, b);
+  setForeground(1, b);
   initialize();
 }
 
@@ -99,6 +128,7 @@ void
 JSONFileObjectDisplayTreeItem::HandleObject
 (QJsonObject InObject)
 {
+  QString                               objName;
   JSONFileObjectDisplayTreeItem*        item;
   QStringList                           keys;
   QString                               tag;
@@ -106,9 +136,14 @@ JSONFileObjectDisplayTreeItem::HandleObject
   
   keys = InObject.keys();
   for ( auto i = keys.begin(); i != keys.end(); i++ ) {
+    objName = QString();
     tag = *i;
     value = InObject[tag];
-    item = new JSONFileObjectDisplayTreeItem(tag, value);
+    if ( tag == "DeclStmt" ) {
+      TRACE_FUNCTION_LOCATION();
+      objName = TranslationUnitObject::GetDeclStmtName(value.toObject());
+    }
+    item = new JSONFileObjectDisplayTreeItem(tag, objName, value);
     addChild(item);
   }
 }
@@ -123,9 +158,11 @@ JSONFileObjectDisplayTreeItem::HandleArray
   JSONFileObjectDisplayTreeItem*        item;
   QString                               tag;
   QJsonValue                            value;
-  
+  QString                               name;
+
   for ( auto i = 0 ; i < InArray.count(); i++ ) {
     value = InArray[i];
+    name = QString();
     if ( value.isObject() ) {
       QJsonObject                       obj = value.toObject();
       QString                           kind;
@@ -135,9 +172,20 @@ JSONFileObjectDisplayTreeItem::HandleArray
         tag = QString("%1").arg(i);
       } else {
         tag = kind;
+        if ( kind == "ParmVarDecl" ) {
+          name = obj["name"].toString();
+        } else if ( kind == "DeclStmt" ) {
+          name = TranslationUnitObject::GetDeclStmtName(value.toObject());
+        } else if ( kind == "CallExpr" ) {
+          name = TranslationUnitObject::GetCallExprName(value.toObject());
+        } else if ( kind == "EnumConstantDecl" ) {
+          name = TranslationUnitObject::GetEnumConstantDeclName(value.toObject());
+        } else if ( kind == "FieldDecl" ) {
+          name = TranslationUnitObject::GetFieldDeclName(value.toObject());
+        }
       }
     }
-    item = new JSONFileObjectDisplayTreeItem(tag, value);
+    item = new JSONFileObjectDisplayTreeItem(tag, name, value);
     addChild(item);
   }
 }
