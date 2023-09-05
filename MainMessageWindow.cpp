@@ -89,6 +89,9 @@ MainMessageWindow::CreateSubWindows()
   message->setText("None");
   message->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
   message->setFont(QFont("Segoe UI", 10, QFont::Bold));
+
+  progressBar = new QProgressBar();
+  progressBar->setParent(this);
 }
 
 /*****************************************************************************!
@@ -107,22 +110,35 @@ void
 MainMessageWindow::resizeEvent
 (QResizeEvent* InEvent)
 {
+  int                                   height;
   int                                   messageW;
   int                                   messageX;
   int                                   messageY;
   int                                   messageH;
+  int                                   progressBarW;
+  int                                   progressBarX;
+  int                                   progressBarY;
+  int                                   progressBarH;
   QSize                                 size;  
   int                                   width;
 
   size = InEvent->size();
   width = size.width();
-  messageW = width - 5;
+  height = size.height();
+  messageW = width / 4 * 3 - 5;
   messageX = 5;
   messageY = message->pos().y();
   messageH = message->size().height();
 
   message->resize(messageW, messageH);
   message->move(messageX, messageY);
+
+  progressBarW = width - (messageW + 10);
+  progressBarH = height - 4;
+  progressBarX = (messageW + messageX) + 4;
+  progressBarY = 2;
+  progressBar->move(progressBarX, progressBarY);
+  progressBar->resize(progressBarW, progressBarH);
 }
 
 /*****************************************************************************!
@@ -188,4 +204,43 @@ void
 MainMessageWindow::SlotTimeout(void)
 {
   ClearMessage();
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarSet
+ *****************************************************************************/
+void
+MainMessageWindow::SlotProgressBarSet
+(int InMinimum, int InMaximum)
+{
+  progressBar->setMaximum(InMaximum);
+  progressBar->setMinimum(InMinimum);
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarShow
+ *****************************************************************************/
+void
+MainMessageWindow::SlotProgressBarShow(void)
+{
+  progressBar->show();
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarHide
+ *****************************************************************************/
+void
+MainMessageWindow::SlotProgressBarHide(void)
+{
+  progressBar->hide();
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarUpdate
+ *****************************************************************************/
+void
+MainMessageWindow::SlotProgressBarUpdate
+(int InValue)
+{
+  progressBar->setValue(InValue);
 }

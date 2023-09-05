@@ -114,29 +114,37 @@ class JSONFileObjectDisplayWindow : public QWidget
 
  //! Public Slots
  public slots :
-  void                          SlotFileObjectSelected  (QJsonObject);
-  void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
-  void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
-  void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
-  void                          SlotDisplayButtonClicked (bool InChecked);
-  void                          SlotCollapseElements    (void);
-  void                          SlotExpandElements      (void);
-  void                          SlotValueSelected       (QJsonValue InValue);
-  void                          SlotClearChildren       (void);
-  void                          SlotNormalMessage       (QString InMessage);
-  void                          SlotCloseTab            (void);
+  void                          SlotFileObjectSelected          (QJsonObject);
+  void                          SlotFileElementSelected         (QString InTag, QList<QString> InKeys);
+  void                          SlotObjectFormatSelected        (JSONObjectFormat* InObjectFormat);
+  void                          SlotObjectFormatIdentified      (QString InTag, QStringList InKeys);
+  void                          SlotDisplayButtonClicked        (bool InChecked);
+  void                          SlotCollapseElements            (void);
+  void                          SlotExpandElements              (void);
+  void                          SlotValueSelected               (QJsonValue InValue);
+  void                          SlotClearChildren               (void);
+  void                          SlotNormalMessage               (QString InMessage);
+  void                          SlotCloseTab                    (void);
+  void                          SlotProgressBarShow             (void);
+  void                          SlotProgressBarHide             (void);
+  void                          SlotProgressBarSet              (int InMinimum, int InMaximum);
+  void                          SlotProgressBarUpdate           (int InValue);
 
  //! Public Signals
  signals :
-  void                          SignalFileObjectSelected  (QJsonObject);
-  void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
-  void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
-  void                          SignalExpandTree        (void);
-  void                          SignalCollapseTree        (void);
-  void                          SignalCallingFunctionFound (QString InFunctionName);
-  void                          SignalClearChildren     (void);
-  void                          SignalNormalMessage     (QString InMessage);
-  void                          SignalCloseTab          (void);
+  void                          SignalFileObjectSelected        (QJsonObject);
+  void                          SignalFileElementSelected       (QString InTag, QList<QString> InKeys);
+  void                          SignalFileElementIdentified     (QString InSearchTag, QStringList InKeys);
+  void                          SignalExpandTree                (void);
+  void                          SignalCollapseTree              (void);
+  void                          SignalCallingFunctionFound      (QString InFunctionName);
+  void                          SignalClearChildren             (void);
+  void                          SignalNormalMessage             (QString InMessage);
+  void                          SignalCloseTab                  (void);
+  void                          SignalProgressBarShow           (void);
+  void                          SignalProgressBarHide           (void);
+  void                          SignalProgressBarSet            (int InMinimum, int InMaximum);
+  void                          SignalProgressBarUpdate         (int InValue);
 
  //! Public Actions
  public :

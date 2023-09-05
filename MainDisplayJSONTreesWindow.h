@@ -89,25 +89,34 @@ class MainDisplayJSONTreesWindow : public QWidget
   
  //! Public Slots
  public slots :
-  void                          SlotFormatTypeSelected  (QString InType);
-  void                          SlotFileObjectSelected  (QJsonObject InObject);
-  void                          SlotFileElementSelected (QString InTag, QList<QString> InKeys);
-  void                          SlotObjectFormatSelected (JSONObjectFormat* InObjectFormat);
-  void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
-  void                          SlotCallingFunctionFound (QString InFunctionName);
-  void                          SlotClearChildren       (void);
-  void                          SlotNormalMessage       (QString InMessage);
+  void                          SlotFormatTypeSelected          (QString InType);
+  void                          SlotFileObjectSelected          (QJsonObject InObject);
+  void                          SlotFileElementSelected         (QString InTag, QList<QString> InKeys);
+  void                          SlotObjectFormatSelected        (JSONObjectFormat* InObjectFormat);
+  void                          SlotObjectFormatIdentified      (QString InTag, QStringList InKeys);
+  void                          SlotCallingFunctionFound        (QString InFunctionName);
+  void                          SlotClearChildren               (void);
+  void                          SlotNormalMessage               (QString InMessage);
+  void                          SlotProgressBarSet              (int InMinimum, int InMaximum);
+  void                          SlotProgressBarShow             (void);
+  void                          SlotProgressBarHide             (void);
+  void                          SlotProgressBarUpdate           (int InValue);
   
  //! Public Signals
  signals :
-  void                          SignalFormatTypeSelected(QString InType);
-  void                          SignalFileObjectSelected(QJsonObject);
-  void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
-  void                          SignalObjectFormatSelected (JSONObjectFormat* InObjectFormat);
-  void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
-  void                          SignalCallingFunctionFound (QString InFunctionName);
-  void                          SignalClearChildren     (void);
+  void                          SignalFormatTypeSelected        (QString InType);
+  void                          SignalFileObjectSelected        (QJsonObject);
+  void                          SignalFileElementSelected       (QString InTag, QList<QString> InKeys);
+  void                          SignalObjectFormatSelected      (JSONObjectFormat* InObjectFormat);
+  void                          SignalFileElementIdentified     (QString InSearchTag, QStringList InKeys);
+  void                          SignalCallingFunctionFound      (QString InFunctionName);
+  void                          SignalClearChildren             (void);
   void                          SignalNormalMessage             (QString InMessage);
+  void                          SignalProgressBarShow           (void);
+  void                          SignalProgressBarHide           (void);
+  void                          SignalProgressBarSet            (int InMinimum, int InMaximum);
+  void                          SignalProgressBarUpdate         (int InValue);
+
  //! Public Actions
  public :
 

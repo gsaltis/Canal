@@ -203,6 +203,27 @@ MainDisplayWindow::CreateConnections(void)
           SIGNAL(SignalNormalMessage(QString)),
           messageWindow,
           SLOT(SlotSetMessageNormal(QString)));
+
+  connect(treesWindow,
+          SIGNAL(SignalProgressBarShow()),
+          messageWindow,
+          SLOT(SlotProgressBarShow()));
+  
+  connect(treesWindow,
+          SIGNAL(SignalProgressBarHide()),
+          messageWindow,
+          SLOT(SlotProgressBarHide()));
+  
+  connect(treesWindow,
+          SIGNAL(SignalProgressBarSet(int, int)),
+          messageWindow,
+          SLOT(SlotProgressBarSet(int, int)));
+  
+  connect(treesWindow,
+          SIGNAL(SignalProgressBarUpdate(int)),
+          messageWindow,
+          SLOT(SlotProgressBarUpdate(int)));
+  
 }
 
 /*****************************************************************************!
@@ -225,3 +246,4 @@ MainDisplayWindow::SlotSetMessageNormal
 {
   emit SignalSetMessageNormal(InMessage);
 }
+

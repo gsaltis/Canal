@@ -109,6 +109,26 @@ JSONFileObjectDisplayTabWindow::AddObject
           SIGNAL(SignalNormalMessage(QString)),
           this,
           SLOT(SlotNormalMessage(QString)));
+  connect(tab,
+          SIGNAL(SignalProgressBarShow()),
+          this,
+          SLOT(SlotProgressBarShow()));
+  
+  connect(tab,
+          SIGNAL(SignalProgressBarHide()),
+          this,
+          SLOT(SlotProgressBarHide()));
+  
+  connect(tab,
+          SIGNAL(SignalProgressBarSet(int, int)),
+          this,
+          SLOT(SlotProgressBarSet(int, int)));
+  
+  connect(tab,
+          SIGNAL(SignalProgressBarUpdate(int)),
+          this,
+          SLOT(SlotProgressBarUpdate(int)));
+  
   
   Tabs[tab->GetName()] = tab;
   addTab(tab, tab->GetName());
@@ -176,4 +196,42 @@ JSONFileObjectDisplayTabWindow::SlotCloseTab(void)
   Tabs.remove(name);
 
   delete tab;
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarShow
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTabWindow::SlotProgressBarShow(void)
+{
+  emit SignalProgressBarShow();  
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarHide
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTabWindow::SlotProgressBarHide(void)
+{
+  emit SignalProgressBarHide();
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarSet
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTabWindow::SlotProgressBarSet
+(int InMinimum, int InMaximum)
+{
+  emit SignalProgressBarSet(InMinimum, InMaximum);
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarUpdate
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTabWindow::SlotProgressBarUpdate
+(int InValue)
+{
+  emit SignalProgressBarUpdate(InValue);
 }

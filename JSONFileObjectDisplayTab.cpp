@@ -82,6 +82,27 @@ JSONFileObjectDisplayTab::CreateConnections
           SIGNAL(SignalNormalMessage(QString)),
           this,
           SLOT(SlotNormalMessage(QString)));
+
+  connect(displayTree,
+          SIGNAL(SignalProgressBarShow()),
+          this,
+          SLOT(SlotProgressBarShow()));
+  
+  connect(displayTree,
+          SIGNAL(SignalProgressBarHide()),
+          this,
+          SLOT(SlotProgressBarHide()));
+  
+  connect(displayTree,
+          SIGNAL(SignalProgressBarSet(int, int)),
+          this,
+          SLOT(SlotProgressBarSet(int, int)));
+  
+  connect(displayTree,
+          SIGNAL(SignalProgressBarUpdate(int)),
+          this,
+          SLOT(SlotProgressBarUpdate(int)));
+  
 }
 
 /*****************************************************************************!
@@ -161,4 +182,42 @@ JSONFileObjectDisplayTab::SlotNormalMessage
 (QString InMessage)
 {
   emit SignalNormalMessage(InMessage);
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarShow
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTab::SlotProgressBarShow(void)
+{
+  emit SignalProgressBarShow();  
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarHide
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTab::SlotProgressBarHide(void)
+{
+  emit SignalProgressBarHide();
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarSet
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTab::SlotProgressBarSet
+(int InMinimum, int InMaximum)
+{
+  emit SignalProgressBarSet(InMinimum, InMaximum);
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarUpdate
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTab::SlotProgressBarUpdate
+(int InValue)
+{
+  emit SignalProgressBarUpdate(InValue);
 }

@@ -48,6 +48,7 @@ JSONFileObjectDisplayTree::CreateConnections
           SIGNAL(itemClicked(QTreeWidgetItem*, int)),
           this,
           SLOT(SlotItemSelected(QTreeWidgetItem*, int)));
+
 }
 
 /*****************************************************************************!
@@ -151,6 +152,9 @@ JSONFileObjectDisplayTree::SlotExpandTree(void)
   int                                   k = 0;
   k = GetItemCount();
   QTreeWidgetItemIterator               i(this);
+
+  emit SignalProgressBarShow();
+  emit SignalProgressBarSet(0, k);
   while (*i) {
     (*i)->setExpanded(true);
     i++;
@@ -159,9 +163,11 @@ JSONFileObjectDisplayTree::SlotExpandTree(void)
       QCoreApplication::processEvents();
       s = QString("Process element %1 of %2").arg(n).arg(k);
       emit SignalNormalMessage(s);
+      emit SignalProgressBarUpdate(n);
     }
   }
   emit SignalNormalMessage(QString());
+  emit SignalProgressBarHide();
 }
 
 /*****************************************************************************!
@@ -340,4 +346,46 @@ JSONFileObjectDisplayTree::OpenCompoundStmt
       item->setExpanded(true);
     }
   }
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarShow
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::SlotProgressBarShow(void)
+{
+  TRACE_FUNCTION_LOCATION();
+  emit SignalProgressBarShow();  
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarHide
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::SlotProgressBarHide(void)
+{
+  TRACE_FUNCTION_LOCATION();
+  emit SignalProgressBarHide();
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarSet
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::SlotProgressBarSet
+(int InMinimum, int InMaximum)
+{
+  TRACE_FUNCTION_LOCATION();
+  emit SignalProgressBarSet(InMinimum, InMaximum);
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarUpdate
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::SlotProgressBarUpdate
+(int InValue)
+{
+  TRACE_FUNCTION_LOCATION();
+  emit SignalProgressBarUpdate(InValue);
 }

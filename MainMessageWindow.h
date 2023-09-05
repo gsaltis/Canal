@@ -16,6 +16,7 @@
 #include <QFrame>
 #include <QLabel>
 #include <QTimer>
+#include <QProgressBar>
 
 /*****************************************************************************!
  * Local Headers
@@ -74,11 +75,16 @@ class MainMessageWindow : public QFrame
   QColor                        NormalColor;
   QColor                        ErrorColor;
   QTimer*                       timer;
+  QProgressBar*                 progressBar;
   
  //! Public Slots
  public slots :
   void                          SlotSetMessageNormal    (QString InMessage);
   void                          SlotTimeout             (void);
+  void                          SlotProgressBarSet      (int InMinimum, int InMaximum);
+  void                          SlotProgressBarShow     (void);
+  void                          SlotProgressBarHide     (void);
+  void                          SlotProgressBarUpdate   (int InValue);
 
  //! Public Signals
  signals :

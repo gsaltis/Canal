@@ -73,13 +73,21 @@ class JSONFileObjectDisplayTab : public QWidget
 
  //! Public Slots
  public slots :
-  void                          SlotExpandTree          (void);
-  void                          SlotCollapseTree        (void);
-  void                          SlotNormalMessage       (QString InMessage);
+  void                          SlotExpandTree                  (void);
+  void                          SlotCollapseTree                (void);
+  void                          SlotNormalMessage               (QString InMessage);
+  void                          SlotProgressBarShow           (void);
+  void                          SlotProgressBarHide           (void);
+  void                          SlotProgressBarSet            (int InMinimum, int InMaximum);
+  void                          SlotProgressBarUpdate         (int InValue);
 
  //! Public Signals
  signals :
   void                          SignalNormalMessage     (QString InMessage);
+  void                          SignalProgressBarShow           (void);
+  void                          SignalProgressBarHide           (void);
+  void                          SignalProgressBarSet            (int InMinimum, int InMaximum);
+  void                          SignalProgressBarUpdate         (int InValue);
 
  //! Public Actions
  public :

@@ -230,6 +230,27 @@ MainDisplayJSONTreesWindow::CreateConnections(void)
           SIGNAL(SignalClearChildren()),
           objectDisplayWindow,
           SLOT(SlotClearChildren()));
+
+  connect(objectDisplayWindow,
+          SIGNAL(SignalProgressBarShow()),
+          this,
+          SLOT(SlotProgressBarShow()));
+  
+  connect(objectDisplayWindow,
+          SIGNAL(SignalProgressBarHide()),
+          this,
+          SLOT(SlotProgressBarHide()));
+  
+  connect(objectDisplayWindow,
+          SIGNAL(SignalProgressBarSet(int, int)),
+          this,
+          SLOT(SlotProgressBarSet(int, int)));
+  
+  connect(objectDisplayWindow,
+          SIGNAL(SignalProgressBarUpdate(int)),
+          this,
+          SLOT(SlotProgressBarUpdate(int)));
+  
 }
 
 /*****************************************************************************!
@@ -332,4 +353,42 @@ void
 MainDisplayJSONTreesWindow::SlotNormalMessage(QString InMessage)
 {
   emit SignalNormalMessage(InMessage);
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarShow
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotProgressBarShow(void)
+{
+  emit SignalProgressBarShow();  
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarHide
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotProgressBarHide(void)
+{
+  emit SignalProgressBarHide();
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarSet
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotProgressBarSet
+(int InMinimum, int InMaximum)
+{
+  emit SignalProgressBarSet(InMinimum, InMaximum);
+}
+
+/*****************************************************************************!
+ * Function : SlotProgressBarUpdate
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotProgressBarUpdate
+(int InValue)
+{
+  emit SignalProgressBarUpdate(InValue);
 }
