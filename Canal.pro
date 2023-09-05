@@ -34,13 +34,16 @@ SOURCES                         += \
 				   CallTreeWindow.cpp                           \
 				   CallTreeWindowTree.cpp                       \
 				   CallTreeWindowTreeItem.cpp                   \
+				   CalledFunction.cpp                           \
 				   CanalDB.cpp                                  \
 				   DirectoryManagement.cpp                      \
 				   DisplayFunctionSVGNamePane.cpp               \
+				   FunctionDefinition.cpp                       \
+				   FunctionParameter.cpp                        \
 				   JSONElementWindow.cpp                        \
 				   JSONElementWindowSectionHeader.cpp           \
-				   JSONFileObjectDisplayTabWindow.cpp           \
 				   JSONFileObjectDisplayTab.cpp                 \
+				   JSONFileObjectDisplayTabWindow.cpp           \
 				   JSONFileObjectDisplayTree.cpp                \
 				   JSONFileObjectDisplayTreeItem.cpp            \
 				   JSONFileObjectDisplayWindow.cpp              \
@@ -80,13 +83,16 @@ HEADERS                         += \
 				   CallTreeWindow.h                             \
 				   CallTreeWindowTree.h                         \
 				   CallTreeWindowTreeItem.h                     \
+				   CalledFunction.h                             \
 				   CanalDB.h                                    \
 				   DirectoryManagement.h                        \
 				   DisplayFunctionSVGNamePane.h                 \
+				   FunctionDefinition.h                         \
+				   FunctionParameter.h                          \
 				   JSONElementWindow.h                          \
 				   JSONElementWindowSectionHeader.h             \
-				   JSONFileObjectDisplayTabWindow.h             \
 				   JSONFileObjectDisplayTab.h                   \
+				   JSONFileObjectDisplayTabWindow.h             \
 				   JSONFileObjectDisplayTree.h                  \
 				   JSONFileObjectDisplayTreeItem.h              \
 				   JSONFileObjectDisplayWindow.h                \
