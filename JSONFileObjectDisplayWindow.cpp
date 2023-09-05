@@ -21,6 +21,11 @@
 #include "JSONNavigate.h"
 
 /*****************************************************************************!
+ * Local Macros
+ *****************************************************************************/
+#define TOOLBAR_WIDTH                   34
+
+/*****************************************************************************!
  * Function : JSONFileObjectDisplayWindow
  *****************************************************************************/
 JSONFileObjectDisplayWindow::JSONFileObjectDisplayWindow
@@ -52,10 +57,23 @@ JSONFileObjectDisplayWindow::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
+  CreateConnections();
+  CreateAction();
+}
+
+/*****************************************************************************!
+ * Function : CreateAction
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::CreateAction
+()
+{
   ActionCollapseElements = new QAction(QIcon(":/Images/Collapse.png"), "CollapseElements", this);
   connect(ActionCollapseElements, SIGNAL(triggered()), this, SLOT(SlotCollapseElements()));
+
   ActionExpandElements = new QAction(QIcon(":/Images/Expand.png"), "ExpandElements", this);
   connect(ActionExpandElements, SIGNAL(triggered()), this, SLOT(SlotExpandElements()));
+
   Toolbar->addAction(ActionExpandElements);
   Toolbar->addAction(ActionCollapseElements);
 }
@@ -68,6 +86,31 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
 {
   fileTree = new JSONFileObjectDisplayTree();  
   fileTree->setParent(this);
+
+  header = new SectionHeader();
+  header->setParent(this);
+
+  Toolbar = new QToolBar(this);
+  Toolbar->setOrientation(Qt::Vertical);
+  Toolbar->setIconSize(QSize(32, 32));
+
+  DisplayButton = new QPushButton("Display");
+  DisplayButton->resize(60, 20);
+
+  elementDisplayWindow = new JSONFileObjectElementDisplayWindow();
+  elementDisplayWindow->setParent(this);
+
+  tabWindow = new JSONFileObjectDisplayTabWindow();
+  tabWindow->setParent(this);
+}
+
+/*****************************************************************************!
+ * Funtion : CreateConnections
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::CreateConnections
+()
+{
   connect(this,
           SIGNAL(SignalFileObjectSelected(QJsonObject)),
           fileTree,
@@ -80,8 +123,6 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
           SIGNAL(SignalFileElementIdentified(QString, QList<QString>)),
           this,
           SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
-  header = new SectionHeader();
-  header->setParent(this);
 
   connect(this,
           SIGNAL(SignalExpandTree()),
@@ -103,19 +144,10 @@ JSONFileObjectDisplayWindow::CreateSubWindows()
           fileTree,
           SLOT(SlotClearChildren()));
   
-  Toolbar = new QToolBar(this);
-  Toolbar->resize(34, 100);
-  Toolbar->move(0, 0);
-  Toolbar->setOrientation(Qt::Vertical);
-  Toolbar->setIconSize(QSize(32, 32));
-  DisplayButton = new QPushButton("Display");
-  DisplayButton->resize(60, 20);
   connect(DisplayButton,
           SIGNAL(clicked(bool)),
           this,
-          SLOT(SlotDisplayButtonClicked(bool)));
-  elementDisplayWindow = new JSONFileObjectElementDisplayWindow();
-  elementDisplayWindow->setParent(this);
+          SLOT(SlotDisplayButtonClicked(bool)));  
 }
 
 /*****************************************************************************!
@@ -127,6 +159,7 @@ JSONFileObjectDisplayWindow::InitializeSubWindows()
   fileTree = NULL;  
   header = NULL;
   elementDisplayWindow = NULL;
+  tabWindow = NULL;
 }
 
 /*****************************************************************************!
@@ -156,7 +189,7 @@ JSONFileObjectDisplayWindow::resizeEvent
   width = size.width();
   height = size.height();
 
-  toolbarW = Toolbar->size().width();
+  toolbarW = TOOLBAR_WIDTH;
   toolbarX = width - toolbarW;
   toolbarH = height - SECTION_HEADER_HEIGHT;
   toolbarY = SECTION_HEADER_HEIGHT;
@@ -188,6 +221,10 @@ JSONFileObjectDisplayWindow::resizeEvent
     elementDisplayWindow->move(elementDisplayWindowX, elementDisplayWindowY);
     elementDisplayWindow->resize(elementDisplayWindowW, elementDisplayWindowH);
   }
+  if ( tabWindow ) {
+    tabWindow->resize(fileTreeW, fileTreeH);
+    tabWindow->move(0, SECTION_HEADER_HEIGHT);
+  }
 }
 
 /*****************************************************************************!
@@ -203,6 +240,7 @@ JSONFileObjectDisplayWindow::SlotFileObjectSelected
   name = InObject["name"].toString();
   FindCalls(name);
   header->SetText(name);
+  tabWindow->AddObject(InObject);
 }
 
 /*****************************************************************************!

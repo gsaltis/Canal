@@ -54,7 +54,9 @@ class TranslationUnitObject : public QWidget
   QJsonObject                   FindFunctionDefinitionObjectByName (QString InName);
   bool                          ObjectIsFunctionDefinition      (QJsonObject InObject);
   bool                          ObjectIsStatic                  (QJsonObject InObject);
+
   static QString                GetDeclStmtName         (QJsonObject InObject);
+  static QString                GetFuncDeclName         (QJsonObject InObject);
   static QString                GetCallExprName         (QJsonObject InObject);
   static QString                GetEnumConstantDeclName (QJsonObject InObject);
   static QString                GetFieldDeclName        (QJsonObject InObject);

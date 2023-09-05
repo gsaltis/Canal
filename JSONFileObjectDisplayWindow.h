@@ -26,6 +26,7 @@
 #include "SectionHeader.h"
 #include "JSONFileObjectElementDisplayWindow.h"
 #include "TranslationUnitObject.h"
+#include "JSONFileObjectDisplayTabWindow.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -79,7 +80,8 @@ class JSONFileObjectDisplayWindow : public QWidget
   bool                          ObjectContainsCall      (QJsonObject InObject, QString InFunctionName);
   QJsonArray                    GetFunctionCompountStmtInternals (QJsonObject InObject);
   bool                          ContainsCallExpr        (QJsonObject InObject, QString InName);
-
+  void                          CreateConnections       ();
+  void                          CreateAction            ();
 
   bool                          FunctionContainsReference
   (QJsonObject InFunctionObject, QString InFunctionName);
@@ -106,6 +108,7 @@ class JSONFileObjectDisplayWindow : public QWidget
   QToolBar*                     Toolbar;
   TranslationUnitObject*        TranslationUnit;
   JSONFileObjectElementDisplayWindow* elementDisplayWindow;
+  JSONFileObjectDisplayTabWindow* tabWindow;
 
  //! Public Slots
  public slots :

@@ -310,3 +310,13 @@ TranslationUnitObject::GetFieldDeclName
 {
   return InObject["name"].toString();
 }
+
+/*****************************************************************************!
+ * Function : GetFuncDeclName
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetFuncDeclName
+(QJsonObject InObject)
+{
+  return InObject["name"].toString();
+}

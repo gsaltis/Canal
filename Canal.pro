@@ -39,6 +39,8 @@ SOURCES                         += \
 				   DisplayFunctionSVGNamePane.cpp               \
 				   JSONElementWindow.cpp                        \
 				   JSONElementWindowSectionHeader.cpp           \
+				   JSONFileObjectDisplayTabWindow.cpp           \
+				   JSONFileObjectDisplayTab.cpp                 \
 				   JSONFileObjectDisplayTree.cpp                \
 				   JSONFileObjectDisplayTreeItem.cpp            \
 				   JSONFileObjectDisplayWindow.cpp              \
@@ -83,6 +85,8 @@ HEADERS                         += \
 				   DisplayFunctionSVGNamePane.h                 \
 				   JSONElementWindow.h                          \
 				   JSONElementWindowSectionHeader.h             \
+				   JSONFileObjectDisplayTabWindow.h             \
+				   JSONFileObjectDisplayTab.h                   \
 				   JSONFileObjectDisplayTree.h                  \
 				   JSONFileObjectDisplayTreeItem.h              \
 				   JSONFileObjectDisplayWindow.h                \
