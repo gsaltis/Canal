@@ -61,7 +61,13 @@ class JSONFileObjectDisplayTree : public QTreeWidget
   void                          initialize              ();
   void                          ExpandItem              (JSONFileObjectDisplayTreeItem* InItem);
   void                          ExpandInnerCompoundStmt (void);
+  int                           GetItemCount            (void);
   void                          CollapseItem            (JSONFileObjectDisplayTreeItem* InItem);
+  void                          CreateConnections       ();
+  void                          OpenBinaryOperator      (JSONFileObjectDisplayTreeItem* InItem);
+  void                          OpenIfStmt              (JSONFileObjectDisplayTreeItem* InItem);
+  void                          OpenCompoundStmt        (JSONFileObjectDisplayTreeItem* InItem);
+  
  //! Private Data
  private :
 
@@ -72,12 +78,14 @@ class JSONFileObjectDisplayTree : public QTreeWidget
   void                          SlotExpandTree          (void);
   void                          SlotCollapseTree        (void);
   void                          SlotClearChildren       (void);
+  void                          SlotItemExpanded        (QTreeWidgetItem* InItem);
   
  //! Public Signals
  signals :
   void                          SignalFileElementSelected (QString InTag, QList<QString> InKeys);
   void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
   void                          SignalValueSelected     (QJsonValue InValue);
+  void                          SignalNormalMessage     (QString InMessage);
 
  //! Public Actions
  public :

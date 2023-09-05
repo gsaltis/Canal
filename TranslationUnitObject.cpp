@@ -16,6 +16,7 @@
  * Local Headers
  *****************************************************************************/
 #include "TranslationUnitObject.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : TranslationUnitObject
@@ -319,4 +320,87 @@ TranslationUnitObject::GetFuncDeclName
 (QJsonObject InObject)
 {
   return InObject["name"].toString();
+}
+
+/*****************************************************************************!
+ * Function : GetIntegerLiteralValue
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetIntegerLiteralValue
+(QJsonObject InObject)
+{
+  return InObject["value"].toString();
+}
+
+/*****************************************************************************!
+ * Function : GetImplicitCastExprReference
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetImplicitCastExprReference
+(QJsonObject InObject)
+{
+  QString                               name;
+  QJsonObject                           obj2;
+  QJsonObject                           obj;
+  QString                               kind;
+  QJsonArray                            innerArray;
+  QJsonValue                            value;
+
+  value = InObject["inner"];
+  if ( ! value.isArray() ) {
+    TRACE_FUNCTION_END();
+    return QString();
+  }
+  innerArray = value.toArray();
+  value = innerArray[0];
+  if ( ! value.isObject() ) {
+    return QString();
+  }
+  obj = value.toObject();
+  kind = obj["kind"].toString();
+  if ( kind == "DeclRefExpr" ) {
+    return GetDeclRefExprName(obj);
+  }
+  if ( kind == "MemberExpr" ) {
+    return GetMemberExprName(obj);
+  }
+  if ( kind == "implicitCastExpr" ) {
+    return GetImplicitCastExprReference(obj);
+  }
+  return QString();
+}
+
+/*****************************************************************************!
+ * Function : GetDeclRefExprName
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetDeclRefExprName
+(QJsonObject InObject)
+{
+  QString                               name;
+  QJsonObject                           obj;
+  QJsonValue                            value;
+
+  value = InObject["referencedDecl"];
+
+  if ( ! value.isObject() ) {
+    return QString();
+  }
+  
+  obj = value.toObject();
+  name = obj["name"].toString();
+  return name;
+}
+
+/*****************************************************************************!
+ * Function : GetMemberExprName
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetMemberExprName
+(QJsonObject InObject)
+{
+  QString                               name;
+  
+  name = InObject["name"].toString();
+  return name;
 }

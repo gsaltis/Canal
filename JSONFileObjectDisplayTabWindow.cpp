@@ -12,10 +12,12 @@
 #include <QtGui>
 #include <QWidget>
 
+#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
 #include "JSONFileObjectDisplayTabWindow.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : JSONFileObjectDisplayTabWindow
@@ -103,7 +105,75 @@ JSONFileObjectDisplayTabWindow::AddObject
   }
     
   tab = new JSONFileObjectDisplayTab(InObject);
+  connect(tab,
+          SIGNAL(SignalNormalMessage(QString)),
+          this,
+          SLOT(SlotNormalMessage(QString)));
+  
   Tabs[tab->GetName()] = tab;
   addTab(tab, tab->GetName());
   setCurrentWidget(tab);
+}
+
+/*****************************************************************************!
+ * Function : SlotExpandTree
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTabWindow::SlotExpandTree(void)
+{
+  JSONFileObjectDisplayTab*             tab;
+
+  tab = (JSONFileObjectDisplayTab*)currentWidget();
+  if ( NULL == tab ) {
+    return;
+  }
+  
+  tab->SlotExpandTree();
+}
+
+/*****************************************************************************!
+ * Function : SlotCollapseTree
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTabWindow::SlotCollapseTree(void)
+{
+  JSONFileObjectDisplayTab*             tab;
+
+  tab = (JSONFileObjectDisplayTab*)currentWidget();
+  if ( NULL == tab ) {
+    return;
+  }
+
+  tab->SlotCollapseTree();
+  
+}
+
+/*****************************************************************************!
+ * Function : SlotNormalMessage
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTabWindow::SlotNormalMessage
+(QString InMessage)
+{
+  emit SignalNormalMessage(InMessage);
+}
+
+/*****************************************************************************!
+ * Function : SlotCloseTab
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTabWindow::SlotCloseTab(void)
+{
+  QString                               name;
+  int                                   n;
+  JSONFileObjectDisplayTab*             tab;
+  
+  n = currentIndex();
+  tab = (JSONFileObjectDisplayTab*)widget(n);
+  removeTab(n);
+
+  name = tab->GetName();
+  Tabs.remove(name);
+
+  delete tab;
 }

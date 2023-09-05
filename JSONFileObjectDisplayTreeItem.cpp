@@ -61,6 +61,9 @@ JSONFileObjectDisplayTreeItem::Create
       break;
     }
     case QJsonValue::String : {
+      if ( tag == "opcode" ) {
+        setFont(1, QFont("Segoe UI", -1, QFont::Bold));
+      }
       setText(1, value.toString());
       break;
     }
@@ -140,7 +143,6 @@ JSONFileObjectDisplayTreeItem::HandleObject
     tag = *i;
     value = InObject[tag];
     if ( tag == "DeclStmt" ) {
-      TRACE_FUNCTION_LOCATION();
       objName = TranslationUnitObject::GetDeclStmtName(value.toObject());
     }
     item = new JSONFileObjectDisplayTreeItem(tag, objName, value);
@@ -182,6 +184,14 @@ JSONFileObjectDisplayTreeItem::HandleArray
           name = TranslationUnitObject::GetEnumConstantDeclName(value.toObject());
         } else if ( kind == "FieldDecl" ) {
           name = TranslationUnitObject::GetFieldDeclName(value.toObject());
+        } else if ( kind == "IntegerLiteral" ) {
+          name = TranslationUnitObject::GetIntegerLiteralValue(value.toObject());
+        } else if ( kind == "ImplicitCastExpr" ) {
+          name = TranslationUnitObject::GetImplicitCastExprReference(value.toObject());
+        } else if ( kind == "DeclRefExpr" ) {
+          name = TranslationUnitObject::GetDeclRefExprName(value.toObject());
+        } else if ( kind == "MemberExpr" ) {
+          name = TranslationUnitObject::GetMemberExprName(value.toObject());
         }
       }
     }

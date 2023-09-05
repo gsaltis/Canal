@@ -148,6 +148,11 @@ MainDisplayJSONTreesWindow::CreateConnections(void)
           this,
           SLOT(SlotCallingFunctionFound(QString)));
 
+  connect(objectDisplayWindow,
+          SIGNAL(SignalNormalMessage(QString)),
+          this,
+          SLOT(SlotNormalMessage(QString)));
+
   connect(this,
           SIGNAL(SignalCallingFunctionFound(QString)),
           translationUnitWindow,
@@ -320,3 +325,11 @@ MainDisplayJSONTreesWindow::OpenNewFile
   objectDisplayWindow->OpenNewFile(TranslationUnit);
 }
 
+/*****************************************************************************!
+ * Function : SlotNormalMessage
+ *****************************************************************************/
+void
+MainDisplayJSONTreesWindow::SlotNormalMessage(QString InMessage)
+{
+  emit SignalNormalMessage(InMessage);
+}

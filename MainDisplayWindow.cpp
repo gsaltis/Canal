@@ -199,6 +199,10 @@ MainDisplayWindow::CreateConnections(void)
           SIGNAL(SignalSetMessageNormal(QString)),
           messageWindow,
           SLOT(SlotSetMessageNormal(QString)));
+  connect(treesWindow,
+          SIGNAL(SignalNormalMessage(QString)),
+          messageWindow,
+          SLOT(SlotSetMessageNormal(QString)));
 }
 
 /*****************************************************************************!

@@ -84,6 +84,8 @@ class SystemConfig : public QWidget
   QColor
   GetDisplayWindowBackgroundColor
   ();
+  QString                       GetFilePathPrefix       (void);
+  void                          SetFilePathPrefix       (QString InFilePathPrefix);
     
  //! Public Data
  public :
@@ -110,6 +112,7 @@ class SystemConfig : public QWidget
   void
   ReadWindowInfo
   (QJsonObject InObj);
+  void                          ReadPathsInfo           (QJsonObject InPathsObj);
 
  //! Private Data
  private :
@@ -122,6 +125,8 @@ class SystemConfig : public QWidget
   QPoint
   MainWindowPosition;
     
+  QString                       FilePathPrefix;
+
  //! Public Slots
  public slots :
 

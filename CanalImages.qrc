@@ -3,5 +3,6 @@
     <file>Images/Expand.png</file>
     <file>Images/Collapse.png</file>
     <file>Images/Canal.png</file>
+    <file>Images/Close.png</file>
 </qresource>
 </RCC>

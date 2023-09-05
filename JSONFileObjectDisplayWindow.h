@@ -36,6 +36,8 @@
 #define JSONFILE_OBJECT_DISPLAY_WINDOW_WIDTH 200
 #define JSONFILE_OBJECT_DISPLAY_WINDOW_HEIGHT 200
 
+#define JSON_FILE_OBJECT_DISPLAY_WINDOW_INDEX   3
+
 /*****************************************************************************!
  * Exported Class : JSONFileObjectDisplayWindow
  *****************************************************************************/
@@ -121,6 +123,8 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          SlotExpandElements      (void);
   void                          SlotValueSelected       (QJsonValue InValue);
   void                          SlotClearChildren       (void);
+  void                          SlotNormalMessage       (QString InMessage);
+  void                          SlotCloseTab            (void);
 
  //! Public Signals
  signals :
@@ -131,12 +135,15 @@ class JSONFileObjectDisplayWindow : public QWidget
   void                          SignalCollapseTree        (void);
   void                          SignalCallingFunctionFound (QString InFunctionName);
   void                          SignalClearChildren     (void);
+  void                          SignalNormalMessage     (QString InMessage);
+  void                          SignalCloseTab          (void);
 
  //! Public Actions
  public :
   
   QAction*                      ActionCollapseElements;
   QAction*                      ActionExpandElements;
+  QAction*                      ActionCloseTab;
 
 };
 

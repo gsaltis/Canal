@@ -63,6 +63,7 @@ class JSONFileObjectDisplayTab : public QWidget
   void                          InitializeSubWindows    ();
   void                          resizeEvent             (QResizeEvent* InEvent);
   void                          SetColumnWidths         (QList<int> InColumnWidths);
+  void                          CreateConnections       ();
   
  //! Private Data
  private :
@@ -72,9 +73,13 @@ class JSONFileObjectDisplayTab : public QWidget
 
  //! Public Slots
  public slots :
+  void                          SlotExpandTree          (void);
+  void                          SlotCollapseTree        (void);
+  void                          SlotNormalMessage       (QString InMessage);
 
  //! Public Signals
  signals :
+  void                          SignalNormalMessage     (QString InMessage);
 
  //! Public Actions
  public :

@@ -69,9 +69,15 @@ class JSONFileObjectDisplayTabWindow : public QTabWidget
 
  //! Public Slots
  public slots :
+  void                          SlotExpandTree          (void);
+  void                          SlotCollapseTree        (void);
+  void                          SlotNormalMessage       (QString InMessage);
+  void                          SlotCloseTab            (void);
 
  //! Public Signals
  signals :
+  void                          SignalNormalMessage     (QString InMessage);
+  void                          SignalCloseTab          (void);
 
  //! Public Actions
  public :

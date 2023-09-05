@@ -29,6 +29,21 @@ JSONFileObjectDisplayTree::JSONFileObjectDisplayTree
 () : QTreeWidget()
 {
   initialize();
+  CreateConnections();
+}
+
+/*****************************************************************************!
+ * Function : CreateConnections
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::CreateConnections
+()
+{
+  connect(this,
+          SIGNAL(itemExpanded(QTreeWidgetItem*)),
+          this,
+          SLOT(SlotItemExpanded(QTreeWidgetItem*)));
+  
   connect(this,
           SIGNAL(itemClicked(QTreeWidgetItem*, int)),
           this,
@@ -131,11 +146,22 @@ JSONFileObjectDisplayTree::SlotItemSelected
 void
 JSONFileObjectDisplayTree::SlotExpandTree(void)
 {
+  QString                               s;
+  int                                   n = 0;
+  int                                   k = 0;
+  k = GetItemCount();
   QTreeWidgetItemIterator               i(this);
   while (*i) {
     (*i)->setExpanded(true);
     i++;
+    n++;
+    if ( n % 100 == 0 ) {
+      QCoreApplication::processEvents();
+      s = QString("Process element %1 of %2").arg(n).arg(k);
+      emit SignalNormalMessage(s);
+    }
   }
+  emit SignalNormalMessage(QString());
 }
 
 /*****************************************************************************!
@@ -206,4 +232,112 @@ void
 JSONFileObjectDisplayTree::SlotClearChildren(void)
 {
   clear();
+}
+
+/*****************************************************************************!
+ * Function : GetItemCount
+ *****************************************************************************/
+int
+JSONFileObjectDisplayTree::GetItemCount(void)
+{
+  int                                   k = 0;
+  QTreeWidgetItemIterator               i(this);
+
+  while (*i) {
+    i++;
+    k++;
+  }
+  return k;
+}
+
+/*****************************************************************************!
+ * Function : SlotItemExpanded
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::SlotItemExpanded
+(QTreeWidgetItem* InItem)
+{
+  QString                               text;
+  JSONFileObjectDisplayTreeItem*        item;
+
+  item = (JSONFileObjectDisplayTreeItem*)InItem;
+
+  text = item->text(0);
+  if ( text == "BinaryOperator" ) {
+    OpenBinaryOperator(item);
+    return;
+  }
+
+  if ( text == "CompoundStmt" ) {
+    OpenCompoundStmt(item);
+    return;
+  }
+
+  if ( text == "IfStmt" ) {
+    OpenIfStmt(item);
+    return;
+  }
+}
+
+/*****************************************************************************!
+ * Function : OpenBinaryOperator
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::OpenBinaryOperator
+(JSONFileObjectDisplayTreeItem* InItem)
+{
+  JSONFileObjectDisplayTreeItem*        item;
+  int                                   n;
+  int                                   i;
+  QJsonValue                            innerValue;
+
+  n = InItem->childCount();
+  for ( i = 0 ; i < n ; i++ ) {
+    item = (JSONFileObjectDisplayTreeItem*)InItem->child(i);
+    if ( item->text(0) == "inner" ) {
+      item->setExpanded(true);
+    }
+  }
+}
+
+/*****************************************************************************!
+ * Function : OpenIfStmt
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::OpenIfStmt
+(JSONFileObjectDisplayTreeItem* InItem)
+{
+  JSONFileObjectDisplayTreeItem*        item;
+  int                                   n;
+  int                                   i;
+  QJsonValue                            innerValue;
+
+  n = InItem->childCount();
+  for ( i = 0 ; i < n ; i++ ) {
+    item = (JSONFileObjectDisplayTreeItem*)InItem->child(i);
+    if ( item->text(0) == "inner" ) {
+      item->setExpanded(true);
+    }
+  }
+}
+
+/*****************************************************************************!
+ * Function : OpenCompoundStmt
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::OpenCompoundStmt
+(JSONFileObjectDisplayTreeItem* InItem)
+{
+  JSONFileObjectDisplayTreeItem*        item;
+  int                                   n;
+  int                                   i;
+  QJsonValue                            innerValue;
+
+  n = InItem->childCount();
+  for ( i = 0 ; i < n ; i++ ) {
+    item = (JSONFileObjectDisplayTreeItem*)InItem->child(i);
+    if ( item->text(0) == "inner" ) {
+      item->setExpanded(true);
+    }
+  }
 }

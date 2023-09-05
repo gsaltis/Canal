@@ -53,6 +53,7 @@ SystemConfig::Initialize
     WindowsInfo.push_back(new WindowSizeInfo());
   }
   SystemName = "Canal";
+  FilePathPrefix = QString("./Test/");
   WindowWidths = QList<int>();
   SectionHeaderBackgroundColor = QColor(229, 152, 102);
 }
@@ -92,6 +93,7 @@ SystemConfig::Save
   QJsonArray                            array1;
   QList<int>                            width;
   QJsonObject                           windowObj;
+  QJsonObject                           pathsObj;
   
   filename = QString("%1%2.json").
     arg(MainDirectoryManager->GetSystemDir()).
@@ -149,6 +151,10 @@ SystemConfig::Save
   windowObj.insert("MainWindow", mainWindowObj);
   windowObj.insert("DisplayWindow", displayWindowObj);
   obj.insert("Window", QJsonValue(windowObj));
+
+  pathsObj = QJsonObject();
+  pathsObj.insert("FilePathPrefix", FilePathPrefix);
+  obj.insert("Paths", QJsonValue(pathsObj));
   
   jsonDoc = QJsonDocument(obj);
   st = QString(jsonDoc.toJson());
@@ -172,6 +178,7 @@ SystemConfig::Save
 void
 SystemConfig::Read(void)
 {
+  QJsonObject                           pathsObj;
   QJsonObject                           windowObj;
   QJsonObject                           obj;
   QJsonDocument                         doc;
@@ -196,6 +203,10 @@ SystemConfig::Read(void)
   windowObj = obj["Window"].toObject();
   if ( ! windowObj.isEmpty() ) {
     ReadWindowInfo(windowObj);
+  }
+  pathsObj = obj["Paths"].toObject();
+  if ( ! pathsObj.isEmpty() ) {
+    ReadPathsInfo(pathsObj);
   }
   file.close();
 }
@@ -351,4 +362,40 @@ SystemConfig::GetMainWindowPosition
 ()
 {
   return MainWindowPosition;
+}
+
+/*****************************************************************************!
+ * Function : GetFilePathPrefix
+ *****************************************************************************/
+QString
+SystemConfig::GetFilePathPrefix(void)
+{
+  return FilePathPrefix;  
+}
+
+/*****************************************************************************!
+ * Function : SetFilePathPrefix
+ *****************************************************************************/
+void
+SystemConfig::SetFilePathPrefix
+(QString InFilePathPrefix)
+{
+  FilePathPrefix = InFilePathPrefix;  
+}
+
+/*****************************************************************************!
+ * Function : ReadPathsInfo
+ *****************************************************************************/
+void
+SystemConfig::ReadPathsInfo
+(QJsonObject InPathsObj)
+{
+  QString                               s;
+
+  s = InPathsObj["FilePathPrefix"].toString();
+  if ( s.isEmpty() ) {
+    return;
+  }
+
+  FilePathPrefix = s;
 }

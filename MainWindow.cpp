@@ -54,7 +54,7 @@ MainWindow::~MainWindow
 void
 MainWindow::Initialize()
 {
-  pathName = "./";
+  pathName = MainSystemConfig->GetFilePathPrefix();
   setWindowTitle(MainSystemConfig->GetSystemName());  
 }
 
@@ -221,6 +221,10 @@ MainWindow::SlotFileOpen(void)
                                              tr("Open JSON File"),
                                              pathName,
                                              tr("JSON Files (*.json);;Any file (*)"));
+  if ( fileNameTmp.isEmpty() ) {
+    emit SignalSetMessageNormal(QString("File Open Cancelled"));
+    return;
+  }
   emit SignalClearChildren();
   TranslationUnit->SetFilename(fileNameTmp);
   QFileInfo                             fileInfo(fileNameTmp);

@@ -60,6 +60,10 @@ class TranslationUnitObject : public QWidget
   static QString                GetCallExprName         (QJsonObject InObject);
   static QString                GetEnumConstantDeclName (QJsonObject InObject);
   static QString                GetFieldDeclName        (QJsonObject InObject);
+  static QString                GetIntegerLiteralValue  (QJsonObject InObject);
+  static QString                GetImplicitCastExprReference    (QJsonObject InObject);
+  static QString                GetDeclRefExprName              (QJsonObject InObject);
+  static QString                GetMemberExprName               (QJsonObject InObject);
   
  //! Public Data
  public :

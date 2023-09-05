@@ -12,12 +12,14 @@
 #include <QtGui>
 #include <QWidget>
 
+#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
 #include "JSONFileObjectDisplayTab.h"
 #include "TranslationUnitObject.h"
 #include "Common.h"
+#include "Trace.h"
 
 /*****************************************************************************!
  * Function : JSONFileObjectDisplayTab
@@ -55,6 +57,7 @@ JSONFileObjectDisplayTab::initialize()
 {
   InitializeSubWindows();  
   CreateSubWindows();
+  CreateConnections();
 }
 
 /*****************************************************************************!
@@ -66,6 +69,19 @@ JSONFileObjectDisplayTab::CreateSubWindows()
   displayTree = new JSONFileObjectDisplayTree();  
   SetColumnWidths(MainSystemConfig->GetColumnWidths(3));
   displayTree->setParent(this);
+}
+
+/*****************************************************************************!
+ * Function : CreateConnections
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTab::CreateConnections
+()
+{
+  connect(displayTree,
+          SIGNAL(SignalNormalMessage(QString)),
+          this,
+          SLOT(SlotNormalMessage(QString)));
 }
 
 /*****************************************************************************!
@@ -115,8 +131,34 @@ JSONFileObjectDisplayTab::resizeEvent
  *****************************************************************************/
 QString
 JSONFileObjectDisplayTab::GetName(void)
-{
-  
+{  
   return name;
 }
 
+/*****************************************************************************!
+ * Function : SlotExpandTree
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTab::SlotExpandTree(void)
+{
+  displayTree->SlotExpandTree();
+}
+
+/*****************************************************************************!
+ * Function : SlotCollapseTree
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTab::SlotCollapseTree(void)
+{
+  displayTree->SlotCollapseTree();
+}
+
+/*****************************************************************************!
+ * Function : SlotNormalMessage
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTab::SlotNormalMessage
+(QString InMessage)
+{
+  emit SignalNormalMessage(InMessage);
+}

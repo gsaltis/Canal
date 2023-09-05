@@ -12,6 +12,7 @@
 #include <QtGui>
 #include <QWidget>
 
+#define TRACE_USE
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
@@ -38,7 +39,7 @@ JSONFileObjectDisplayWindow::JSONFileObjectDisplayWindow
   setPalette(pal);
   setAutoFillBackground(true);
   initialize();
-  SetColumnWidths(MainSystemConfig->GetColumnWidths(3));
+  SetColumnWidths(MainSystemConfig->GetColumnWidths(JSON_FILE_OBJECT_DISPLAY_WINDOW_INDEX));
 }
 
 /*****************************************************************************!
@@ -68,14 +69,18 @@ void
 JSONFileObjectDisplayWindow::CreateAction
 ()
 {
-  ActionCollapseElements = new QAction(QIcon(":/Images/Collapse.png"), "CollapseElements", this);
+  ActionCollapseElements = new QAction(QIcon(":/Images/Collapse.png"), "Collapse Elements", this);
   connect(ActionCollapseElements, SIGNAL(triggered()), this, SLOT(SlotCollapseElements()));
 
-  ActionExpandElements = new QAction(QIcon(":/Images/Expand.png"), "ExpandElements", this);
+  ActionExpandElements = new QAction(QIcon(":/Images/Expand.png"), "Expand Elements", this);
   connect(ActionExpandElements, SIGNAL(triggered()), this, SLOT(SlotExpandElements()));
+
+  ActionCloseTab = new QAction(QIcon(":/Images/Close.png"), "Close Tab", this);
+  connect(ActionCloseTab, SIGNAL(triggered()), this, SLOT(SlotCloseTab()));
 
   Toolbar->addAction(ActionExpandElements);
   Toolbar->addAction(ActionCollapseElements);
+  Toolbar->addAction(ActionCloseTab);
 }
 
 /*****************************************************************************!
@@ -124,10 +129,25 @@ JSONFileObjectDisplayWindow::CreateConnections
           this,
           SLOT(SlotObjectFormatIdentified(QString, QList<QString>)));
 
+  connect(tabWindow,
+          SIGNAL(SignalNormalMessage(QString)),
+          this,
+          SLOT(SlotNormalMessage(QString)));
+
+  connect(this,
+          SIGNAL(SignalCloseTab()),
+          tabWindow,
+          SLOT(SlotCloseTab()));
+  
   connect(this,
           SIGNAL(SignalExpandTree()),
-          fileTree,
+          tabWindow,
           SLOT(SlotExpandTree()));
+  
+  connect(this,
+          SIGNAL(SignalCollapseTree()),
+          tabWindow,
+          SLOT(SlotCollapseTree()));
   
   connect(this,
           SIGNAL(SignalCollapseTree()),
@@ -640,4 +660,23 @@ JSONFileObjectDisplayWindow::OpenNewFile
 (TranslationUnitObject* InTranslationUnit)
 {
   TranslationUnit = InTranslationUnit;
+}
+
+/*****************************************************************************!
+ * Function : SlotNormalMessage
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotNormalMessage
+(QString InMessage)
+{
+  emit SignalNormalMessage(InMessage);
+}
+
+/*****************************************************************************!
+ * Function : SlotCloseTab
+ *****************************************************************************/
+void
+JSONFileObjectDisplayWindow::SlotCloseTab(void)
+{
+  emit SignalCloseTab();
 }

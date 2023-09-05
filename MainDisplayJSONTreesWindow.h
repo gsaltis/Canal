@@ -96,6 +96,7 @@ class MainDisplayJSONTreesWindow : public QWidget
   void                          SlotObjectFormatIdentified (QString InTag, QStringList InKeys);
   void                          SlotCallingFunctionFound (QString InFunctionName);
   void                          SlotClearChildren       (void);
+  void                          SlotNormalMessage       (QString InMessage);
   
  //! Public Signals
  signals :
@@ -106,7 +107,7 @@ class MainDisplayJSONTreesWindow : public QWidget
   void                          SignalFileElementIdentified (QString InSearchTag, QStringList InKeys);
   void                          SignalCallingFunctionFound (QString InFunctionName);
   void                          SignalClearChildren     (void);
-
+  void                          SignalNormalMessage             (QString InMessage);
  //! Public Actions
  public :
 
