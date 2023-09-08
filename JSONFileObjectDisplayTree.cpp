@@ -283,6 +283,21 @@ JSONFileObjectDisplayTree::SlotItemExpanded
     OpenIfStmt(item);
     return;
   }
+
+  if ( text == "CallExpr" ) {
+    OpenCallExpr(item);
+    return;
+  }
+
+  if ( text == "ForStmt" ) {
+    OpenObjectInner(item);
+    return;
+  }
+
+  if ( text == "UnaryOperator" ) {
+    OpenObjectInner(item);
+    return;
+  }
 }
 
 /*****************************************************************************!
@@ -349,12 +364,53 @@ JSONFileObjectDisplayTree::OpenCompoundStmt
 }
 
 /*****************************************************************************!
+ * Function : OpenCallExpr
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::OpenCallExpr
+(JSONFileObjectDisplayTreeItem* InItem)
+{
+  JSONFileObjectDisplayTreeItem*        item;
+  int                                   n;
+  int                                   i;
+  QJsonValue                            innerValue;
+
+  n = InItem->childCount();
+  for ( i = 0 ; i < n ; i++ ) {
+    item = (JSONFileObjectDisplayTreeItem*)InItem->child(i);
+    if ( item->text(0) == "inner" ) {
+      item->setExpanded(true);
+    }
+  }
+}
+
+/*****************************************************************************!
+ * Function : OpenObjectInner
+ *****************************************************************************/
+void
+JSONFileObjectDisplayTree::OpenObjectInner
+(JSONFileObjectDisplayTreeItem* InItem)
+{
+  JSONFileObjectDisplayTreeItem*        item;
+  int                                   n;
+  int                                   i;
+  QJsonValue                            innerValue;
+
+  n = InItem->childCount();
+  for ( i = 0 ; i < n ; i++ ) {
+    item = (JSONFileObjectDisplayTreeItem*)InItem->child(i);
+    if ( item->text(0) == "inner" ) {
+      item->setExpanded(true);
+    }
+  }
+}
+
+/*****************************************************************************!
  * Function : SlotProgressBarShow
  *****************************************************************************/
 void
 JSONFileObjectDisplayTree::SlotProgressBarShow(void)
 {
-  TRACE_FUNCTION_LOCATION();
   emit SignalProgressBarShow();  
 }
 
@@ -364,7 +420,6 @@ JSONFileObjectDisplayTree::SlotProgressBarShow(void)
 void
 JSONFileObjectDisplayTree::SlotProgressBarHide(void)
 {
-  TRACE_FUNCTION_LOCATION();
   emit SignalProgressBarHide();
 }
 
@@ -375,7 +430,6 @@ void
 JSONFileObjectDisplayTree::SlotProgressBarSet
 (int InMinimum, int InMaximum)
 {
-  TRACE_FUNCTION_LOCATION();
   emit SignalProgressBarSet(InMinimum, InMaximum);
 }
 
@@ -386,6 +440,5 @@ void
 JSONFileObjectDisplayTree::SlotProgressBarUpdate
 (int InValue)
 {
-  TRACE_FUNCTION_LOCATION();
   emit SignalProgressBarUpdate(InValue);
 }

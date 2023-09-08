@@ -33,6 +33,7 @@ class FunctionDefinition : public QWidget
  //! Constructors
  public :
   FunctionDefinition            ();
+  FunctionDefinition            (QString InName, QString InFilename);
 
  //! Destructor
  public :
@@ -40,6 +41,10 @@ class FunctionDefinition : public QWidget
 
  //! Public Methods
  public :
+  QString                       GetFilename             (void);
+  QString                       GetName                 (void);
+  void                          SetSignature            (QString InSignature);
+  QString                       GetSignature            (void);
 
  //! Public Data
  public :
@@ -56,8 +61,10 @@ class FunctionDefinition : public QWidget
  //! Private Data
  private :
   QString                               Name;
+  QString                               ID;
   QString                               Filename;
   QString                               ReturnType;
+  QString                               Signature;
   QList<FunctionParameter*>             Parameters;
   QList<class FunctionDefinition*>      CalledFunctionReferences;
 

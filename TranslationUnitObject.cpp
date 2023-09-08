@@ -24,7 +24,20 @@
 TranslationUnitObject::TranslationUnitObject
 () : QWidget()
 {
+  Initialize();
   objectFormats = new JSONObjectFormatList();
+}
+
+/*****************************************************************************!
+ * Function : Initialize
+ *****************************************************************************/
+void
+TranslationUnitObject::Initialize
+()
+{
+  firstLocalItemIndex = 0;
+  objectFormats = NULL;
+  Filename = QString();
 }
 
 /*****************************************************************************!
@@ -36,22 +49,12 @@ TranslationUnitObject::~TranslationUnitObject
 }
 
 /*****************************************************************************!
- * Function : GetFirstFunctionIndex
+ * Function : GetFirstLocalItemIndex
  *****************************************************************************/
 int
-TranslationUnitObject::GetFirstFunctionIndex(void)
+TranslationUnitObject::GetFirstLocalItemIndex(void)
 {
-  return firstFunctionIndex;  
-}
-
-/*****************************************************************************!
- * Function : SetFirstFunctionIndex
- *****************************************************************************/
-void
-TranslationUnitObject::SetFirstFunctionIndex
-(int InFirstFunctionIndex)
-{
-  firstFunctionIndex = InFirstFunctionIndex;  
+  return firstLocalItemIndex;  
 }
 
 /*****************************************************************************!
@@ -71,6 +74,7 @@ TranslationUnitObject::SetJSONObject
 (QJsonObject InJSONObject)
 {
   JSONObject = InJSONObject;  
+  FindFirstLocaiItemIndex();
 }
 
 /*****************************************************************************!
@@ -153,7 +157,7 @@ TranslationUnitObject::FindFunctionDefinitionObjectByName
 
   inner = JSONObject["inner"].toArray();
   n = inner.count();
-  for ( i = firstFunctionIndex ; i < n ; i++ ) {
+  for ( i = firstLocalItemIndex ; i < n ; i++ ) {
     obj = inner[i].toObject();
     if ( obj["name"].toString() == InName && ObjectIsFunctionDefinition(obj) ) {
       return obj;
@@ -348,7 +352,6 @@ TranslationUnitObject::GetImplicitCastExprReference
 
   value = InObject["inner"];
   if ( ! value.isArray() ) {
-    TRACE_FUNCTION_END();
     return QString();
   }
   innerArray = value.toArray();
@@ -403,4 +406,55 @@ TranslationUnitObject::GetMemberExprName
   
   name = InObject["name"].toString();
   return name;
+}
+
+/*****************************************************************************!
+ * Function : FindFirstLocaiItemIndex
+ *****************************************************************************/
+void
+TranslationUnitObject::FindFirstLocaiItemIndex(void)
+{
+  QJsonObject                           locObj;
+  QJsonObject                           obj;
+  QJsonValue                            value;
+  int                                   n;
+  int                                   i;
+  QJsonArray                            innerArray;
+  QString                               filename;
+  QString                               baseFilename;
+
+  baseFilename = GetBaseFilename();
+  value = JSONObject["inner"];
+  innerArray = value.toArray();
+
+  n = innerArray.count();
+
+  for (i = 0; i < n; i++) {
+    value = innerArray[i];
+    obj = value.toObject();
+    locObj = obj["loc"].toObject();
+    filename = locObj["file"].toString();
+    if ( filename == baseFilename ) {
+      firstLocalItemIndex = i;
+      return;
+    }
+  }
+}
+
+/*****************************************************************************!
+ * Function : GetFunctionSignature
+ *****************************************************************************/
+QString
+TranslationUnitObject::GetFunctionSignature
+(QJsonObject InFunctionObject)
+{
+  QJsonObject                           typeObj;
+  QString                               siq;
+  
+  if ( InFunctionObject["kind"].toString() != "FunctionDecl" ) {
+    return siq;
+  }
+
+  typeObj = InFunctionObject["type"].toObject();
+  return typeObj["qualType"].toString();
 }

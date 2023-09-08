@@ -41,8 +41,7 @@ class TranslationUnitObject : public QWidget
 
  //! Public Methods
  public :
-  int                           GetFirstFunctionIndex   (void);
-  void                          SetFirstFunctionIndex   (int InFirstFunctionIndex);
+  int                           GetFirstLocalItemIndex  (void);
   QJsonObject                   GetJSONObject           (void);
   void                          SetJSONObject           (QJsonObject InJSONObject);
   JSONObjectFormatList*         GetObjectFormats        (void);
@@ -64,6 +63,7 @@ class TranslationUnitObject : public QWidget
   static QString                GetImplicitCastExprReference    (QJsonObject InObject);
   static QString                GetDeclRefExprName              (QJsonObject InObject);
   static QString                GetMemberExprName               (QJsonObject InObject);
+  static QString                GetFunctionSignature    (QJsonObject InObject);
   
  //! Public Data
  public :
@@ -76,10 +76,12 @@ class TranslationUnitObject : public QWidget
 
  //! Private Methods
  private :
-
+  void                          Initialize                      ();
+  void                          FindFirstLocaiItemIndex         (void);
+  
  //! Private Data
  private :
-  int                           firstFunctionIndex;
+  int                           firstLocalItemIndex;
   QJsonObject                   JSONObject;
   JSONObjectFormatList*         objectFormats;
   QString                       Filename;

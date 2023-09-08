@@ -21,6 +21,7 @@
  *****************************************************************************/
 #include "DirectoryManagement.h"
 #include "SystemConfig.h"
+#include "FunctionDefinitionDB.h"
 
 /*****************************************************************************!
  * Exported Macros
@@ -48,6 +49,10 @@ MainTopLevelObjects;
 extern
 int
 MainFirstLocalElementIndex;
+
+extern
+FunctionDefinitionDB*
+MainFunctionsDatabase;
 
 /*****************************************************************************!
  * Exported Functions

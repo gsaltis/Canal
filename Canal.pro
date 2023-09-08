@@ -39,6 +39,7 @@ SOURCES                         += \
 				   DirectoryManagement.cpp                      \
 				   DisplayFunctionSVGNamePane.cpp               \
 				   FunctionDefinition.cpp                       \
+				   FunctionDefinitionDB.cpp                     \
 				   FunctionParameter.cpp                        \
 				   JSONElementWindow.cpp                        \
 				   JSONElementWindowSectionHeader.cpp           \
@@ -88,6 +89,7 @@ HEADERS                         += \
 				   DirectoryManagement.h                        \
 				   DisplayFunctionSVGNamePane.h                 \
 				   FunctionDefinition.h                         \
+				   FunctionDefinitionDB.h                       \
 				   FunctionParameter.h                          \
 				   JSONElementWindow.h                          \
 				   JSONElementWindowSectionHeader.h             \

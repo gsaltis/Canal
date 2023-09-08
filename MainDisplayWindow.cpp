@@ -145,6 +145,8 @@ MainDisplayWindow::HandleInputFilename(void)
     return;
   }
   TranslationUnit->SetJSONObject(jsonDoc.object());
+  MainFunctionsDatabase->ReadFunctions(TranslationUnit);
+  MainFunctionsDatabase->Save("Functions.txt");
 }
 
 /*****************************************************************************!

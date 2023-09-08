@@ -117,6 +117,7 @@ JSONFileTree::Set
 {
   TranslationUnit = InTranslationUnit;
   SetObject();
+  FunctionDefItems->setExpanded(true);
 }
 
 /*****************************************************************************!
@@ -135,6 +136,7 @@ void
 JSONFileTree::SetInnerItem
 (QJsonValue* InValue)
 {
+  QString                               id;
   QString                               filename;
   QColor                                color;
   QJsonArray                            inner;
@@ -146,7 +148,7 @@ JSONFileTree::SetInnerItem
   bool                                  outFileFound = false;
   int                                   localCount = 0;
   int                                   elementType;
-  
+
   array = InValue->toArray();
   n = array.size();
   for (int i = 0; i < n; i++) {
@@ -171,12 +173,13 @@ JSONFileTree::SetInnerItem
         break;
       }
     }
-      
+
+    id = obj["id"].toString();
+             
     locObj = obj["loc"].toObject();
     filename = locObj["file"].toString();
     if ( filename == TranslationUnit->GetBaseFilename() ) {
       outFileFound = true;
-      TranslationUnit->SetFirstFunctionIndex(i);
     }
     if ( outFileFound ) {
       localCount++;
@@ -192,6 +195,7 @@ JSONFileTree::SetInnerItem
         item->setFont(1, f);
       }
       if ( elementType == JSONFILE_TREE_ITEM_TYPE_FUNCTION_DEF ) {
+        item->setText(1, id);
         FunctionDefItems->addChild(item);
       } else if ( elementType == JSONFILE_TREE_ITEM_TYPE_FUNCTION_DECL ) {
         FunctionDeclItems->addChild(item);
@@ -207,6 +211,7 @@ JSONFileTree::SetInnerItem
         item->setText(1, kind);
         OtherItems->addChild(item);
       }
+#if 0
     } else {
       item = new JSONFileTreeItem(JSONFILE_TREE_ITEM_INNER_TOP, elementType, obj);
       MainTopLevelObjects << obj;
@@ -215,6 +220,7 @@ JSONFileTree::SetInnerItem
       item->setText(0, name);
       item->setText(1, kind);
       NonLocalItems->addChild(item);
+#endif      
     }
   }
   emit SignalLocalCountSet(localCount);
@@ -392,7 +398,7 @@ JSONFileTree::ResetNameFonts(void)
  *****************************************************************************/
 void
 JSONFileTree::SortItems(void)
-{ 
+{
   EnumItems->sortChildren(0, Qt::AscendingOrder);
   RecordItems->sortChildren(0, Qt::AscendingOrder);
   TypeDefItems->sortChildren(0, Qt::AscendingOrder);

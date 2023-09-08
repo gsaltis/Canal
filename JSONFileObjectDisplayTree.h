@@ -67,6 +67,8 @@ class JSONFileObjectDisplayTree : public QTreeWidget
   void                          OpenBinaryOperator              (JSONFileObjectDisplayTreeItem* InItem);
   void                          OpenIfStmt                      (JSONFileObjectDisplayTreeItem* InItem);
   void                          OpenCompoundStmt                (JSONFileObjectDisplayTreeItem* InItem);
+  void                          OpenCallExpr                    (JSONFileObjectDisplayTreeItem* InItem);
+  void                          OpenObjectInner                 (JSONFileObjectDisplayTreeItem* InItem);
   
  //! Private Data
  private :

@@ -26,6 +26,16 @@ FunctionDefinition::FunctionDefinition
 }
 
 /*****************************************************************************!
+ * Function : FunctionDefinition
+ *****************************************************************************/
+FunctionDefinition::FunctionDefinition
+(QString InName, QString InFilename) : QWidget()
+{
+  Name          = InName;
+  Filename      = InFilename;
+}
+
+/*****************************************************************************!
  * Function : ~FunctionDefinition
  *****************************************************************************/
 FunctionDefinition::~FunctionDefinition
@@ -33,3 +43,39 @@ FunctionDefinition::~FunctionDefinition
 {
 }
 
+/*****************************************************************************!
+ * Function : GetFilename
+ *****************************************************************************/
+QString
+FunctionDefinition::GetFilename(void)
+{
+  return Filename;
+}
+
+/*****************************************************************************!
+ * Function : GetName
+ *****************************************************************************/
+QString
+FunctionDefinition::GetName(void)
+{
+  return Name;
+}
+
+/*****************************************************************************!
+ * Function : SetSignature
+ *****************************************************************************/
+void
+FunctionDefinition::SetSignature
+(QString InSignature)
+{
+  Signature = InSignature;
+}
+
+/*****************************************************************************!
+ * Function : GetSignature
+ *****************************************************************************/
+QString
+FunctionDefinition::GetSignature(void)
+{
+  return Signature;
+}

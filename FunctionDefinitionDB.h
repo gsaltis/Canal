@@ -1,11 +1,11 @@
 /*****************************************************************************
- * FILE NAME    : TranslationUnitObject.h
- * DATE         : August 31 2023
+ * FILE NAME    : FunctionDefinitionDB.h
+ * DATE         : September 06 2023
  * PROJECT      : 
  * COPYRIGHT    : Copyright (C) 2023 by Gregory R Saltis
  *****************************************************************************/
-#ifndef _translationunitobject_h_
-#define _translationunitobject_h_
+#ifndef _functiondefinitiondb_h_
+#define _functiondefinitiondb_h_
 
 /*****************************************************************************!
  * Global Headers
@@ -18,32 +18,35 @@
 /*****************************************************************************!
  * Local Headers
  *****************************************************************************/
+#include "FunctionDefinition.h"
+#include "TranslationUnitObject.h"
 
 /*****************************************************************************!
  * Exported Macros
  *****************************************************************************/
 
 /*****************************************************************************!
- * Exported Class : TranslationUnitObject
+ * Exported Class : FunctionDefinitionDB
  *****************************************************************************/
-class TranslationUnitObject : public QWidget
+class FunctionDefinitionDB : public QWidget
 {
   Q_OBJECT;
 
  //! Constructors
  public :
-  TranslationUnitObject         ();
+  FunctionDefinitionDB          ();
 
  //! Destructor
  public :
-  ~TranslationUnitObject        ();
+  ~FunctionDefinitionDB         ();
 
  //! Public Methods
  public :
-  int                           GetFirstFunctionIndex   (void);
-  void                          SetFirstFunctionIndex   (int InFirstFunctionIndex);
-  QJsonObject                   GetJSONObject           (void);
-  void                          SetJSONObject           (QJsonObject InJSONObject);
+  void                          ReadFunctions           (TranslationUnitObject* InTranslationUnit);
+  void                          AddFunction             (FunctionDefinition* InFunction);
+  bool                          FunctionExists          (QString InFunctionName, QString InFilename);
+  int                           GetFunctionCount        (void);
+  void                          Save                    (QString InFilename);
 
  //! Public Data
  public :
@@ -56,12 +59,14 @@ class TranslationUnitObject : public QWidget
 
  //! Private Methods
  private :
+  void                          ReadFunctionDefinition  (QString InFilename, QJsonObject InJSONObject);
 
  //! Private Data
  private :
-  int                           firstFunctionIndex;
+  TranslationUnitObject*        TranslationUnit;
   QJsonObject                   JSONObject;
-
+  QList<FunctionDefinition*>    Functions;
+  
  //! Public Slots
  public slots :
 
@@ -73,4 +78,4 @@ class TranslationUnitObject : public QWidget
 
 };
 
-#endif /* _translationunitobject_h_*/
+#endif /* _functiondefinitiondb_h_*/

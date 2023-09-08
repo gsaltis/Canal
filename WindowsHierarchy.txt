@@ -1,4 +1,7 @@
 MainDisplayJSONTreesWindow
+  JSONFileWindow
+    JSONFileTree
+      JSONFileTreeItem[]
   JSONFileObjectDisplayWindow
     JSONFileObjectDisplayTabWindow
       JSONFileObjectDisplayTab[]

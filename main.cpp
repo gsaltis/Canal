@@ -25,6 +25,7 @@
 #include "common.h"
 #include "trace.h"
 #include "TranslationUnitObject.h"
+#include "FunctionDefinitionDB.h"
 
 /*****************************************************************************!
  * Local Macros
@@ -64,6 +65,9 @@ MainTopLevelObjects;
 
 TranslationUnitObject*
 TranslationUnit = NULL;
+
+FunctionDefinitionDB*
+MainFunctionsDatabase = NULL;
 
 /*****************************************************************************!
  * Function : main
@@ -150,7 +154,7 @@ MainInitialize
 ()
 {
   TranslationUnit = new TranslationUnitObject();
-  
+  MainFunctionsDatabase = new FunctionDefinitionDB();
   MainDirectoryManager = new DirectoryManagement();
   MainSystemConfig = new SystemConfig();
   MainSystemConfig->Read();

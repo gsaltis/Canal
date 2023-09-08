@@ -355,7 +355,7 @@ JSONFileObjectDisplayWindow::FindCalls
 
   n = MainTopLevelObjects.count();
 
-  for (i = TranslationUnit->GetFirstFunctionIndex(); i < n; i++) {
+  for (i = TranslationUnit->GetFirstLocalItemIndex(); i < n; i++) {
     obj = MainTopLevelObjects[i];
     name = obj["name"].toString();
     if ( TranslationUnit->ObjectIsFunctionDefinition(obj) ) {
